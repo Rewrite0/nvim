@@ -7,6 +7,10 @@ Plug 'tmhedberg/SimpylFold'					"代码折叠
 Plug 'preservim/nerdcommenter'				"注释
 Plug 'luochen1990/rainbow'					"彩色括号
 Plug 'keith/swift.vim'						"swift
+Plug 'honza/vim-snippets'					"语法片段(需安装coc-snippets)
+Plug 'godlygeek/tabular' "必要插件，安装在vim-markdown前面,提供表格对齐
+Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}		"md预览
 call plug#end()
 
 "============================================
@@ -16,6 +20,13 @@ let g:rainbow_active = 1
 
 "coc
 let g:coc_global_extensions = ['coc-json','coc-css','coc-html','coc-snippets','coc-highlight','coc-yaml','coc-xml','coc-tsserver','coc-sourcekit','coc-python','coc-java','coc-vimlsp']
+
+"vim-markdown
+let g:vim_markdown_toc_autofit = 1
+let g:vim_markdown_conceal = 0
+let g:tex_conceal = ''
+let g:vim_markdown_math = 1
+let g:vim_markdown_toml_frontmatter = 1
 
 "============================================
 "配置
@@ -59,6 +70,8 @@ set cindent
 " 为C程序提供自动缩进
 set smartindent
 
+" 双击空格跳到'<++>' 
+noremap <space><space> <Esc>/<++><CR>:nohlsearch<CR>c4l
 "=============================================================================
 "按键映射
 
@@ -86,6 +99,16 @@ noremap rc :e ~/.config/nvim/init.vim<CR>
 nnoremap < <<
 nnoremap > >>
 
+"<!--more-->
+inoremap //m <!--more--><Esc>o
+"z向前删除
+nnoremap z i<BS><Esc>l
+"注释切换
+nmap ci \ci
+"注释光标后的内容
+nmap ce \c$
+"最后一行添加注释符号并进入插入模式
+nmap cli \cA
 "=============================================================================
 "新建文件，自动插入文件头 
 autocmd BufNewFile *.sh,*.py exec ":call SetTitle()" 
@@ -132,6 +155,8 @@ endfunc
             exec "!python %"
 		elseif &filetype == 'swift'
 			exec "!swift %"
+		elseif &filetype == 'markdown'
+			exec "MarkdownPreview"
         elseif &filetype == 'html'
             exec "!chromium % &"
         elseif &filetype == 'go'
@@ -140,4 +165,19 @@ endfunc
         endif
     endfunc
 
+"================================================================
+"输入|自动对齐表格
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>table_auto_align()<CR>a
+
+function! s:table_auto_align()
+    let p = '^\s*|\s.*\s|\s*$'
+    if exists(':Tabularize') && getline('.') =~# '^\s*|'
+                \ && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+        let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+        let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+        Tabularize/|/l1
+        normal! 0
+        call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+    endif
+endfunction
 "================================================================
