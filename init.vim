@@ -109,6 +109,8 @@ nmap ci \ci
 nmap ce \c$
 "最后一行添加注释符号并进入插入模式
 nmap cli \cA
+"单词转为大写
+inoremap <C-u> <esc>gUiwea
 "=============================================================================
 "新建文件，自动插入文件头 
 autocmd BufNewFile *.sh,*.py exec ":call SetTitle()" 
