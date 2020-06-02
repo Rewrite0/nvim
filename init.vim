@@ -30,6 +30,8 @@ let g:vim_markdown_toml_frontmatter = 1
 
 "============================================
 "配置
+"设置前缀键<leader>为空格
+let mapleader="\<space>"
 set encoding=utf-8
 set t_Co=256                    "256色
 set number                      "行号
@@ -116,6 +118,36 @@ inoremap <C-u> <esc>gUiwea
 noremap H 0
 "光标移到行尾
 noremap L $
+
+"分屏操作
+"向右分屏
+map <LEADER>l :set splitright<CR>:vsplit<CR>
+"向左分屏
+map <LEADER>h :set nosplitright<CR>:vsplit<CR>
+"向上分屏
+map <LEADER>k :set nosplitbelow<CR>:split<CR>
+"向下分屏
+map <LEADER>j :set splitbelow<CR>:split<CR>
+"光标移动至左分屏
+map sh <C-w>h
+"光标移动至右分屏
+map sl <C-w>l
+"光标移动至下分屏
+map sj <C-w>j
+"光标移动至上分屏
+map sk <C-w>k
+"增加纵向分屏大小
+map <up> :res +5<CR>
+"减少纵向分屏大小
+map <down> :res -5<CR>
+"减少横向分屏大小
+map <left> :vertical resize-5<CR>
+"增加横横分屏大小
+map <right> :vertical resize+5<CR>
+"将分屏设置为横向分屏
+map <LEADER>H <C-w>t<C-w>H
+"将分屏设置为纵向分屏
+map <LEADER>K <C-w>t<C-w>K
 "=============================================================================
 "新建文件，自动插入文件头 
 autocmd BufNewFile *.sh,*.py exec ":call SetTitle()" 
