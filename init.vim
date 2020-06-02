@@ -11,6 +11,7 @@ Plug 'honza/vim-snippets'					"语法片段(需安装coc-snippets)
 Plug 'godlygeek/tabular' "必要插件，安装在vim-markdown前面,提供表格对齐
 Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}		"md预览
+Plug 'preservim/nerdtree'					"文件树菜单
 call plug#end()
 
 "============================================
@@ -27,6 +28,12 @@ let g:vim_markdown_conceal = 0
 let g:tex_conceal = ''
 let g:vim_markdown_math = 1
 let g:vim_markdown_toml_frontmatter = 1
+
+"NERDTree
+" 不显示隐藏文件
+let g:NERDTreeHidden=0
+" 过滤: 所有指定文件和文件夹不显示
+let NERDTreeIgnore = ['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']  
 
 "============================================
 "配置
@@ -115,9 +122,9 @@ nmap cli \cA
 inoremap <C-u> <esc>gUiwea
 
 "光标移到行首
-noremap H 0
+noremap <LEADER>a 0
 "光标移到行尾
-noremap L $
+noremap <LEADER>l $
 
 "分屏操作
 "向右分屏
@@ -148,6 +155,22 @@ map <right> :vertical resize+5<CR>
 map <LEADER>H <C-w>t<C-w>H
 "将分屏设置为纵向分屏
 map <LEADER>K <C-w>t<C-w>K
+
+"打开目录树
+map <F3> :NERDTreeToggle<CR>
+"切换光标
+noremap <LEADER>w <C-w>w
+
+"标签
+"打开新标签
+map tn :tabe<CR>
+" 跳转至上一个标签
+map tj :-tabnext<CR>
+" 跳转至下一个标签
+map tk :+tabnext<CR>
+  " 关闭当前标签
+map td :tabclose<CR>
+
 "=============================================================================
 "新建文件，自动插入文件头 
 autocmd BufNewFile *.sh,*.py exec ":call SetTitle()" 
