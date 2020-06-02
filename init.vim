@@ -42,6 +42,7 @@ let mapleader="\<space>"
 set encoding=utf-8
 set t_Co=256                    "256色
 set number                      "行号
+set relativenumber				"相对行号
 set tabstop=4                   "Tab键的宽度
 
 " 统一缩进为4
@@ -91,9 +92,9 @@ noremap ; :
 noremap ! :!
 
 " Save & quit
-noremap Q :q<CR>
+noremap <LEADER>q :q<CR>
 noremap <C-q> :wq<CR>
-noremap S :w<CR>
+noremap <LEADER>s :w<CR>
 
 " 映射全选+复制 ctrl+a
 map <C-A> ggVGY
@@ -124,7 +125,7 @@ inoremap <C-u> <esc>gUiwea
 "光标移到行首
 noremap <LEADER>a 0
 "光标移到行尾
-noremap <LEADER>l $
+noremap <LEADER>e $
 
 "分屏操作
 "向右分屏
@@ -170,6 +171,10 @@ map tj :-tabnext<CR>
 map tk :+tabnext<CR>
   " 关闭当前标签
 map td :tabclose<CR>
+
+"md快捷
+imap mda [<++>](<++>)<esc>0
+
 
 "=============================================================================
 "新建文件，自动插入文件头 
