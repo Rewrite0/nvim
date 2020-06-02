@@ -111,6 +111,11 @@ nmap ce \c$
 nmap cli \cA
 "单词转为大写
 inoremap <C-u> <esc>gUiwea
+
+"光标移到行首
+noremap H 0
+"光标移到行尾
+noremap L $
 "=============================================================================
 "新建文件，自动插入文件头 
 autocmd BufNewFile *.sh,*.py exec ":call SetTitle()" 
