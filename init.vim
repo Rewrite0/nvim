@@ -15,6 +15,7 @@ Plug 'preservim/nerdtree'					"文件树菜单
 call plug#end()
 
 "============================================
+
 "================插件配置====================
 "彩色括号
 let g:rainbow_active = 1 
@@ -35,10 +36,10 @@ let g:NERDTreeHidden=0
 " 过滤: 所有指定文件和文件夹不显示
 let NERDTreeIgnore = ['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']  
 
-"============================================
-"配置
+"====================配置===================
 "设置前缀键<leader>为空格
 let mapleader="\<space>"
+
 set encoding=utf-8
 set t_Co=256                    "256色
 set number                      "行号
@@ -82,8 +83,7 @@ set smartindent
 
 " 双击空格跳到'<++>' 
 noremap <space><space> <Esc>/<++><CR>:nohlsearch<CR>c4l
-"=============================================================================
-"按键映射
+"================================按键映射==================================
 
 "用;替换:
 noremap ; :
@@ -109,8 +109,6 @@ noremap rc :e ~/.config/nvim/init.vim<CR>
 nnoremap < <<
 nnoremap > >>
 
-"<!--more-->
-inoremap //m <!--more--><Esc>o
 "z向前删除
 nnoremap z i<BS><Esc>l
 "注释切换
@@ -125,7 +123,7 @@ inoremap <C-u> <esc>gUiwea
 "光标移到行首
 noremap <LEADER>a 0
 "光标移到行尾
-noremap <LEADER>e $
+noremap <LEADER>d $
 
 "分屏操作
 "向右分屏
@@ -172,8 +170,11 @@ map tk :+tabnext<CR>
   " 关闭当前标签
 map td :tabclose<CR>
 
-"md快捷
-imap mda [<++>](<++>)<esc>0
+"markdown
+"插入超链接
+imap ;a [](<++>)<++><esc>10hi
+"插入<!--more-->
+inoremap ;m <!--more--><Esc>o
 
 
 "=============================================================================
@@ -203,8 +204,8 @@ func SetTitle()
     autocmd BufNewFile * normal G
 endfunc
 "================================================================
-"f5运行程序    
-    map <F5> :call CompileRunGcc()<CR>
+"r运行程序    
+    map r :call CompileRunGcc()<CR>
     func! CompileRunGcc()
         exec "w"
         if &filetype == 'c'
