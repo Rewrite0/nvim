@@ -112,11 +112,11 @@ nnoremap > >>
 "z向前删除
 nnoremap z i<BS><Esc>l
 "注释切换
-nmap ci \ci
+noremap ci \ci
 "注释光标后的内容
-nmap ce \c$
+noremap ce \c$
 "最后一行添加注释符号并进入插入模式
-nmap cli \cA
+noremap cli \cA
 "单词转为大写
 inoremap <C-u> <esc>gUiwea
 
