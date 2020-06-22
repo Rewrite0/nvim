@@ -55,7 +55,7 @@ set smarttab                    "在行和段开始处使用制表符
 set wrap                        "自动换行
 set linebreak                   "不再单词内部折行
 set wrapmargin=2                "折行处与编辑窗口的右边缘之间空出的字符数
-set scrolloff=5                 "垂直滚动时，光标距离顶部/底部的位置（单位：行）
+set scrolloff=10                 "垂直滚动时，光标距离顶部/底部的位置（单位：行）
 set showmatch                   "高亮对应括号
 set incsearch                   "自动跳转搜索到的第一个结果
 set ignorecase                  "搜索忽略大小写
