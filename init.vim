@@ -81,9 +81,9 @@ set cindent
 " 为C程序提供自动缩进
 set smartindent
 
+"================================按键映射==================================
 " 双击空格跳到'<++>' 
 noremap <space><space> <Esc>/<++><CR>:nohlsearch<CR>c4l
-"================================按键映射==================================
 
 "用;替换:
 noremap ; :
@@ -102,6 +102,9 @@ map <C-A> ggVGY
 " 选中状态下 Ctrl+c 复制
 vmap <C-c> "+y
 
+" 输入状态 Ctrl+v 粘贴
+inoremap <C-v> <Esc>p
+
 "init.vim
 noremap rc :e ~/.config/nvim/init.vim<CR>
 
@@ -112,11 +115,11 @@ nnoremap > >>
 "z向前删除
 nnoremap z i<BS><Esc>l
 "注释切换
-noremap ci \ci
+nmap ci <LEADER>ci
 "注释光标后的内容
-noremap ce \c$
+nmap ce <LEADER>c$
 "最后一行添加注释符号并进入插入模式
-noremap cli \cA
+nmap cli <LEADER>cA
 "单词转为大写
 inoremap <C-u> <esc>gUiwea
 
@@ -172,10 +175,11 @@ map td :tabclose<CR>
 
 "markdown
 "插入超链接
-imap ;a [](<++>)<++><esc>10hi
+inoremap ;a [](<++>)<++><esc>10hi
 "插入<!--more-->
 inoremap ;m <!--more--><Esc>o
-
+"插入</br>
+inoremap ;br </br>
 
 "=============================================================================
 "新建文件，自动插入文件头 
@@ -205,7 +209,7 @@ func SetTitle()
 endfunc
 "================================================================
 "r运行程序    
-    map r :call CompileRunGcc()<CR>
+    map <LEADER>r :call CompileRunGcc()<CR>
     func! CompileRunGcc()
         exec "w"
         if &filetype == 'c'
