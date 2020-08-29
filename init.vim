@@ -21,7 +21,40 @@ call plug#end()
 let g:rainbow_active = 1 
 
 "coc
-let g:coc_global_extensions = ['coc-json','coc-css','coc-html','coc-snippets','coc-highlight','coc-yaml','coc-xml','coc-tsserver','coc-sourcekit','coc-python','coc-java','coc-vimlsp']
+let g:coc_global_extensions = ['coc-json','coc-css','coc-html','coc-snippets','coc-highlight','coc-yaml','coc-xml','coc-tsserver','coc-python','coc-java','coc-vimlsp']
+set updatetime=100
+set shortmess+=c
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
+nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+nmap <leader>rn <Plug>(coc-rename)
+
 
 "vim-markdown
 let g:vim_markdown_toc_autofit = 1
@@ -230,7 +263,7 @@ endfunc
 		elseif &filetype == 'markdown'
 			exec "MarkdownPreview"
         elseif &filetype == 'html'
-            exec "!chromium % &"
+            exec "!chromium %"
         elseif &filetype == 'go'
             exec "!go build %<"
             exec "!go run %"
