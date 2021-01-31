@@ -2,9 +2,8 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline'				"状态栏
 Plug 'vim-airline/vim-airline-themes'
-Plug 'jiangmiao/auto-pairs'					"括号补全
 Plug 'tmhedberg/SimpylFold'					"代码折叠
-Plug 'preservim/nerdcommenter'				"注释
+Plug 'preservim/nerdcommenter'			"注释
 Plug 'luochen1990/rainbow'					"彩色括号
 Plug 'keith/swift.vim'						"swift
 Plug 'honza/vim-snippets'					"语法片段(需安装coc-snippets)
@@ -21,7 +20,7 @@ call plug#end()
 let g:rainbow_active = 1 
 
 "coc
-let g:coc_global_extensions = ['coc-json','coc-css','coc-html','coc-snippets','coc-highlight','coc-yaml','coc-xml','coc-tsserver','coc-python','coc-java','coc-vimlsp']
+let g:coc_global_extensions = ['coc-json','coc-css','coc-html','coc-snippets','coc-highlight','coc-yaml','coc-xml','coc-tsserver','coc-python','coc-java','coc-vimlsp','coc-pairs']
 set updatetime=100
 set shortmess+=c
 inoremap <silent><expr> <TAB>
@@ -57,6 +56,8 @@ nmap <leader>rn <Plug>(coc-rename)
 
 
 "vim-markdown
+" 禁用折叠
+let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_toc_autofit = 1
 let g:vim_markdown_conceal = 0
 let g:tex_conceal = ''
@@ -77,11 +78,11 @@ set encoding=utf-8
 set t_Co=256                    "256色
 set number                      "行号
 set relativenumber				"相对行号
-set tabstop=4                   "Tab键的宽度
+set tabstop=2                   "Tab键的宽度
 
 " 统一缩进为4
-set softtabstop=4
-set shiftwidth=4
+set softtabstop=2
+set shiftwidth=2
 
 set noexpandtab                 "不要用空格代替制表符
 set smarttab                    "在行和段开始处使用制表符
@@ -145,8 +146,6 @@ noremap rc :e ~/.config/nvim/init.vim<CR>
 nnoremap < <<
 nnoremap > >>
 
-"z向前删除
-nnoremap z i<BS><Esc>l
 "注释切换
 nmap ci <LEADER>ci
 "注释光标后的内容
@@ -214,6 +213,9 @@ inoremap ;m <!--more--><Esc>o
 "插入</br>
 inoremap ;br </br>
 
+"html
+inoremap ;/d </div>
+
 "=============================================================================
 "新建文件，自动插入文件头 
 autocmd BufNewFile *.sh,*.py exec ":call SetTitle()" 
@@ -255,7 +257,7 @@ endfunc
             exec "!javac %"
             exec "!java %<"
         elseif &filetype == 'sh'
-            :!time bash %
+            :!bash %
         elseif &filetype == 'python'
             exec "!python %"
 		elseif &filetype == 'swift'
