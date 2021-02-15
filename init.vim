@@ -77,7 +77,7 @@ let mapleader="\<space>"
 set encoding=utf-8
 set t_Co=256                    "256色
 set number                      "行号
-set relativenumber				"相对行号
+set relativenumber							"相对行号
 set tabstop=2                   "Tab键的宽度
 
 " 统一缩进为4
@@ -212,9 +212,6 @@ inoremap ;a [](<++>)<++><esc>10hi
 inoremap ;m <!--more--><Esc>o
 "插入</br>
 inoremap ;br </br>
-
-"html
-inoremap ;/d </div>
 
 "=============================================================================
 "新建文件，自动插入文件头 
