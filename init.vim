@@ -96,7 +96,7 @@ set ignorecase                  "搜索忽略大小写
 set smartcase                   "搜索对首字母大写敏感
 set autochdir                   "自动切换工作目录
 set nocompatible                "不兼容vi
-set clipboard=unnamed           "共享剪切板
+set clipboard=unnamedplus       "共享剪切板
 
 "禁止生成临时文件
 set nobackup
