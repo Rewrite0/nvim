@@ -38,6 +38,7 @@ let g:coc_global_extensions = [
 	\ 'coc-highlight',
 	\ 'coc-yaml',
 	\ 'coc-xml',
+	\ 'coc-go',
 	\ 'coc-tsserver',
 	\ 'coc-pyright',
 	\ 'coc-java',
@@ -108,11 +109,11 @@ nmap <LEADER>f <Plug>(coc-format-selected)
 
 " coc-translator
 " popup
-nmap <LEADER>t :CocCommand translator.popup<CR>
+nmap tt :CocCommand translator.popup<CR>
 " echo
-nmap <LEADER>e :CocCommand translator.echo<CR>
+nmap te :CocCommand translator.echo<CR>
 " replace
-nmap <LEADER>r :CocCommand translator.replace<CR>
+nmap tr :CocCommand translator.replace<CR>
 
 " coc-snippets
 imap <C-l> <Plug>(coc-snippets-expand)
