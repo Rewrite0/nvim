@@ -1,16 +1,21 @@
 call plug#begin('~/.config/nvim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'vim-airline/vim-airline'				"状态栏
+"状态栏
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tmhedberg/SimpylFold'					"代码折叠
-Plug 'preservim/nerdcommenter'			"注释
-Plug 'luochen1990/rainbow'					"彩色括号
-Plug 'keith/swift.vim'						"swift
-Plug 'honza/vim-snippets'					"语法片段(需安装coc-snippets)
-Plug 'godlygeek/tabular' "必要插件，安装在vim-markdown前面,提供表格对齐
+"代码折叠
+Plug 'tmhedberg/SimpylFold'
+"注释
+Plug 'preservim/nerdcommenter'
+"彩色括号
+Plug 'luochen1990/rainbow'
+"语法片段(需安装coc-snippets)
+Plug 'honza/vim-snippets'					
+"必要插件，安装在vim-markdown前面,提供表格对齐
+Plug 'godlygeek/tabular' 
 Plug 'plasticboy/vim-markdown'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}		"md预览
-Plug 'preservim/nerdtree'					"文件树菜单
+"md预览
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 call plug#end()
 
 "============================================
@@ -20,9 +25,35 @@ call plug#end()
 let g:rainbow_active = 1 
 
 "coc
-let g:coc_global_extensions = ['coc-json','coc-css','coc-html','coc-snippets','coc-highlight','coc-yaml','coc-xml','coc-tsserver','coc-python','coc-java','coc-vimlsp','coc-pairs']
+let g:coc_global_extensions = [
+	\ 'coc-json',
+	\ 'coc-css',
+	\ 'coc-html',
+	\ 'coc-vetur',
+	\ 'coc-snippets',
+	\ 'coc-highlight',
+	\ 'coc-yaml',
+	\ 'coc-xml',
+	\ 'coc-tsserver',
+	\ 'coc-pyright',
+	\ 'coc-java',
+	\ 'coc-vimlsp',
+	\ 'coc-translator',
+	\ 'coc-explorer',
+	\ 'coc-pairs']
 set updatetime=100
 set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" tab补全
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -33,42 +64,59 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
-nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
+
+" ctrl+space调出补全
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" 查看上/下代码报错
+nmap <silent> <LEADER>[ <Plug>(coc-diagnostic-prev)
+nmap <silent> <LEADER>] <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-nmap <leader>rn <Plug>(coc-rename)
 
+" Symbol renaming.
+nmap <LEADER>rn <Plug>(coc-rename)
 
-"vim-markdown
-" 禁用折叠
-let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_toc_autofit = 1
-let g:vim_markdown_conceal = 0
-let g:tex_conceal = ''
-let g:vim_markdown_math = 1
-let g:vim_markdown_toml_frontmatter = 1
+" Formatting selected code.
+xmap <LEADER>f <Plug>(coc-format-selected)
+nmap <LEADER>f <Plug>(coc-format-selected)
 
-"NERDTree
-" 不显示隐藏文件
-let g:NERDTreeHidden=0
-" 过滤: 所有指定文件和文件夹不显示
-let NERDTreeIgnore = ['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']  
+" coc-translator
+" popup
+nmap <LEADER>t :CocCommand translator.popup<CR>
+" echo
+nmap <LEADER>e :CocCommand translator.echo<CR>
+" replace
+nmap <LEADER>r :CocCommand translator.replace<CR>
+
+" coc-snippets
+imap <C-l> <Plug>(coc-snippets-expand)
+vmap <C-e> <Plug>(coc-snippets-select)
+let g:coc_snippet_next = '<c-e>'
+let g:coc_snippet_prev = '<c-n>'
+imap <C-e> <Plug>(coc-snippets-expand-jump)
+let g:snips_author = 'Rewrite'
 
 "====================配置===================
 "设置前缀键<leader>为空格
@@ -139,14 +187,23 @@ vmap <C-c> "+y
 " 输入状态 Ctrl+v 粘贴
 inoremap <C-v> <Esc>p
 
+inoremap <C-k> <up>
+inoremap <C-j> <down>
+inoremap <C-h> <left>
+inoremap <C-l> <right>
+
 "init.vim
 noremap rc :e ~/.config/nvim/init.vim<CR>
+
+" CocCommand
+nmap <LEADER>c :CocCommand<CR>
 
 "缩进
 nnoremap < <<
 nnoremap > >>
 
 "注释切换
+nmap <LEADER>/ 0i//<esc>
 nmap ci <LEADER>ci
 "注释光标后的内容
 nmap ce <LEADER>c$
@@ -191,7 +248,7 @@ map <LEADER>H <C-w>t<C-w>H
 map <LEADER>K <C-w>t<C-w>K
 
 "打开目录树
-map <F3> :NERDTreeToggle<CR>
+map <F3> :CocCommand explorer<CR>
 "切换光标
 noremap <LEADER>w <C-w>w
 
@@ -262,7 +319,7 @@ endfunc
 		elseif &filetype == 'markdown'
 			exec "MarkdownPreview"
         elseif &filetype == 'html'
-            exec "!chromium %"
+            exec "!firefox %"
         elseif &filetype == 'go'
             exec "!go build %<"
             exec "!go run %"
