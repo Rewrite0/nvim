@@ -11,6 +11,10 @@ Plug 'preservim/nerdcommenter'
 Plug 'luochen1990/rainbow'
 "语法片段(需安装coc-snippets)
 Plug 'honza/vim-snippets'					
+"内容包裹
+Plug 'tpope/vim-surround'
+"智能选中内容
+Plug 'gcmt/wildfire.vim'
 "必要插件，安装在vim-markdown前面,提供表格对齐
 Plug 'godlygeek/tabular' 
 Plug 'plasticboy/vim-markdown'
