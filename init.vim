@@ -123,6 +123,11 @@ let g:coc_snippet_prev = '<c-n>'
 imap <C-e> <Plug>(coc-snippets-expand-jump)
 let g:snips_author = 'Rewrite'
 
+"vue
+let g:LanguageClient_serverCommands = {
+    \ 'vue': ['vls']
+    \ }
+
 "====================配置===================
 "设置前缀键<leader>为空格
 let mapleader="\<space>"
