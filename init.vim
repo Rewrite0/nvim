@@ -20,6 +20,13 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 "md预览
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+" (Optional) Multi-entry selection UI.
+Plug 'junegunn/fzf'
 call plug#end()
 
 "============================================
@@ -125,7 +132,7 @@ let g:snips_author = 'Rewrite'
 
 "vue
 let g:LanguageClient_serverCommands = {
-    \ 'vue': ['vls']
+    \ 'vue': ['/home/rewrite/.cache/npm-packages/lib/node_modules/vls/bin/vls']
     \ }
 
 "====================配置===================
