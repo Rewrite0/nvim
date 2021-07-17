@@ -304,11 +304,6 @@ func SetTitle()
     "如果文件类型为.mjs文件 
 		elseif &filetype == 'javascript' 
         call setline(1, "#!/usr/bin/env zx")
-        call append(line("."), "#########################################################################")
-        call append(line(".")+1, "# File Name: ".expand("%")) 
-        call append(line(".")+2, "# Created Time: ".strftime("%c")) 
-        call append(line(".")+3, "#########################################################################") 
-        call append(line(".")+4, "")
 
     "如果文件类型为.py文件
     elseif &filetype == 'python'
