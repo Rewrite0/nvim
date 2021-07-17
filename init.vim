@@ -132,7 +132,7 @@ let g:snips_author = 'Rewrite'
 
 "vue
 let g:LanguageClient_serverCommands = {
-    \ 'vue': ['/home/rewrite/.cache/npm-packages/lib/node_modules/vls/bin/vls']
+    \ 'vue': ['vls']
     \ }
 
 "====================配置===================
@@ -289,7 +289,7 @@ inoremap ;br </br>
 
 "=============================================================================
 "新建文件，自动插入文件头 
-autocmd BufNewFile *.sh,*.py exec ":call SetTitle()" 
+autocmd BufNewFile *.sh,*.py,*.mjs exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
     "如果文件类型为.sh文件 
@@ -300,7 +300,16 @@ func SetTitle()
         call append(line(".")+2, "# Created Time: ".strftime("%c")) 
         call append(line(".")+3, "#########################################################################") 
         call append(line(".")+4, "")
-    
+
+    "如果文件类型为.mjs文件 
+		elseif &filetype == 'javascript' 
+        call setline(1, "#!/usr/bin/env zx")
+        call append(line("."), "#########################################################################")
+        call append(line(".")+1, "# File Name: ".expand("%")) 
+        call append(line(".")+2, "# Created Time: ".strftime("%c")) 
+        call append(line(".")+3, "#########################################################################") 
+        call append(line(".")+4, "")
+
     "如果文件类型为.py文件
     elseif &filetype == 'python'
         call setline(1, "#!/usr/bin/env python")
@@ -310,6 +319,7 @@ func SetTitle()
         call append(line(".")+3, "# Created Time: ".strftime("%c")) 
         call append(line(".")+4, "#########################################################################") 
         call append(line(".")+5, "")
+
     endif
     autocmd BufNewFile * normal G
 endfunc
@@ -317,32 +327,40 @@ endfunc
 "r运行程序    
     map <LEADER>r :call CompileRunGcc()<CR>
     func! CompileRunGcc()
-        exec "w"
-        if &filetype == 'c'
-            exec "!g++ % -o %<"
-            exec "!./%<"
-        elseif &filetype == 'cpp'
-            exec "!g++ % -o %<"
-            exec "!./%<"
-        elseif &filetype == 'java'
-            exec "!javac %"
-            exec "!java %<"
-        elseif &filetype == 'sh'
-            :!bash %
-        elseif &filetype == 'python'
-            exec "!python3 %"
-        elseif &filetype == 'javascript'
-            exec "!node %"
-		elseif &filetype == 'swift'
-			exec "!swift %"
-		elseif &filetype == 'markdown'
-			exec "MarkdownPreview"
-        elseif &filetype == 'html'
-            exec "!firefox %"
-        elseif &filetype == 'go'
-            exec "!go build %<"
-            exec "!go run %"
-        endif
+		exec "w"
+			if &filetype == 'c'
+				exec "!g++ % -o %<"
+				exec "!./%<"
+			elseif &filetype == 'cpp'
+				exec "!g++ % -o %<"
+				exec "!./%<"
+
+			elseif &filetype == 'java'
+				exec "!javac %"
+				exec "!java %<"
+
+			elseif &filetype == 'sh'
+				:!bash %
+
+			elseif &filetype == 'python'
+				exec "!python3 %"
+
+			elseif &filetype == 'javascript'
+				exec "!node %"
+
+			elseif &filetype == 'swift'
+				exec "!swift %"
+
+			elseif &filetype == 'markdown'
+				exec "MarkdownPreview"
+
+			elseif &filetype == 'html'
+					exec "!firefox %"
+
+			elseif &filetype == 'go'
+					exec "!go build %<"
+					exec "!go run %"
+			endif
     endfunc
 
 "================================================================
