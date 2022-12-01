@@ -40,7 +40,7 @@ let g:coc_global_extensions = [
 	\ 'coc-json',
 	\ 'coc-css',
 	\ 'coc-html',
-	\ 'coc-vetur',
+	\ '@yaegassy/coc-volar',
 	\ 'coc-snippets',
 	\ 'coc-highlight',
 	\ 'coc-yaml',
