@@ -1,0 +1,6 @@
+{
+  "test": {
+    "prefix": "tsnip",
+    "body": ["test snip"]
+  }
+}

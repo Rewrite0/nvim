@@ -1,0 +1,23 @@
+{
+  "name": "vscode-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "all"
+        ],
+        "path": "./test.json"
+      },
+      {
+        "language": [
+          "typescript",
+          "typescriptreact",
+          "javascript",
+          "javascriptreact",
+          "vue"
+        ],
+        "path": "./web.json"
+      }
+    ]
+  }
+}
