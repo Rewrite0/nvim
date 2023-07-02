@@ -1,4 +1,3 @@
-local try_require = require("utils").try_require
 local merge_table = require("utils").merge_table
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -8,7 +7,11 @@ local get_config = function(name)
 		capabilities = capabilities,
 	}
 
-	local config = try_require("lsp.cofig." .. name)
+	local ok, config = pcall(require, "lsp.config." .. name)
+
+	if not ok then
+		return default_config
+	end
 
 	if config ~= nil and type(config) == "table" then
 		return merge_table(default_config, config)
@@ -39,7 +42,7 @@ local lsp = {
 	"cssls",
 	"unocss",
 	"html",
-	"tsserver",
+	-- "tsserver",
 	"volar",
 }
 
