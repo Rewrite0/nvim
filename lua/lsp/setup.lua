@@ -23,6 +23,7 @@ end
 local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local lspconfig = require("lspconfig")
+local neoconf = require("neoconf")
 
 local lsp = {
 	"lua_ls",
@@ -42,7 +43,7 @@ local lsp = {
 	"cssls",
 	"unocss",
 	"html",
-	-- "tsserver",
+	"tsserver",
 	"volar",
 }
 
@@ -60,13 +61,25 @@ mason.setup({
 	},
 })
 
+neoconf.setup({
+	local_settings = ".neoconf.json",
+	global_settings = "neoconf.json",
+})
+
 mason_lspconfig.setup({
 	ensure_installed = lsp,
 })
 
--- setup lsp config
-for _, name in pairs(lsp) do
-	local config = get_config(name)
+mason_lspconfig.setup_handlers({
+	function(server_name)
+		-- setup lspconfig
+		local is_disabled = neoconf.get(server_name .. ".disabled")
 
-	lspconfig[name].setup(config)
-end
+		if is_disabled ~= nil and is_disabled then
+			return
+		end
+
+		local config = get_config(server_name)
+		lspconfig[server_name].setup(config)
+	end,
+})

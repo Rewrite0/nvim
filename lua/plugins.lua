@@ -119,6 +119,7 @@ require("lazy").setup({
 	},
 	"williamboman/mason-lspconfig.nvim",
 	"neovim/nvim-lspconfig",
+  "folke/neoconf.nvim",
 
 	-- lspsaga
 	{
