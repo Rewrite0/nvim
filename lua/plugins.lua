@@ -119,7 +119,7 @@ require("lazy").setup({
 	},
 	"williamboman/mason-lspconfig.nvim",
 	"neovim/nvim-lspconfig",
-  "folke/neoconf.nvim",
+	"folke/neoconf.nvim",
 
 	-- lspsaga
 	{
@@ -177,6 +177,16 @@ require("lazy").setup({
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		keys = keys.trouble,
 		opts = require("plugin-config.trouble"),
+	},
+
+	-- ai
+	{
+		"Exafunction/codeium.vim",
+		lazy = false,
+		keys = keys.codeium,
+		config = function()
+			require("plugin-config.codeium")
+		end,
 	},
 }, {
 	defaults = {

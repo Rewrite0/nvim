@@ -4,9 +4,6 @@ local map = require("utils").map
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- 取消默认行为
-map("n", "s", "")
-
 -- save
 map("n", "<C-s>", ":w<CR>")
 map("n", "<leader>s", ":w<CR>")
@@ -15,8 +12,8 @@ map("n", "<leader>q", ":q<CR>")
 map("n", "<leader>Q", ":q!<CR>")
 
 -- 快速翻页
-map("n", "<C-k>", "9k")
-map("n", "<C-j>", "9j")
+map("n", "<C-j>", "5j")
+map("n", "<C-k>", "5k")
 map("v", "<C-j>", "5j")
 map("v", "<C-k>", "5k")
 
@@ -45,7 +42,7 @@ map("n", "<A-h>", ":vertical resize -5<CR>")
 map("n", "<A-k>", ":resize +5<CR>")
 map("n", "<A-j>", ":resize -5<CR>")
 -- 相等比例
-map("n", "s=", "<C-w>=")
+map("n", "<A-=>", "<C-w>=")
 
 -- 分屏窗口跳转
 map("n", "<C-h>", "<C-w>h")
@@ -230,6 +227,45 @@ return {
 			"<leader>xr",
 			":TroubleToggle lsp_references<CR>",
 			desc = "trouble toggle lsp_references",
+		},
+	},
+
+	codeium = {
+		{
+			"<Tab>",
+			function()
+				return vim.fn["codeium#Accept"]()
+			end,
+			mode = "i",
+			desc = "codeium 插入建议",
+			expr = true,
+		},
+		{
+			"<C-.>",
+			function()
+				return vim.fn["codeium#CycleCompletions"](1)
+			end,
+			mode = "i",
+			desc = "codeium 下一个建议",
+			expr = true,
+		},
+		{
+			"<C-,>",
+			function()
+				return vim.fn["codeium#CycleCompletions"](-1)
+			end,
+			mode = "i",
+			desc = "codeium 上一个建议",
+			expr = true,
+		},
+		{
+			"<C-x>",
+			function()
+				return vim.fn["codeium#Clear"]()
+			end,
+			mode = "i",
+			desc = "codeium 清除建议",
+			expr = true,
 		},
 	},
 }
