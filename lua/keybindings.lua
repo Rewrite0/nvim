@@ -181,12 +181,16 @@ return {
 		},
 		{
 			"[e",
-			":lua require('lspsaga.diagnostic'):goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>",
+			function()
+				require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+			end,
 			desc = "jump error prev",
 		},
 		{
 			"]e",
-			":lua require('lspsaga.diagnostic'):goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>",
+			function()
+				require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+			end,
 			desc = "jump error next",
 		},
 		{
