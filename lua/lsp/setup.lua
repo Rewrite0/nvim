@@ -70,15 +70,24 @@ mason_lspconfig.setup({
 	ensure_installed = lsp,
 })
 
+-- 获取 volar 是否启用
+local volar_enabled = neoconf.get("volar.enable")
+
 mason_lspconfig.setup_handlers({
 	function(server_name)
-		-- setup lspconfig
-		local is_disabled = neoconf.get(server_name .. ".disabled")
-
-		if is_disabled ~= nil and is_disabled then
-			return
+		if volar_enabled then
+			-- volar 启用时禁用 tsserver
+			if server_name == "tsserver" then
+				return
+			end
+		else
+			-- volar 默认禁用
+			if server_name == "volar" then
+				return
+			end
 		end
 
+		-- setup lspconfig
 		local config = get_config(server_name)
 		lspconfig[server_name].setup(config)
 	end,
