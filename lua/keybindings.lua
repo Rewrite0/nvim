@@ -272,4 +272,12 @@ return {
 			expr = true,
 		},
 	},
+
+	lazygit = {
+		{
+			"<leader>g",
+			":LazyGit<CR>",
+			desc = "open lazygit",
+		},
+	},
 }

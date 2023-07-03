@@ -188,6 +188,15 @@ require("lazy").setup({
 			require("plugin-config.codeium")
 		end,
 	},
+
+	{
+		"kdheepak/lazygit.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		keys = keys.lazygit,
+		opts = {},
+	},
 }, {
 	defaults = {
 		lazy = true,
