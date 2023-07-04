@@ -201,6 +201,7 @@ require("lazy").setup({
 	-- 现代化折叠
 	{
 		"kevinhwang91/nvim-ufo",
+		lazy = false,
 		dependencies = {
 			"kevinhwang91/promise-async",
 		},
