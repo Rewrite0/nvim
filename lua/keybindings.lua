@@ -11,12 +11,6 @@ map("n", "<leader>s", ":w<CR>")
 map("n", "<leader>q", ":q<CR>")
 map("n", "<leader>Q", ":q!<CR>")
 
--- 快速翻页
-map("n", "<C-j>", "5j")
-map("n", "<C-k>", "5k")
-map("v", "<C-j>", "5j")
-map("v", "<C-k>", "5k")
-
 -- ;进入命令
 map("n", ";", ":")
 
@@ -278,6 +272,23 @@ return {
 			"<leader>g",
 			":LazyGit<CR>",
 			desc = "open lazygit",
+		},
+	},
+
+	nvim_ufo = {
+		{
+			"zC",
+			function()
+				require("ufo").closeAllFolds()
+			end,
+			desc = "close all folds",
+		},
+		{
+			"zO",
+			function()
+				require("ufo").openAllFolds()
+			end,
+			desc = "open all folds",
 		},
 	},
 }

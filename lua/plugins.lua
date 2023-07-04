@@ -197,6 +197,18 @@ require("lazy").setup({
 		keys = keys.lazygit,
 		opts = {},
 	},
+
+	-- 现代化折叠
+	{
+		"kevinhwang91/nvim-ufo",
+		dependencies = {
+			"kevinhwang91/promise-async",
+		},
+		keys = keys.nvim_ufo,
+		config = function()
+			require("plugin-config.nvim-ufo")
+		end,
+	},
 }, {
 	defaults = {
 		lazy = true,
