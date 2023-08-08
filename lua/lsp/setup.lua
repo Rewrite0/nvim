@@ -34,7 +34,7 @@ local lsp = {
 	"jsonls",
 	"yamlls",
 	-- nix
-	"rnix",
+	-- "rnix",
 	--markdown
 	"marksman",
 
@@ -45,6 +45,7 @@ local lsp = {
 	"html",
 	"tsserver",
 	"volar",
+	"tailwindcss",
 }
 
 ----------------------------

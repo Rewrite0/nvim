@@ -168,7 +168,7 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim",
 		},
 		config = function()
-			require("plugin-config.null-ls")
+			require("lsp.null-ls")
 		end,
 	},
 

@@ -29,9 +29,6 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.eslint_d,
 		null_ls.builtins.code_actions.eslint_d,
 
-		-- css style lint
-		null_ls.builtins.diagnostics.stylelint,
-
 		-- dockerfile linter
 		null_ls.builtins.diagnostics.hadolint,
 
