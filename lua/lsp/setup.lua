@@ -39,7 +39,7 @@ local lsp = {
 	"marksman",
 
 	-- web
-	"emmet_ls",
+	"emmet_language_server",
 	"cssls",
 	"unocss",
 	"html",
