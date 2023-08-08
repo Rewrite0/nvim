@@ -210,6 +210,18 @@ require("lazy").setup({
 			require("plugin-config.nvim-ufo")
 		end,
 	},
+
+	-- 颜色高亮
+	{
+		"brenoprata10/nvim-highlight-colors",
+		lazy = false,
+		keys = keys.color_highlight,
+		opts = {
+			render = "background", -- or 'foreground' or 'first_column'
+			enable_named_colors = true,
+			enable_tailwind = true,
+		},
+	},
 }, {
 	defaults = {
 		lazy = true,

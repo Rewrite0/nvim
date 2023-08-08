@@ -291,4 +291,14 @@ return {
 			desc = "open all folds",
 		},
 	},
+
+	color_highlight = {
+		{
+			"<leader>cc",
+			function()
+				require("nvim-highlight-colors").toggle()
+			end,
+			desc = "toggle color highlight",
+		},
+	},
 }
