@@ -32,6 +32,7 @@ local lsp = {
 	"taplo",
 	"jsonls",
 	"yamlls",
+	"dockerls",
 	-- nix
 	-- "rnix",
 	--markdown
