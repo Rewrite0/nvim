@@ -1,5 +1,13 @@
-local function codeium()
-	return "ai:" .. vim.fn["codeium#GetStatusString"]()
+local function ai_status()
+	-- return "ai:" .. vim.fn["codeium#GetStatusString"]()
+	local disabled = "Copilot: Disabled globally by :Copilot disable"
+	local enabled = "Copilot: Enabled and online"
+	local status = vim.api.nvim_exec("Copilot status", true)
+	if status == disabled then
+		return "ai: Disabled"
+	elseif status == enabled then
+		return "ai: Enabled"
+	end
 end
 
 require("lualine").setup({
@@ -17,7 +25,7 @@ require("lualine").setup({
 	extensions = { "nvim-tree" },
 	sections = {
 		lualine_x = {
-			{ codeium },
+			{ ai_status },
 			"filesize",
 			{
 				"fileformat",

@@ -62,7 +62,7 @@ require("lazy").setup({
 	-- comment
 	{
 		"numToStr/Comment.nvim",
-		lazy = false,
+		event = "VeryLazy",
 		dependencies = {
 			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
@@ -105,7 +105,7 @@ require("lazy").setup({
 	-- git
 	{
 		"lewis6991/gitsigns.nvim",
-		lazy = false,
+		event = "VeryLazy",
 		config = function()
 			require("plugin-config.gitsigns")
 		end,
@@ -163,7 +163,7 @@ require("lazy").setup({
 	-- null-ls
 	{
 		"jose-elias-alvarez/null-ls.nvim",
-		lazy = false,
+		event = "LspAttach",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
@@ -182,11 +182,16 @@ require("lazy").setup({
 	-- ai
 	{
 		"Exafunction/codeium.vim",
-		lazy = false,
+		enabled = false,
+		event = "VeryLazy",
 		keys = keys.codeium,
 		config = function()
 			require("plugin-config.codeium")
 		end,
+	},
+	{
+		"github/copilot.vim",
+		event = "VeryLazy",
 	},
 
 	{
@@ -201,7 +206,7 @@ require("lazy").setup({
 	-- 现代化折叠
 	{
 		"kevinhwang91/nvim-ufo",
-		lazy = false,
+		event = "VeryLazy",
 		dependencies = {
 			"kevinhwang91/promise-async",
 		},
@@ -214,7 +219,7 @@ require("lazy").setup({
 	-- 颜色高亮
 	{
 		"brenoprata10/nvim-highlight-colors",
-		lazy = false,
+		event = "VeryLazy",
 		keys = keys.color_highlight,
 		opts = {
 			render = "background", -- or 'foreground' or 'first_column'
