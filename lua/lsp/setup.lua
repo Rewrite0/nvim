@@ -46,6 +46,7 @@ local lsp = {
 	"tsserver",
 	"volar",
 	"tailwindcss",
+	"astro",
 }
 
 ----------------------------
