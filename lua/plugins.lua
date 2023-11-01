@@ -3,13 +3,26 @@ local keys = require("keybindings")
 require("lazy").setup({
 	-- theme
 	{
-		"folke/tokyonight.nvim",
-		lazy = false,
+		"catppuccin/nvim",
+		name = "catppuccin",
 		priority = 1000,
+		lazy = false,
 		config = function()
-			vim.cmd([[colorscheme tokyonight]])
+			-- catppuccin-latte,
+			-- catppuccin-frappe,
+			-- catppuccin-macchiato,
+			-- catppuccin-mocha
+			vim.cmd([[colorscheme catppuccin-macchiato]])
 		end,
 	},
+	-- {
+	-- 	"folke/tokyonight.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		vim.cmd([[colorscheme tokyonight]])
+	-- 	end,
+	-- },
 
 	"nvim-lua/plenary.nvim",
 	"nvim-tree/nvim-web-devicons",
@@ -159,6 +172,9 @@ require("lazy").setup({
 			"saadparwaiz1/cmp_luasnip",
 		},
 	},
+	{
+		"onsails/lspkind.nvim",
+	},
 
 	-- null-ls
 	{
@@ -180,18 +196,47 @@ require("lazy").setup({
 	},
 
 	-- ai
+	-- {
+	-- 	"Exafunction/codeium.vim",
+	-- 	enabled = false,
+	-- 	event = "VeryLazy",
+	-- 	keys = keys.codeium,
+	-- 	config = function()
+	-- 		require("plugin-config.codeium")
+	-- 	end,
+	-- },
 	{
-		"Exafunction/codeium.vim",
-		enabled = false,
-		event = "VeryLazy",
-		keys = keys.codeium,
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
 		config = function()
-			require("plugin-config.codeium")
+			require("plugin-config.copilot")
 		end,
 	},
 	{
-		"github/copilot.vim",
-		event = "VeryLazy",
+		"zbirenbaum/copilot-cmp",
+		config = function()
+			require("copilot_cmp").setup()
+		end,
+	},
+
+	{
+		"jonahgoldwastaken/copilot-status.nvim",
+		dependencies = { "zbirenbaum/copilot.lua" },
+		lazy = true,
+		event = "BufReadPost",
+		config = function()
+			require("copilot_status").setup({
+				icons = {
+					idle = "",
+					error = "",
+					offline = "",
+					warning = "",
+					loading = "",
+				},
+				debug = false,
+			})
+		end,
 	},
 
 	{
