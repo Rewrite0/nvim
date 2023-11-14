@@ -84,14 +84,12 @@ require("lazy").setup({
 		end,
 	},
 
-	-- hop
+	-- flash
 	{
-		"phaazon/hop.nvim",
-		branch = "v2",
-		keys = keys.hop,
-		config = function()
-			require("plugin-config.hop")
-		end,
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {},
+		keys = keys.flash,
 	},
 
 	-- lualine
