@@ -80,4 +80,4 @@ vim.o.showtabline = 2
 --在操作系统和Neovim之间同步剪贴板。
 --如果您希望操作系统剪贴板保持独立，请删除此选项。
 --  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+-- vim.o.clipboard = "unnamedplus"
