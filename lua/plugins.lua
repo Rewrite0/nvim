@@ -15,14 +15,6 @@ require("lazy").setup({
 			vim.cmd([[colorscheme catppuccin-macchiato]])
 		end,
 	},
-	-- {
-	-- 	"folke/tokyonight.nvim",
-	-- 	lazy = false,
-	-- 	priority = 1000,
-	-- 	config = function()
-	-- 		vim.cmd([[colorscheme tokyonight]])
-	-- 	end,
-	-- },
 
 	"nvim-lua/plenary.nvim",
 	"nvim-tree/nvim-web-devicons",
@@ -148,27 +140,23 @@ require("lazy").setup({
 	},
 
 	-- cmp
-	-- source
-	"hrsh7th/cmp-nvim-lsp",
-	"hrsh7th/cmp-buffer",
-	"hrsh7th/cmp-path",
-	"hrsh7th/cmp-cmdline",
-	"saadparwaiz1/cmp_luasnip",
-	-- snip
-	{
-		"L3MON4D3/LuaSnip",
-		dependencies = { "rafamadriz/friendly-snippets" },
-	},
 	-- main
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
+			-- source
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
+			-- "hrsh7th/cmp-path",
+			"FelipeLema/cmp-async-path",
 			"hrsh7th/cmp-cmdline",
 			"saadparwaiz1/cmp_luasnip",
 		},
+	},
+	-- snip
+	{
+		"L3MON4D3/LuaSnip",
+		dependencies = { "rafamadriz/friendly-snippets" },
 	},
 	{
 		"onsails/lspkind.nvim",
