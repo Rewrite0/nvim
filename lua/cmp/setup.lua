@@ -15,10 +15,12 @@ cmp.setup({
 			luasnip.lsp_expand(args.body) -- For `luasnip` users.
 		end,
 	},
+
 	window = {
 		-- completion = cmp.config.window.bordered(),
 		-- documentation = cmp.config.window.bordered(),
 	},
+
 	mapping = cmp.mapping.preset.insert({
 		["<C-n>"] = cmp.mapping.scroll_docs(-4),
 		["<C-u>"] = cmp.mapping.scroll_docs(4),
@@ -65,6 +67,7 @@ cmp.setup({
 			end
 		end, { "i", "s" }),
 	}),
+
 	sources = cmp.config.sources({
 		-- Copilot Source
 		{ name = "copilot", group_index = 2 },
@@ -79,6 +82,7 @@ cmp.setup({
 			},
 		},
 	}),
+
 	sorting = {
 		priority_weight = 2,
 		comparators = {
@@ -98,6 +102,7 @@ cmp.setup({
 			cmp.config.compare.order,
 		},
 	},
+
 	formatting = {
 		format = lspkind.cmp_format({
 			mode = "symbol",

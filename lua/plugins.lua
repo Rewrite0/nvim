@@ -143,6 +143,7 @@ require("lazy").setup({
 	-- main
 	{
 		"hrsh7th/nvim-cmp",
+		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
 			-- source
 			"hrsh7th/cmp-nvim-lsp",
