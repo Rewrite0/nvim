@@ -1,28 +1,3 @@
-local servers = {
-	"lua_ls",
-	"bashls",
-	"pyright",
-	"rust_analyzer",
-	"taplo",
-	"jsonls",
-	"yamlls",
-	"dockerls",
-	-- nix
-	-- "rnix",
-	--markdown
-	"marksman",
-
-	-- web
-	"emmet_language_server",
-	"cssls",
-	"unocss",
-	"html",
-	"tsserver",
-	"volar",
-	"tailwindcss",
-	"astro",
-}
-
 local neoconf = require("neoconf")
 
 local merge_table = require("config.utils").merge_table
@@ -70,7 +45,6 @@ local disable_clash_lsp = function(server_name, default_lsp, fallback_lsp)
 end
 
 return {
-	servers = servers,
 	disable_clash_lsp = disable_clash_lsp,
 	get_config = get_config,
 }

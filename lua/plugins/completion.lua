@@ -13,6 +13,8 @@ return {
 			"L3MON4D3/LuaSnip",
 			-- This tiny plugin adds vscode-like pictograms to neovim built-in lsp
 			"onsails/lspkind.nvim",
+      "zbirenbaum/copilot-cmp",
+      "windwp/nvim-autopairs",
 		},
 		config = function()
 			local lspkind = require("lspkind")
@@ -163,18 +165,6 @@ return {
 				suggestion = {
 					enabled = false,
 				},
-				filetypes = {
-					yaml = false,
-					markdown = false,
-					help = false,
-					gitcommit = false,
-					gitrebase = false,
-					hgcommit = false,
-					svn = false,
-					cvs = false,
-					["."] = false,
-				},
-				copilot_node_command = "node", -- Node.js version must be > 16.x
 			})
 		end,
 	},

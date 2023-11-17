@@ -129,6 +129,7 @@ return {
 		},
 	},
 
+	-- which key
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",

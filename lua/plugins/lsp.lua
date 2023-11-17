@@ -1,15 +1,17 @@
 local lsp = require("config.lsp")
+local langs = require("config.langs")
 local neoconf = require("neoconf")
 
 return {
 	{
 		"williamboman/mason.nvim",
-		event = "VeryLazy",
+		lazy = false,
 		dependencies = {
 			"williamboman/mason-lspconfig.nvim",
 			"neovim/nvim-lspconfig",
 			"mfussenegger/nvim-lint",
 			"rshkarin/mason-nvim-lint",
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
 		},
 		build = ":MasonUpdate",
 		keys = {
@@ -22,8 +24,14 @@ return {
 		config = function()
 			local mason_lspconfig = require("mason-lspconfig")
 			local lspconfig = require("lspconfig")
+			local mason_tool_installer = require("mason-tool-installer")
 
 			require("mason").setup()
+
+			mason_tool_installer.setup({
+				ensure_installed = langs.install_list,
+				auto_update = true,
+			})
 
 			neoconf.setup({
 				local_settings = ".neoconf.json",
@@ -31,7 +39,7 @@ return {
 			})
 
 			mason_lspconfig.setup({
-				ensure_installed = lsp.servers,
+				ensure_installed = langs.servers,
 			})
 
 			mason_lspconfig.setup_handlers({

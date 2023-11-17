@@ -3,11 +3,11 @@ return {
 	name = "catppuccin",
 	priority = 1000,
 	lazy = false,
-	config = function()
+	init = function()
 		-- catppuccin-latte,
 		-- catppuccin-frappe,
 		-- catppuccin-macchiato,
 		-- catppuccin-mocha
-		vim.cmd([[colorscheme catppuccin-macchiato]])
+		vim.cmd.colorscheme("catppuccin-macchiato")
 	end,
 }

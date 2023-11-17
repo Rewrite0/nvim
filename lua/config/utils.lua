@@ -34,4 +34,17 @@ return {
 		local is_terminal = fn.getbufvar(cur_bufnr, "&buftype") == "terminal"
 		cmd(is_terminal and "bd! #" or "silent! confirm bd #")
 	end,
+
+	-- lua table 去重
+	table_unique = function(t)
+		local hash = {}
+		local res = {}
+		for _, v in ipairs(t) do
+			if not hash[v] then
+				hash[v] = true
+				table.insert(res, v)
+			end
+		end
+		return res
+	end,
 }

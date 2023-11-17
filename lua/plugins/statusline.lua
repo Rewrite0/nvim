@@ -4,14 +4,11 @@ return {
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
-			"jonahgoldwastaken/copilot-status.nvim",
 		},
-		lazy = false,
 		config = function()
-			local function ai_status()
-				-- return "ai:" .. vim.fn["codeium#GetStatusString"]()
-				return require("copilot_status").status_string()
-			end
+      local function copilot()
+          return require("copilot_status").status_string()
+      end
 
 			require("lualine").setup({
 				options = {
@@ -28,12 +25,10 @@ return {
 				extensions = { "nvim-tree" },
 				sections = {
 					lualine_x = {
-						{
-							ai_status,
-							cond = function()
-								return require("copilot_status").enabled()
-							end,
-						},
+            {
+              copilot,
+              cond = function() return require("copilot_status").enabled() end,
+            },
 						"filesize",
 						{
 							"fileformat",
@@ -65,7 +60,6 @@ return {
 					warning = "",
 					loading = "",
 				},
-				debug = false,
 			})
 		end,
 	},
