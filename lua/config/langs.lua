@@ -34,6 +34,7 @@ local langs = {
 	typescript = web_tools,
 	javascriptreact = web_tools,
 	typescriptreact = web_tools,
+	vue = web_tools,
 	css = {
 		lint = "stylelint",
 		format = "prettierd",
