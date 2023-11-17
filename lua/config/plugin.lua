@@ -14,3 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({ { import = "plugins" } }, {
 	concurrency = 16,
 })
+
+require("which-key").register({
+	["<leader>l"] = { ":Lazy<CR>", "Open lazy panel" },
+})

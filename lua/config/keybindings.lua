@@ -1,9 +1,6 @@
 local utils = require("config.utils")
 local map = utils.map
-
--- leader key 空格
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+local wk = require("which-key")
 
 -- save
 map("n", "<C-s>", ":w<CR>")
@@ -11,9 +8,6 @@ map("n", "<leader>s", ":w<CR>")
 -- exit
 map("n", "<leader>q", ":q<CR>")
 map("n", "<leader>Q", ":q!<CR>")
-
--- ;进入命令
-map("n", ";", ":")
 
 -- 可视模式缩进
 map("v", "<", "<gv")
@@ -24,10 +18,15 @@ map("v", "J", ":move '>+1<CR>gv-gv")
 map("v", "K", ":move '<-2<CR>gv-gv")
 
 -- 分屏
-map("n", "<leader>sv", ":vsp<CR>") -- 水平分屏
-map("n", "<leader>sh", ":sp<CR>") -- 垂直分屏
-map("n", "<leader>sc", "<C-w>c") -- 关闭当前分屏
-map("n", "<leader>so", "<C-w>o") -- 关闭其他分屏
+wk.register({
+	["<leader>s"] = {
+		name = "split screen",
+		v = { ":vsp<CR>", "vertical split" },
+		h = { ":sp<CR>", "horizontal split" },
+		c = { "<C-w>c", "close current split" },
+		o = { "<C-w>o", "close other split" },
+	},
+})
 
 -- 比例控制
 -- 左右
@@ -48,13 +47,9 @@ map("n", "<C-l>", "<C-w>l")
 -- buffer
 map("n", "<S-h>", ":BufferLineCyclePrev<CR>")
 map("n", "<S-l>", ":BufferLineCycleNext<CR>")
-map("n", "<leader>bp", ":BufferLineTogglePin<CR>")
-map("n", "<leader>bw", ":BufferLinePickClose<CR>")
-map("n", "<leader>w", utils.close_buffer, { desc = "close buffer" })
-
-----------------------------
--- plugins
-----------------------------
-
--- open lazy
-map("n", "<leader>l", ":Lazy<CR>")
+wk.register({
+	["<leader>b"] = { name = "+buffer" },
+	["<leader>bp"] = { ":BufferLineTogglePin<CR>", "Toggle bufferline pin" },
+	["<leader>bw"] = { ":BufferLinePickClose<CR>", "Pick close buffer" },
+	["<leader>w"] = { utils.close_buffer, "Close buffer" },
+})
