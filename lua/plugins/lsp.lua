@@ -130,12 +130,6 @@ return {
 				end,
 				desc = "jump error next",
 			},
-			{
-				"<A-;>",
-				"<cmd>Lspsaga term_toggle<CR>",
-				mode = { "n", "t" },
-				desc = "toggle terminal",
-			},
 		},
 		opts = {},
 	},
