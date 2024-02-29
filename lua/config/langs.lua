@@ -10,7 +10,7 @@ local servers = {
 	"yamlls",
 	"dockerls",
 	-- nix
-	-- "rnix",
+	"nil_ls",
 	--markdown
 	"marksman",
 
