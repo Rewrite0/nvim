@@ -5,10 +5,10 @@ return {
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},
-		config = function()
-      local function copilot()
-          return require("copilot_status").status_string()
-      end
+		init = function()
+			local function copilot()
+				return require("copilot_status").status_string()
+			end
 
 			require("lualine").setup({
 				options = {
@@ -25,10 +25,12 @@ return {
 				extensions = { "nvim-tree" },
 				sections = {
 					lualine_x = {
-            {
-              copilot,
-              cond = function() return require("copilot_status").enabled() end,
-            },
+						{
+							copilot,
+							cond = function()
+								return require("copilot_status").enabled()
+							end,
+						},
 						"filesize",
 						{
 							"fileformat",

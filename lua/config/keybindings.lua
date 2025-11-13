@@ -18,14 +18,12 @@ map("v", "J", ":move '>+1<CR>gv-gv")
 map("v", "K", ":move '<-2<CR>gv-gv")
 
 -- 分屏
-wk.register({
-	["<leader>s"] = {
-		name = "split screen",
-		v = { ":vsp<CR>", "vertical split" },
-		h = { ":sp<CR>", "horizontal split" },
-		c = { "<C-w>c", "close current split" },
-		o = { "<C-w>o", "close other split" },
-	},
+wk.add({
+	{ "<leader>s", group = "split screen" },
+	{ "<leader>v", ":vsp<CR>", desc = "vertical split" },
+	{ "<leader>h", ":sp<CR>", desc = "horizontal split" },
+	{ "<leader>c", "<C-w>c", desc = "close current split" },
+	{ "<leader>o", "<C-w>o", desc = "close other split" },
 })
 
 -- 比例控制
@@ -47,9 +45,11 @@ map("n", "<C-l>", "<C-w>l")
 -- buffer
 map("n", "<S-h>", ":BufferLineCyclePrev<CR>")
 map("n", "<S-l>", ":BufferLineCycleNext<CR>")
-wk.register({
-	["<leader>b"] = { name = "+buffer" },
-	["<leader>bp"] = { ":BufferLineTogglePin<CR>", "Toggle bufferline pin" },
-	["<leader>bw"] = { ":BufferLinePickClose<CR>", "Pick close buffer" },
-	["<leader>w"] = { utils.close_buffer, "Close buffer" },
+wk.add({
+	{ "<leader>b", group = "+buffer" },
+	{ "<leader>bp", ":BufferLineTogglePin<CR>", desc = "Toggle bufferline pin" },
+	{ "<leader>bw", ":BufferLinePickClose<CR>", desc = "Pick close buffer" },
+})
+wk.add({
+	{ "<leader>w", utils.close_buffer, desc = "Close buffer" },
 })

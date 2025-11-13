@@ -1,19 +1,18 @@
-local lsp = require("config.lsp")
 local langs = require("config.langs")
-local neoconf = require("neoconf")
 
 return {
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		lazy = false,
 		dependencies = {
-			"williamboman/mason-lspconfig.nvim",
+			{
+				"mason-org/mason-lspconfig.nvim",
+				opts = {
+					ensure_installed = langs,
+				},
+			},
 			"neovim/nvim-lspconfig",
-			"mfussenegger/nvim-lint",
-			"rshkarin/mason-nvim-lint",
-			"WhoIsSethDaniel/mason-tool-installer.nvim",
 		},
-		build = ":MasonUpdate",
 		keys = {
 			{
 				"<leader>m",
@@ -21,43 +20,7 @@ return {
 				desc = "open Mason",
 			},
 		},
-		config = function()
-			local mason_lspconfig = require("mason-lspconfig")
-			local lspconfig = require("lspconfig")
-			local mason_tool_installer = require("mason-tool-installer")
-
-			require("mason").setup()
-
-			mason_tool_installer.setup({
-				ensure_installed = langs.install_list,
-				auto_update = true,
-			})
-
-			neoconf.setup({
-				local_settings = ".neoconf.json",
-				global_settings = "neoconf.json",
-			})
-
-			mason_lspconfig.setup({
-				ensure_installed = langs.servers,
-			})
-
-			mason_lspconfig.setup_handlers({
-				function(server_name)
-					if lsp.disable_clash_lsp(server_name, "tsserver", "volar") then
-						return
-					end
-
-					if lsp.disable_clash_lsp(server_name, "unocss", "tailwindcss") then
-						return
-					end
-
-					-- setup lspconfig
-					local config = lsp.get_config(server_name)
-					lspconfig[server_name].setup(config)
-				end,
-			})
-		end,
+		opts = {},
 	},
 
 	-- lspsaga
@@ -140,20 +103,18 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		-- enabled = not values.use_noice,
 		dependencies = { "neovim/nvim-lspconfig" },
-		config = function()
-			require("fidget").setup({
-				progress = {
-					poll_rate = 60,
+		opts = {
+			progress = {
+				poll_rate = 60,
+			},
+			notification = {
+				poll_rate = 60,
+				override_vim_notify = true,
+				window = {
+					max_width = 120,
 				},
-				notification = {
-					poll_rate = 60,
-					override_vim_notify = true,
-					window = {
-						max_width = 120,
-					},
-				},
-			})
-		end,
+			},
+		},
 	},
 
 	-- trouble

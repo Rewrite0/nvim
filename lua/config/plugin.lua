@@ -15,6 +15,6 @@ require("lazy").setup({ { import = "plugins" } }, {
 	concurrency = 16,
 })
 
-require("which-key").register({
-	["<leader>l"] = { ":Lazy<CR>", "Open lazy panel" },
+require("which-key").add({
+	{ "<leader>l", ":Lazy<CR>", desc = "Open lazy panel" },
 })

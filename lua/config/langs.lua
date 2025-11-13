@@ -19,8 +19,8 @@ local servers = {
 	"cssls",
 	"unocss",
 	"html",
-	"tsserver",
-	"volar",
+	"vtsls",
+	"vue-language-server",
 	"tailwindcss",
 }
 

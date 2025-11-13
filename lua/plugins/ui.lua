@@ -11,11 +11,10 @@ return {
 				desc = "toggle nvim tree",
 			},
 		},
-		config = function()
+		opts = {},
+		init = function()
 			vim.g.loaded_netrw = 1
 			vim.g.loaded_netrwPlugin = 1
-
-			require("nvim-tree").setup()
 
 			-- 开启目录时打开 tree
 			local function open_nvim_tree(data)
@@ -43,9 +42,7 @@ return {
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
 		lazy = false,
-		config = function()
-			require("bufferline").setup()
-		end,
+		opts = {},
 	},
 
 	-- 现代化折叠
