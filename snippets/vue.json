@@ -1,0 +1,16 @@
+{
+  "import": {
+    "prefix": "vts",
+    "body": [
+      "<script lang='ts' setup>",
+      "</script>",
+      "",
+      "<template>",
+      "</template>",
+      "",
+      "<style lang='scss' scoped>",
+      "</style>"
+    ],
+    "description": "vue3 ts setup init"
+  }
+}

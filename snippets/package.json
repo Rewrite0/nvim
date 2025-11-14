@@ -17,6 +17,12 @@
           "vue"
         ],
         "path": "./web.json"
+      },
+      {
+        "language": [
+          "vue"
+        ],
+        "path": "./vue.json"
       }
     ]
   }

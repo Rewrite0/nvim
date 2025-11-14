@@ -10,7 +10,7 @@ local servers = {
 	"yamlls",
 	"dockerls",
 	-- nix
-	"nil_ls",
+	-- "nil_ls",
 	--markdown
 	"marksman",
 
@@ -20,7 +20,7 @@ local servers = {
 	"unocss",
 	"html",
 	"vtsls",
-	"vue-language-server",
+	"vue_ls",
 	"tailwindcss",
 }
 
