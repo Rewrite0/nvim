@@ -35,6 +35,7 @@ nvim
 | [folke/flash.nvim](https://github.com/folke/flash.nvim) | 快速文本和 Treesitter 结构跳转 |
 | [folke/trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断、符号、LSP 和 quickfix 列表 |
 | [echasnovski/mini.surround](https://github.com/echasnovski/mini.surround) | 添加、删除和替换文本环绕符号 |
+| [numToStr/Comment.nvim](https://github.com/numToStr/Comment.nvim) | 切换当前行或选区的行注释 |
 | [nvim-tree/nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | 文件和界面图标 |
 | [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | 基于 Neovim 原生 API 配置 LSP |
 | [mason-org/mason.nvim](https://github.com/mason-org/mason.nvim) | 安装和管理 LSP 服务 |
@@ -44,7 +45,7 @@ nvim
 | [L3MON4D3/LuaSnip](https://github.com/L3MON4D3/LuaSnip) | 代码片段引擎 |
 | [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | 通用代码片段集合 |
 | [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | 语法高亮与缩进 |
-| [windwp/nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) | 自动闭合和同步重命名 HTML/组件标签 |
+| [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs) | 自动补全括号、引号等成对符号 |
 | [stevearc/conform.nvim](https://github.com/stevearc/conform.nvim) | 保存时和手动格式化 |
 | [mfussenegger/nvim-lint](https://github.com/mfussenegger/nvim-lint) | 保存、进入 Buffer 和离开插入模式时 lint |
 | [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Git 变更块、预览、暂存和还原 |
@@ -86,6 +87,7 @@ Mason 自动安装 `lua_ls`、`denols`、`ts_ls`、`vue_ls`、Astro LSP，以及
 | `<leader>bd` | 选择并关闭 Buffer 标签 |
 | `<C-h/j/k/l>` | 聚焦相邻窗口 |
 | `<Esc>` | 清除搜索高亮 |
+| `<C-/>` | 切换当前行或选区注释 |
 | `s` / `S` | Flash 快速跳转 / Treesitter 结构跳转 |
 | `gsa` / `gsd` / `gsr` | 添加 / 删除 / 替换文本环绕 |
 
