@@ -8,7 +8,13 @@ return {
       "rafamadriz/friendly-snippets",
     },
     opts = {
-      keymap = { preset = "default" },
+      keymap = {
+        preset = "enter",
+        ["<C-j>"] = { "select_next", "fallback" },
+        ["<C-k>"] = { "select_prev", "fallback" },
+        ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+      },
       cmdline = {
         keymap = { preset = "cmdline" },
         completion = {
@@ -29,7 +35,9 @@ return {
     },
     -- 加载第三方和自定义代码片段，然后初始化补全引擎。
     config = function(_, opts)
-      require("luasnip.loaders.from_vscode").lazy_load()
+      local vscode_loader = require("luasnip.loaders.from_vscode")
+      vscode_loader.lazy_load()
+      vscode_loader.lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets" })
       require("config.snippets")
       require("blink.cmp").setup(opts)
     end,
