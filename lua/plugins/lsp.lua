@@ -18,6 +18,13 @@ return {
     },
   },
   {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "mason-org/mason.nvim" },
+    opts = {
+      ensure_installed = languages.mason_tools(),
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "saghen/blink.cmp" },

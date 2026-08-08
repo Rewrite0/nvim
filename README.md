@@ -11,8 +11,6 @@
 - `tree-sitter-cli >= 0.26.1`（安装 Treesitter parser）
 - 可选：`lazygit`（终端 Git 界面）
 
-格式化和 lint 命令需要在项目或系统 `PATH` 中可用，例如 Node 项目的 `prettier`、`eslint`，以及 Deno 项目的 `deno`。
-
 ## 安装
 
 备份已有配置后，将本仓库放到 Neovim 配置目录：
@@ -22,7 +20,7 @@ git clone https://github.com/rewrite0/nvim ~/.config/nvim
 nvim
 ```
 
-首次启动时会自动安装 `lazy.nvim` 和声明的插件。使用 `:Lazy` 查看插件状态，使用 `:Mason` 查看 LSP 工具。
+首次启动时会自动安装 `lazy.nvim`、声明的插件和语言工具。使用 `:Lazy` 查看插件状态，使用 `:Mason` 查看 LSP、formatter 和 linter。
 
 ## 插件说明
 
@@ -41,6 +39,7 @@ nvim
 | [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | 基于 Neovim 原生 API 配置 LSP |
 | [mason-org/mason.nvim](https://github.com/mason-org/mason.nvim) | 安装和管理 LSP 服务 |
 | [mason-org/mason-lspconfig.nvim](https://github.com/mason-org/mason-lspconfig.nvim) | 将 Mason 与 LSP 配置连接起来 |
+| [WhoIsSethDaniel/mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim) | 根据语言注册表自动安装 formatter 和 linter |
 | [saghen/blink.cmp](https://github.com/Saghen/blink.cmp) | 插入模式与命令行实时补全 |
 | [L3MON4D3/LuaSnip](https://github.com/L3MON4D3/LuaSnip) | 代码片段引擎 |
 | [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | 通用代码片段集合 |
@@ -60,7 +59,7 @@ nvim
 
 | 语言/文件类型 | LSP | Formatter | Linter |
 | --- | --- | --- | --- |
-| Lua | `lua_ls` | 手动格式化时回退到 LSP | 无 |
+| Lua | `lua_ls` | `stylua` | 无 |
 | JavaScript / TypeScript / JSX / TSX（Node） | `ts_ls` | `prettier` | `eslint` |
 | JavaScript / TypeScript / JSX / TSX（Deno） | `denols` | `deno fmt` | `deno lint` |
 | Vue（Node） | `vue_ls` + `ts_ls` Vue 插件 | `prettier` | `eslint` |
@@ -70,7 +69,7 @@ nvim
 
 Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；Deno 项目通过 `deno.json` 或 `deno.jsonc` 识别。Deno 优先级更高，同一路径下不会同时启动 `denols` 和 `ts_ls`。不属于 Node 或 Deno 项目的文件不会自动选择对应 formatter/linter。
 
-Mason 自动安装 `lua_ls`、`denols`、`ts_ls`、`vue_ls` 和 Astro LSP。Mason 不负责本配置中的 `prettier`、`eslint` 或 `deno` 命令。
+Mason 自动安装 `lua_ls`、`denols`、`ts_ls`、`vue_ls`、Astro LSP，以及 `stylua`、`prettier` 和 `deno`。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
 
 ## 常用快捷键
 
@@ -146,6 +145,7 @@ init.lua                      # 配置入口与 lazy.nvim 引导
 lua/config/                   # 选项、快捷键、自动命令和语言声明
 lua/plugins/                  # 按功能拆分的插件规格
 lua/utils/language_registry.lua # 语言注册表校验与派生逻辑
+stylua.toml                   # StyLua 格式化规则
 lazy-lock.json                # 插件版本锁文件
 ```
 

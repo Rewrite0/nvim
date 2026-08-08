@@ -67,6 +67,11 @@ local languages = {
     treesitter = { "lua" },
     toolchain = false,
     projects = {},
+    tools = {
+      mason = { "stylua" },
+      formatters = { lua = { "stylua" } },
+      linters = {},
+    },
     lsp = {
       name = "lua_ls",
       mason = true,
@@ -94,12 +99,16 @@ local languages = {
     treesitter = { "javascript", "typescript", "tsx" },
     lsp = false,
     toolchain = false,
+    tools = false,
     projects = {
       deno = {
         priority = 100,
         root = project.deno_root,
-        formatters = deno_formatters,
-        linters = deno_linters,
+        tools = {
+          mason = { "deno" },
+          formatters = deno_formatters,
+          linters = deno_linters,
+        },
         lsp = {
           name = "denols",
           mason = true,
@@ -118,8 +127,11 @@ local languages = {
       node = {
         priority = 50,
         root = project.node_root,
-        formatters = node_formatters,
-        linters = node_linters,
+        tools = {
+          mason = { "prettier" },
+          formatters = node_formatters,
+          linters = node_linters,
+        },
         lsp = {
           name = "ts_ls",
           mason = true,
@@ -148,6 +160,7 @@ local languages = {
     treesitter = { "vue" },
     toolchain = "typescript",
     projects = {},
+    tools = false,
     lsp = {
       name = "vue_ls",
       mason = true,
@@ -164,6 +177,7 @@ local languages = {
     treesitter = { "astro" },
     toolchain = "typescript",
     projects = {},
+    tools = false,
     lsp = {
       name = "astro",
       mason = true,
@@ -181,6 +195,7 @@ local languages = {
     lsp = false,
     toolchain = "typescript",
     projects = {},
+    tools = false,
   },
 
   yaml = {
@@ -189,6 +204,7 @@ local languages = {
     lsp = false,
     toolchain = "typescript",
     projects = {},
+    tools = false,
   },
 
   markdown = {
@@ -197,6 +213,7 @@ local languages = {
     lsp = false,
     toolchain = "typescript",
     projects = {},
+    tools = false,
   },
 }
 

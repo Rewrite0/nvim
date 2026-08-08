@@ -1,6 +1,11 @@
 ---@alias ProjectRootDetector fun(bufnr: integer): string?
 ---@alias ToolMap table<string, string[]>
 
+---@class LanguageToolsDefinition
+---@field mason string[]
+---@field formatters ToolMap
+---@field linters ToolMap
+
 ---@class LanguageLspDefinition
 ---@field name string
 ---@field mason boolean|string
@@ -11,13 +16,13 @@
 ---@field priority integer
 ---@field root ProjectRootDetector
 ---@field lsp LanguageLspDefinition|false
----@field formatters ToolMap
----@field linters ToolMap
+---@field tools LanguageToolsDefinition
 
 ---@class LanguageDefinitionSpec
 ---@field filetypes string[]
 ---@field treesitter string[]
 ---@field lsp LanguageLspDefinition|false
+---@field tools LanguageToolsDefinition|false
 ---@field toolchain string|false
 ---@field projects table<string, LanguageProjectDefinition>
 
@@ -64,7 +69,7 @@ end
 ---校验按 filetype 声明的工具映射。
 ---@param path string
 ---@param tools ToolMap
-local function validate_tools(path, tools)
+local function validate_tool_map(path, tools)
   assert(type(tools) == "table", path .. " 必须是 table")
   for filetype, names in pairs(tools) do
     assert(type(filetype) == "string", path .. " 的键必须是 filetype")
@@ -72,17 +77,34 @@ local function validate_tools(path, tools)
   end
 end
 
+---校验 formatter、linter 及其 Mason 包定义。
+---@param path string
+---@param tools LanguageToolsDefinition|false
+local function validate_tools(path, tools)
+  if tools == false then
+    return
+  end
+  assert(type(tools) == "table", path .. " 必须是工具定义或 false")
+  for _, field in ipairs({ "mason", "formatters", "linters" }) do
+    assert(tools[field] ~= nil, ("工具配置 %q 缺少字段 %q"):format(path, field))
+  end
+  validate_string_list(path .. ".mason", tools.mason)
+  validate_tool_map(path .. ".formatters", tools.formatters)
+  validate_tool_map(path .. ".linters", tools.linters)
+end
+
 ---校验单个语言定义及其项目配置。
 ---@param name string
 ---@param definition LanguageDefinitionSpec
 local function validate_language(name, definition)
-  for _, field in ipairs({ "filetypes", "treesitter", "lsp", "toolchain", "projects" }) do
+  for _, field in ipairs({ "filetypes", "treesitter", "lsp", "tools", "toolchain", "projects" }) do
     assert(definition[field] ~= nil, ("语言 %q 缺少字段 %q"):format(name, field))
   end
 
   validate_string_list(name .. ".filetypes", definition.filetypes)
   validate_string_list(name .. ".treesitter", definition.treesitter)
   validate_lsp(name .. ".lsp", definition.lsp)
+  validate_tools(name .. ".tools", definition.tools)
   assert(
     definition.toolchain == false or type(definition.toolchain) == "string",
     name .. ".toolchain 必须是语言名称或 false"
@@ -91,14 +113,13 @@ local function validate_language(name, definition)
 
   for project_name, project_definition in pairs(definition.projects) do
     local path = name .. ".projects." .. project_name
-    for _, field in ipairs({ "priority", "root", "lsp", "formatters", "linters" }) do
+    for _, field in ipairs({ "priority", "root", "lsp", "tools" }) do
       assert(project_definition[field] ~= nil, ("项目配置 %q 缺少字段 %q"):format(path, field))
     end
     assert(type(project_definition.priority) == "number", path .. ".priority 必须是数字")
     assert(type(project_definition.root) == "function", path .. ".root 必须是函数")
     validate_lsp(path .. ".lsp", project_definition.lsp)
-    validate_tools(path .. ".formatters", project_definition.formatters)
-    validate_tools(path .. ".linters", project_definition.linters)
+    validate_tools(path .. ".tools", project_definition.tools)
   end
 end
 
@@ -111,29 +132,32 @@ local function index_definitions()
       local toolchain = M.definitions[definition.toolchain]
       assert(toolchain, ("语言 %q 引用了未知工具链 %q"):format(language_name, definition.toolchain))
       assert(next(toolchain.projects), ("工具链 %q 没有项目配置"):format(definition.toolchain))
-      assert(not next(definition.projects), ("语言 %q 不能同时声明 toolchain 和 projects"):format(language_name))
+      assert(
+        not next(definition.projects),
+        ("语言 %q 不能同时声明 toolchain 和 projects"):format(language_name)
+      )
     end
 
     for _, filetype in ipairs(definition.filetypes) do
-      assert(not filetype_languages[filetype], ("filetype %q 同时属于 %q 和 %q"):format(
-        filetype,
-        filetype_languages[filetype] or "",
-        language_name
-      ))
+      assert(
+        not filetype_languages[filetype],
+        ("filetype %q 同时属于 %q 和 %q"):format(filetype, filetype_languages[filetype] or "", language_name)
+      )
       filetype_languages[filetype] = language_name
     end
   end
 
   for language_name, language in pairs(M.definitions) do
     for project_name, definition in pairs(language.projects) do
-      for kind, tools in pairs({ formatters = definition.formatters, linters = definition.linters }) do
+      for kind, tools in pairs({
+        formatters = definition.tools.formatters,
+        linters = definition.tools.linters,
+      }) do
         for filetype in pairs(tools) do
-          assert(filetype_languages[filetype], ("%s.projects.%s.%s 使用了未知 filetype %q"):format(
-            language_name,
-            project_name,
-            kind,
-            filetype
-          ))
+          assert(
+            filetype_languages[filetype],
+            ("%s.projects.%s.%s 使用了未知 filetype %q"):format(language_name, project_name, kind, filetype)
+          )
         end
       end
     end
@@ -197,7 +221,8 @@ function M.formatters_for(bufnr)
     return {}
   end
   local definition = M.resolve_project(language, bufnr)
-  return definition and definition.formatters[vim.bo[bufnr].filetype] or {}
+  local tools = definition and definition.tools or language.tools
+  return tools and tools.formatters[vim.bo[bufnr].filetype] or {}
 end
 
 ---返回当前缓冲区应使用的 linter 列表。
@@ -209,7 +234,37 @@ function M.linters_for(bufnr)
     return {}
   end
   local definition = M.resolve_project(language, bufnr)
-  return definition and definition.linters[vim.bo[bufnr].filetype] or {}
+  local tools = definition and definition.tools or language.tools
+  return tools and tools.linters[vim.bo[bufnr].filetype] or {}
+end
+
+---汇总并去重需要 Mason 安装的 formatter 和 linter。
+---@return string[]
+function M.mason_tools()
+  local seen, tools = {}, {}
+
+  ---加入工具定义中尚未记录的 Mason 包。
+  ---@param definition LanguageToolsDefinition|false
+  local function add(definition)
+    if not definition then
+      return
+    end
+    for _, name in ipairs(definition.mason) do
+      if not seen[name] then
+        seen[name] = true
+        tools[#tools + 1] = name
+      end
+    end
+  end
+
+  for _, language in pairs(M.definitions) do
+    add(language.tools)
+    for _, definition in pairs(language.projects) do
+      add(definition.tools)
+    end
+  end
+  table.sort(tools)
+  return tools
 end
 
 ---汇总并去重所有 Treesitter parser。
