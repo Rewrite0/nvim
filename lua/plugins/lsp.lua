@@ -1,3 +1,5 @@
+local languages = require("config.languages")
+
 return {
   {
     "mason-org/mason.nvim",
@@ -11,7 +13,7 @@ return {
       "neovim/nvim-lspconfig",
     },
     opts = {
-      ensure_installed = { "lua_ls", "ts_ls", "denols", "astro" },
+      ensure_installed = languages.mason_servers(),
       automatic_enable = false,
     },
   },
@@ -24,7 +26,14 @@ return {
       vim.lsp.config("*", {
         capabilities = require("blink.cmp").get_lsp_capabilities(),
       })
-      vim.lsp.enable({ "lua_ls", "ts_ls", "denols", "astro" })
+
+      local servers = {}
+      for name, config in pairs(languages.lsp_configs()) do
+        vim.lsp.config(name, config)
+        servers[#servers + 1] = name
+      end
+      table.sort(servers)
+      vim.lsp.enable(servers)
     end,
   },
 }

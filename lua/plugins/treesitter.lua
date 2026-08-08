@@ -6,18 +6,7 @@ return {
     lazy = false,
     -- 安装目标解析器，并为各文件类型启用高亮和缩进。
     config = function()
-      local parsers = {
-        "lua",
-        "typescript",
-        "javascript",
-        "tsx",
-        "vue",
-        "astro",
-        "json",
-        "yaml",
-        "markdown",
-        "markdown_inline",
-      }
+      local parsers = require("config.languages").treesitter_parsers()
 
       local treesitter = require("nvim-treesitter")
       treesitter.setup({})

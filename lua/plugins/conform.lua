@@ -5,17 +5,15 @@ return {
     cmd = { "ConformInfo" },
     -- 根据当前项目类型生成 Conform 配置。
     opts = function()
-      local project = require("config.project")
+      local languages = require("config.languages")
 
       ---选择当前缓冲区使用的格式化器。
       ---@param bufnr integer
       ---@return table?
       local function format_options(bufnr)
-        if project.is_deno(bufnr) then
-          return { formatters = { "deno_fmt" }, timeout_ms = 2000 }
-        end
-        if project.is_node(bufnr) then
-          return { formatters = { "prettier" }, timeout_ms = 2000 }
+        local formatters = languages.formatters_for(bufnr)
+        if #formatters > 0 then
+          return { formatters = formatters, timeout_ms = 2000 }
         end
       end
 
