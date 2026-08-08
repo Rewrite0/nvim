@@ -9,6 +9,15 @@ return {
     },
     opts = {
       keymap = { preset = "default" },
+      cmdline = {
+        keymap = { preset = "cmdline" },
+        completion = {
+          menu = {
+            auto_show = true,
+          },
+        },
+        sources = { "buffer", "cmdline" },
+      },
       appearance = { nerd_font_variant = "mono" },
       completion = {
         documentation = { auto_show = true, auto_show_delay_ms = 300 },
