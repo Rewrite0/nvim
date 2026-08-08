@@ -5,8 +5,12 @@ map("n", "<C-h>", "<C-w><C-h>", { desc = "聚焦左侧窗口" })
 map("n", "<C-j>", "<C-w><C-j>", { desc = "聚焦下方窗口" })
 map("n", "<C-k>", "<C-w><C-k>", { desc = "聚焦上方窗口" })
 map("n", "<C-l>", "<C-w><C-l>", { desc = "聚焦右侧窗口" })
-map("n", "<leader>w", "<cmd>write<CR>", { desc = "保存文件" })
+map("n", "<leader>w", "<cmd>confirm bdelete<CR>", { desc = "关闭当前标签" })
+map("n", "<leader>s", "<cmd>write<CR>", { desc = "保存文件" })
 map("n", "<leader>q", "<cmd>confirm quit<CR>", { desc = "关闭窗口" })
+map("n", "<S-h>", "<cmd>BufferLineCyclePrev<CR>", { desc = "上一个标签" })
+map("n", "<S-l>", "<cmd>BufferLineCycleNext<CR>", { desc = "下一个标签" })
+map("n", "<leader>bd", "<cmd>BufferLinePickClose<CR>", { desc = "关闭选中标签" })
 
 -- 使用 Snacks Picker 查找文件。
 map("n", "<leader>ff", function()
