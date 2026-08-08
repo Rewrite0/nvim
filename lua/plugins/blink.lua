@@ -16,8 +16,14 @@ return {
         ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
       },
       cmdline = {
-        keymap = { preset = "cmdline" },
+        keymap = {
+          preset = "cmdline",
+          ["<CR>"] = { "accept_and_enter", "fallback" },
+        },
         completion = {
+          list = {
+            selection = { preselect = false, auto_insert = true },
+          },
           menu = {
             auto_show = true,
           },
