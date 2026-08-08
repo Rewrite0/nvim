@@ -60,6 +60,7 @@ return {
         { "<leader>f", group = "查找" },
         { "<leader>g", group = "Git" },
         { "<leader>c", group = "代码" },
+        { "<leader>p", group = "会话" },
       },
     },
   },
