@@ -32,6 +32,10 @@ end, { desc = "查找缓冲区" })
 map("n", "<leader>fr", function()
   Snacks.picker.recent()
 end, { desc = "最近文件" })
+-- 查看当前 Neovim 会话中的通知历史。
+map("n", "<leader>fn", function()
+  Snacks.picker.notifications()
+end, { desc = "通知历史" })
 -- 打开 Snacks 文件浏览器。
 map("n", "<leader>e", function()
   Snacks.explorer()

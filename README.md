@@ -107,6 +107,7 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | `<leader>fg` | 全文搜索 |
 | `<leader>fb` | 查找 Buffer |
 | `<leader>fr` | 最近文件 |
+| `<leader>fn` | 查看通知历史 |
 | `<leader>e` | 文件浏览器 |
 
 ### LSP 与代码质量
