@@ -81,7 +81,7 @@ Mason 自动安装 `lua_ls`、`denols`、`ts_ls`、`vue_ls`、Astro LSP，以及
 | 快捷键 | 功能 |
 | --- | --- |
 | `<leader>s` | 保存文件 |
-| `<leader>w` | 关闭当前 Buffer 标签 |
+| `<leader>w` | 关闭当前 Buffer 标签并保持分屏布局 |
 | `<leader>q` | 关闭当前窗口 |
 | `<leader>m` | 打开 Mason |
 | `<leader>l` | 打开 Lazy |

@@ -28,6 +28,7 @@ return {
     lazy = false,
     opts = {
       bigfile = {},
+      bufdelete = {},
       dim = {},
       dashboard = {},
       explorer = {},
