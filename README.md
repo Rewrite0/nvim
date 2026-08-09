@@ -10,6 +10,7 @@
 - `ripgrep`（Snacks 全文搜索）
 - `tree-sitter-cli >= 0.26.1`（安装 Treesitter parser）
 - Node.js 与 npm（Mason 安装 Node 生态 LSP 和 `pyright`）
+- 可选：GitHub Copilot 账号（AI 幽灵文本补全）
 - Go 工具链（Go 格式化和 `gopls` 安装）
 - Rustup 管理的 Rust 工具链，并安装 `rustfmt` 与 `clippy` 组件
 - 可选：`lazygit`（终端 Git 界面）
@@ -26,6 +27,8 @@ nvim
 ```
 
 首次启动时会自动安装 `lazy.nvim`、声明的插件和语言工具。使用 `:Lazy` 查看插件状态，使用 `:Mason` 查看 LSP、formatter 和 linter。
+
+使用 AI 幽灵文本补全前，执行 `:Copilot auth` 登录 GitHub Copilot。
 
 ## 插件说明
 
@@ -47,6 +50,7 @@ nvim
 | [mason-org/mason-lspconfig.nvim](https://github.com/mason-org/mason-lspconfig.nvim) | 将 Mason 与 LSP 配置连接起来 |
 | [WhoIsSethDaniel/mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim) | 根据语言注册表自动安装 formatter 和 linter |
 | [saghen/blink.cmp](https://github.com/Saghen/blink.cmp) | 插入模式与命令行实时补全 |
+| [zbirenbaum/copilot.lua](https://github.com/zbirenbaum/copilot.lua) | GitHub Copilot 幽灵文本补全 |
 | [L3MON4D3/LuaSnip](https://github.com/L3MON4D3/LuaSnip) | 代码片段引擎 |
 | [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | 通用代码片段集合 |
 | [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | 语法高亮与缩进 |
@@ -129,6 +133,12 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | `<leader>xl` | 打开当前 Buffer LSP 列表 |
 | `<leader>xq` / `<leader>xL` | 打开 quickfix / location list |
 | `[r` / `]r` | 上一个 / 下一个当前符号的 LSP 文档高亮引用 |
+
+### AI 补全
+
+| 快捷键 | 功能 |
+| --- | --- |
+| `<A-l>` | 接受 GitHub Copilot 幽灵文本建议 |
 
 ### Snacks 界面与开关
 
