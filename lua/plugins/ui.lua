@@ -4,22 +4,9 @@ return {
     name = "catppuccin",
     priority = 1000,
     lazy = false,
-    opts = {
-      flavour = "mocha",
-      integrations = {
-        blink_cmp = true,
-        gitsigns = true,
-        mason = true,
-        native_lsp = { enabled = true },
-        snacks = { enabled = true },
-        treesitter = true,
-        which_key = true,
-      },
-    },
     -- 应用 Catppuccin 配置并切换到对应配色。
-    config = function(_, opts)
-      require("catppuccin").setup(opts)
-      vim.cmd.colorscheme("catppuccin")
+    config = function()
+      vim.cmd.colorscheme("catppuccin-macchiato")
     end,
   },
   {
