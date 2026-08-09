@@ -56,10 +56,14 @@ return {
     opts = {
       preset = "modern",
       spec = {
+        { "<leader>b", group = "Buffer" },
         { "<leader>f", group = "查找" },
         { "<leader>g", group = "Git" },
         { "<leader>c", group = "代码" },
         { "<leader>p", group = "会话" },
+        { "<leader>t", group = "终端" },
+        { "<leader>u", group = "开关" },
+        { "<leader>x", group = "列表" },
       },
     },
   },
