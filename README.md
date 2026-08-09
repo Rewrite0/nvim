@@ -130,9 +130,9 @@ Mason 自动安装 `lua_ls`、`denols`、`ts_ls`、`vue_ls`、Astro LSP，以及
 | `<leader>.` | 打开或隐藏项目关联的临时缓冲区 |
 | `<leader>S` | 选择临时缓冲区 |
 | `<leader>z` | 切换 Zen 专注模式 |
-| `<leader>ud` | 切换诊断显示 |
-| `<leader>uh` | 切换 LSP Inlay Hints |
-| `<leader>us` | 切换拼写检查 |
+| `<leader>ud` | 切换诊断显示（带状态图标） |
+| `<leader>uh` | 切换 LSP Inlay Hints（带状态图标） |
+| `<leader>us` | 切换拼写检查（带状态图标） |
 | `<leader>tt` | 切换 Snacks 终端 |
 | `<leader>tf` | 切换 Snacks 浮动终端 |
 

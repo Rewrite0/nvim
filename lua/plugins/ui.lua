@@ -49,12 +49,18 @@ return {
       scroll = {},
       zen = {},
     },
+    config = function(_, opts)
+      require("snacks").setup(opts)
+      Snacks.toggle.diagnostics():map("<leader>ud")
+      Snacks.toggle.inlay_hints():map("<leader>uh")
+      Snacks.toggle.option("spell", { name = "拼写检查" }):map("<leader>us")
+    end,
   },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      preset = "modern",
+      preset = "helix",
       spec = {
         { "<leader>b", group = "Buffer" },
         { "<leader>f", group = "查找" },
