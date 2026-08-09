@@ -75,3 +75,9 @@ end, { desc = "在浏览器打开 Git 文件" })
 map("n", "<leader>tt", function()
   Snacks.terminal()
 end, { desc = "切换终端" })
+map("n", "<leader>tf", function()
+  Snacks.terminal(nil, {
+    count = 0,
+    win = { position = "float" },
+  })
+end, { desc = "切换浮动终端" })

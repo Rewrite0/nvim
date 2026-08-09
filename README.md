@@ -134,6 +134,7 @@ Mason 自动安装 `lua_ls`、`denols`、`ts_ls`、`vue_ls`、Astro LSP，以及
 | `<leader>uh` | 切换 LSP Inlay Hints |
 | `<leader>us` | 切换拼写检查 |
 | `<leader>tt` | 切换 Snacks 终端 |
+| `<leader>tf` | 切换 Snacks 浮动终端 |
 
 ### 会话
 
