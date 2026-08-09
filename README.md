@@ -10,6 +10,8 @@
 - `ripgrep`（Snacks 全文搜索）
 - `tree-sitter-cli >= 0.26.1`（安装 Treesitter parser）
 - 可选：`lazygit`（终端 Git 界面）
+- 可选：ImageMagick（Snacks 图片查看器转换非 PNG 格式）
+- 可选：支持 Kitty Graphics Protocol 的 Kitty、Ghostty 或 WezTerm（Snacks 行内图片渲染）
 
 ## 安装
 
@@ -27,10 +29,10 @@ nvim
 | 插件 | 用途 |
 | --- | --- |
 | [folke/lazy.nvim](https://github.com/folke/lazy.nvim) | 插件安装、锁定和懒加载 |
-| [catppuccin/nvim](https://github.com/catppuccin/nvim) | Catppuccin Mocha 配色 |
+| [catppuccin/nvim](https://github.com/catppuccin/nvim) | Catppuccin Macchiato 配色 |
 | [nvim-lualine/lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | 全局状态栏 |
 | [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | Buffer 标签栏和 LSP 诊断标记 |
-| [folke/snacks.nvim](https://github.com/folke/snacks.nvim) | 启动页、文件浏览、Picker、通知、终端和文本辅助功能 |
+| [folke/snacks.nvim](https://github.com/folke/snacks.nvim) | 启动页、文件浏览、Picker、通知、终端、专注模式、临时缓冲区及文本辅助功能 |
 | [folke/which-key.nvim](https://github.com/folke/which-key.nvim) | Leader 快捷键提示 |
 | [folke/flash.nvim](https://github.com/folke/flash.nvim) | 快速文本和 Treesitter 结构跳转 |
 | [folke/trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断、符号、LSP 和 quickfix 列表 |
@@ -119,6 +121,19 @@ Mason 自动安装 `lua_ls`、`denols`、`ts_ls`、`vue_ls`、Astro LSP，以及
 | `<leader>xs` | 打开当前 Buffer 符号列表 |
 | `<leader>xl` | 打开当前 Buffer LSP 列表 |
 | `<leader>xq` / `<leader>xL` | 打开 quickfix / location list |
+| `[r` / `]r` | 上一个 / 下一个当前符号的 LSP 文档高亮引用 |
+
+### Snacks 界面与开关
+
+| 快捷键 | 功能 |
+| --- | --- |
+| `<leader>.` | 打开或隐藏项目关联的临时缓冲区 |
+| `<leader>S` | 选择临时缓冲区 |
+| `<leader>z` | 切换 Zen 专注模式 |
+| `<leader>ud` | 切换诊断显示 |
+| `<leader>uh` | 切换 LSP Inlay Hints |
+| `<leader>us` | 切换拼写检查 |
+| `<leader>tt` | 切换 Snacks 终端 |
 
 ### 会话
 
@@ -139,6 +154,7 @@ Mason 自动安装 `lua_ls`、`denols`、`ts_ls`、`vue_ls`、Astro LSP，以及
 | `<leader>gp` | 预览当前变更块 |
 | `<leader>gg` | 打开 Lazygit |
 | `<leader>gb` | 查看当前行 Git 追溯 |
+| `<leader>go` | 在浏览器打开当前 Git 文件/行 |
 
 ## 目录结构
 
