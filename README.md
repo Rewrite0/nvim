@@ -9,6 +9,9 @@
 - Nerd Font（用于图标显示）
 - `ripgrep`（Snacks 全文搜索）
 - `tree-sitter-cli >= 0.26.1`（安装 Treesitter parser）
+- Node.js 与 npm（Mason 安装 Node 生态 LSP 和 `pyright`）
+- Go 工具链（Go 格式化和 `gopls` 安装）
+- Rustup 管理的 Rust 工具链，并安装 `rustfmt` 与 `clippy` 组件
 - 可选：`lazygit`（终端 Git 界面）
 - 可选：ImageMagick（Snacks 图片查看器转换非 PNG 格式）
 - 可选：支持 Kitty Graphics Protocol 的 Kitty、Ghostty 或 WezTerm（Snacks 行内图片渲染）
@@ -63,6 +66,9 @@ nvim
 | 语言/文件类型 | LSP | Formatter | Linter |
 | --- | --- | --- | --- |
 | Lua | `lua_ls` | `stylua` | 无 |
+| Go | `gopls` | `gofmt` | `golangci-lint` |
+| Rust | `rust_analyzer` | `rustfmt` | `clippy`（通过 `rust-analyzer`） |
+| Python | `pyright` | Ruff | Ruff |
 | JavaScript / TypeScript / JSX / TSX（Node） | `ts_ls` | `prettier` | `eslint` |
 | JavaScript / TypeScript / JSX / TSX（Deno） | `denols` | `deno fmt` | `deno lint` |
 | Vue（Node） | `vue_ls` + `ts_ls` Vue 插件 | `prettier` | `eslint` |
@@ -72,7 +78,7 @@ nvim
 
 Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；Deno 项目通过 `deno.json` 或 `deno.jsonc` 识别。Deno 优先级更高，同一路径下不会同时启动 `denols` 和 `ts_ls`。不属于 Node 或 Deno 项目的文件不会自动选择对应 formatter/linter。
 
-Mason 自动安装 `lua_ls`、`denols`、`ts_ls`、`vue_ls`、Astro LSP，以及 `stylua`、`prettier` 和 `deno`。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
+Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`、`ts_ls`、`vue_ls`、Astro LSP，以及 `stylua`、`golangci-lint`、Ruff、`prettier` 和 `deno`。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
 
 ## 常用快捷键
 

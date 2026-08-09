@@ -94,6 +94,71 @@ local languages = {
     },
   },
 
+  go = {
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    treesitter = { "go", "gomod", "gosum", "gowork" },
+    toolchain = false,
+    projects = {},
+    tools = {
+      mason = { "golangci-lint" },
+      formatters = { go = { "gofmt" } },
+      linters = { go = { "golangcilint" } },
+    },
+    lsp = {
+      name = "gopls",
+      mason = true,
+      root = false,
+      config = {
+        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+      },
+    },
+  },
+
+  rust = {
+    filetypes = { "rust" },
+    treesitter = { "rust" },
+    toolchain = false,
+    projects = {},
+    tools = {
+      mason = {},
+      formatters = { rust = { "rustfmt" } },
+      linters = {},
+    },
+    lsp = {
+      name = "rust_analyzer",
+      mason = true,
+      root = false,
+      config = {
+        filetypes = { "rust" },
+        settings = {
+          ["rust-analyzer"] = {
+            check = { command = "clippy" },
+          },
+        },
+      },
+    },
+  },
+
+  python = {
+    filetypes = { "python" },
+    treesitter = { "python" },
+    toolchain = false,
+    projects = {},
+    tools = {
+      mason = { "ruff" },
+      formatters = { python = { "ruff_format" } },
+      linters = { python = { "ruff" } },
+    },
+    lsp = {
+      name = "pyright",
+      mason = true,
+      root = false,
+      config = {
+        filetypes = { "python" },
+      },
+    },
+  },
+
   typescript = {
     filetypes = javascript_filetypes,
     treesitter = { "javascript", "typescript", "tsx" },
