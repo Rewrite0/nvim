@@ -10,16 +10,13 @@ return {
 
       local treesitter = require("nvim-treesitter")
       treesitter.setup({})
-      if vim.fn.executable("tree-sitter") == 1 then
-        -- Windows 上 tree-sitter 默认尝试使用 cl.exe；优先复用用户已设置的
-        -- CC，否则自动回退到 PATH 中可用的 clang 或 gcc。
-        if vim.env.CC == nil or vim.env.CC == "" then
-          for _, compiler in ipairs({ "clang", "gcc" }) do
-            if vim.fn.executable(compiler) == 1 then
-              vim.env.CC = vim.fn.exepath(compiler)
-              break
-            end
-          end
+      local has_tree_sitter = vim.fn.executable("tree-sitter") == 1
+      local is_windows = vim.fn.has("win32") == 1
+
+      if has_tree_sitter then
+        -- Windows 交由 tree-sitter 自动发现 Visual Studio Build Tools 的 MSVC 环境。
+        if is_windows then
+          vim.env.CC = nil
         end
         treesitter.install(parsers)
       else

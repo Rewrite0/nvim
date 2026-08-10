@@ -9,7 +9,7 @@
 - Nerd Font（用于图标显示）
 - `ripgrep`（Snacks 全文搜索）
 - `tree-sitter-cli >= 0.26.1`（安装 Treesitter parser）
-- C 编译器（Windows 推荐 LLVM/Clang；也支持 GCC 或 Visual C++）
+- C 编译器（Windows 必须使用 Visual Studio C++ Build Tools 提供的 MSVC `cl.exe`）
 - Node.js 与 npm（Mason 安装 Node 生态 LSP 和 `pyright`）
 - 可选：GitHub Copilot 账号（AI 幽灵文本补全）
 - Go 工具链（Go 格式化和 `gopls` 安装）
@@ -79,6 +79,7 @@ nvim
 | Vue（Node） | `vue_ls` + `ts_ls` Vue 插件 | `prettier` | `eslint` |
 | Astro（Node） | `astro` | `prettier` | `eslint` |
 | Vue / Astro（Deno） | 无专用 LSP | `deno fmt` | 无 |
+| CSS / SCSS / Less | 无 | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无 |
 | JSON / JSONC / YAML / Markdown | 无 | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无 |
 
 Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；Deno 项目通过 `deno.json` 或 `deno.jsonc` 识别。Deno 优先级更高，同一路径下不会同时启动 `denols` 和 `ts_ls`。不属于 Node 或 Deno 项目的文件不会自动选择对应 formatter/linter。
@@ -202,8 +203,10 @@ git diff --check        # 检查空白错误
 
 ### Treesitter 编译器
 
-`nvim-treesitter` 安装 parser 时需要 C 编译器。配置会保留已有的 `CC` 环境变量；未设置时按 `clang`、`gcc` 的顺序自动选择，二者都不可用时才使用 Windows 默认的 `cl.exe`。
+`nvim-treesitter` 安装 parser 时需要 C 编译器。Windows 必须安装 Visual Studio Build Tools，并选择“使用 C++ 的桌面开发”工作负载，确保 MSVC C++ 工具集和 Windows SDK 均已安装。配置会清除 Windows 下可能指向 Clang/GCC 的 `CC`，由 `tree-sitter` 自动发现并使用 MSVC 编译环境。
 
-Windows 用户可通过 Scoop 安装 LLVM（`scoop install llvm`），也可以使用已有的 GCC；如果两者都未安装，则需要 Visual Studio C++ Build Tools 提供 `cl.exe`。
+`fatal error: 'stdlib.h' file not found` 并非 Windows 专属错误；它表示当前编译器找不到 C 标准库头文件。在 Windows 上出现该错误时，请检查上述 Build Tools 组件是否完整安装，然后执行 `:TSInstall css scss` 重试安装。
+
+Windows 用户可在 Visual Studio Installer 中安装或修改 Visual Studio Build Tools，勾选“使用 C++ 的桌面开发”工作负载后补齐所需组件。
 
 启动 Neovim 后可执行 `:lua require("nvim-treesitter").install({ "astro" })` 重新安装 Astro parser。

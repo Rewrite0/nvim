@@ -19,6 +19,9 @@ local deno_formatters = {
   jsonc = { "deno_fmt" },
   markdown = { "deno_fmt" },
   yaml = { "deno_fmt" },
+  css = { "deno_fmt" },
+  scss = { "deno_fmt" },
+  less = { "deno_fmt" },
 }
 
 local deno_linters = {
@@ -32,6 +35,9 @@ local deno_linters = {
   jsonc = {},
   markdown = {},
   yaml = {},
+  css = {},
+  scss = {},
+  less = {},
 }
 
 local node_formatters = {
@@ -45,6 +51,9 @@ local node_formatters = {
   jsonc = { "prettier" },
   markdown = { "prettier" },
   yaml = { "prettier" },
+  css = { "prettier" },
+  scss = { "prettier" },
+  less = { "prettier" },
 }
 
 local node_linters = {
@@ -58,6 +67,9 @@ local node_linters = {
   jsonc = {},
   markdown = {},
   yaml = {},
+  css = {},
+  scss = {},
+  less = {},
 }
 
 ---@type table<string, LanguageDefinitionSpec>
@@ -252,6 +264,15 @@ local languages = {
         single_file_support = false,
       },
     },
+  },
+
+  styles = {
+    filetypes = { "css", "scss", "less" },
+    treesitter = { "css", "scss" },
+    lsp = false,
+    toolchain = "typescript",
+    projects = {},
+    tools = false,
   },
 
   json = {
