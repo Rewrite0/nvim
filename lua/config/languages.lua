@@ -19,6 +19,7 @@ local emmet_filetypes = {
 }
 
 local deno_formatters = {
+  html = { "deno_fmt" },
   javascript = { "deno_fmt" },
   javascriptreact = { "deno_fmt" },
   typescript = { "deno_fmt" },
@@ -51,6 +52,7 @@ local deno_linters = {
 }
 
 local node_formatters = {
+  html = { "prettier" },
   javascript = { "prettier" },
   javascriptreact = { "prettier" },
   typescript = { "prettier" },

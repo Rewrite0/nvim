@@ -78,7 +78,7 @@ nvim
 | Go | `gopls` | `gofmt` | `golangci-lint` |
 | Rust | `rust_analyzer` | `rustfmt` | `clippy`（通过 `rust-analyzer`） |
 | Python | `pyright` | Ruff | Ruff |
-| HTML | `html` + `emmet_language_server` | 无 | 无 |
+| HTML | `html` + `emmet_language_server` | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无 |
 | JavaScript / TypeScript / JSX / TSX（Node） | `ts_ls` + Emmet | `prettier` | `eslint` |
 | JavaScript / TypeScript / JSX / TSX（Deno） | `denols` + Emmet | `deno fmt` | `deno lint` |
 | Vue（Node） | `vue_ls` + `ts_ls` Vue 插件 + Emmet | `prettier` | `eslint` |
