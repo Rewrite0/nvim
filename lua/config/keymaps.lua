@@ -77,3 +77,9 @@ map("n", "<leader>tf", function()
     win = { position = "float" },
   })
 end, { desc = "切换浮动终端" })
+map("n", "<leader>tr", function()
+  Snacks.terminal(nil, {
+    count = -1,
+    win = { position = "right" },
+  })
+end, { desc = "切换右侧终端" })

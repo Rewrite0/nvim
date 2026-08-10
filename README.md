@@ -166,6 +166,7 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | `<leader>us` | 切换拼写检查（带状态图标） |
 | `<leader>tt` | 切换 Snacks 终端 |
 | `<leader>tf` | 切换 Snacks 浮动终端 |
+| `<leader>tr` | 切换 Snacks 右侧终端 |
 
 Snacks 终端窗口可以使用 Neovim 的窗口命令继续布局：`<C-w>v` 垂直拆分、`<C-w>s` 水平拆分。拆分窗口会复用同一个终端进程；要创建独立终端，请使用数字前缀，例如 `2<leader>tt`。
 
