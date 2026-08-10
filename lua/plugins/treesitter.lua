@@ -11,6 +11,16 @@ return {
       local treesitter = require("nvim-treesitter")
       treesitter.setup({})
       if vim.fn.executable("tree-sitter") == 1 then
+        -- Windows 上 tree-sitter 默认尝试使用 cl.exe；优先复用用户已设置的
+        -- CC，否则自动回退到 PATH 中可用的 clang 或 gcc。
+        if vim.env.CC == nil or vim.env.CC == "" then
+          for _, compiler in ipairs({ "clang", "gcc" }) do
+            if vim.fn.executable(compiler) == 1 then
+              vim.env.CC = vim.fn.exepath(compiler)
+              break
+            end
+          end
+        end
         treesitter.install(parsers)
       else
         -- 等待启动流程结束后提示缺少的系统依赖。

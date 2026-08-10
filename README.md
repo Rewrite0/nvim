@@ -9,6 +9,7 @@
 - Nerd Font（用于图标显示）
 - `ripgrep`（Snacks 全文搜索）
 - `tree-sitter-cli >= 0.26.1`（安装 Treesitter parser）
+- C 编译器（Windows 推荐 LLVM/Clang；也支持 GCC 或 Visual C++）
 - Node.js 与 npm（Mason 安装 Node 生态 LSP 和 `pyright`）
 - 可选：GitHub Copilot 账号（AI 幽灵文本补全）
 - Go 工具链（Go 格式化和 `gopls` 安装）
@@ -198,3 +199,11 @@ git diff --check        # 检查空白错误
 ```
 
 进入 Neovim 后可使用 `:checkhealth`、`:LspInfo`、`:ConformInfo`、`:Mason` 和 `:Lazy` 查看具体状态。
+
+### Treesitter 编译器
+
+`nvim-treesitter` 安装 parser 时需要 C 编译器。配置会保留已有的 `CC` 环境变量；未设置时按 `clang`、`gcc` 的顺序自动选择，二者都不可用时才使用 Windows 默认的 `cl.exe`。
+
+Windows 用户可通过 Scoop 安装 LLVM（`scoop install llvm`），也可以使用已有的 GCC；如果两者都未安装，则需要 Visual Studio C++ Build Tools 提供 `cl.exe`。
+
+启动 Neovim 后可执行 `:lua require("nvim-treesitter").install({ "astro" })` 重新安装 Astro parser。
