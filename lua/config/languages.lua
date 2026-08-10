@@ -188,20 +188,30 @@ local languages = {
     projects = {},
     tools = false,
     lsp = {
-      name = "emmet_language_server",
-      mason = true,
-      root = false,
-      config = {
-        filetypes = emmet_filetypes,
-        single_file_support = true,
-        init_options = {
-          includeLanguages = {
-            javascript = "javascriptreact",
-            typescript = "typescriptreact",
+      {
+        name = "html",
+        mason = true,
+        root = false,
+        config = {
+          filetypes = { "html" },
+        },
+      },
+      {
+        name = "emmet_language_server",
+        mason = true,
+        root = false,
+        config = {
+          filetypes = emmet_filetypes,
+          single_file_support = true,
+          init_options = {
+            includeLanguages = {
+              javascript = "javascriptreact",
+              typescript = "typescriptreact",
+            },
+            showAbbreviationSuggestions = true,
+            showExpandedAbbreviation = "always",
+            showSuggestionsAsSnippets = true,
           },
-          showAbbreviationSuggestions = true,
-          showExpandedAbbreviation = "always",
-          showSuggestionsAsSnippets = true,
         },
       },
     },
@@ -305,7 +315,14 @@ local languages = {
   styles = {
     filetypes = { "css", "scss", "less" },
     treesitter = { "css", "scss" },
-    lsp = false,
+    lsp = {
+      name = "cssls",
+      mason = true,
+      root = false,
+      config = {
+        filetypes = { "css", "scss", "less" },
+      },
+    },
     toolchain = "typescript",
     projects = {},
     tools = false,

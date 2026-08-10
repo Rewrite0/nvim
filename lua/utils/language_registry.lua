@@ -12,16 +12,18 @@
 ---@field root ProjectRootDetector|false
 ---@field config vim.lsp.Config
 
+---@alias LanguageLspDefinitions LanguageLspDefinition|LanguageLspDefinition[]|false
+
 ---@class LanguageProjectDefinition
 ---@field priority integer
 ---@field root ProjectRootDetector
----@field lsp LanguageLspDefinition|false
+---@field lsp LanguageLspDefinitions
 ---@field tools LanguageToolsDefinition
 
 ---@class LanguageDefinitionSpec
 ---@field filetypes string[]
 ---@field treesitter string[]
----@field lsp LanguageLspDefinition|false
+---@field lsp LanguageLspDefinitions
 ---@field tools LanguageToolsDefinition|false
 ---@field toolchain string|false
 ---@field projects table<string, LanguageProjectDefinition>
@@ -48,9 +50,16 @@ end
 
 ---校验 LSP 定义。
 ---@param path string
----@param definition LanguageLspDefinition|false
+---@param definition LanguageLspDefinitions
 local function validate_lsp(path, definition)
   if definition == false then
+    return
+  end
+  if vim.islist(definition) then
+    assert(#definition > 0, path .. " 不能为空数组")
+    for index, item in ipairs(definition) do
+      validate_lsp(("%s[%d]"):format(path, index), item)
+    end
     return
   end
   assert(type(definition) == "table", path .. " 必须是 LSP 定义或 false")
@@ -314,14 +323,26 @@ function M.lsp_configs()
     configs[definition.name] = resolve_lsp_config(definition, fallback_root)
   end
 
-  for _, language in pairs(M.definitions) do
-    if language.lsp then
-      add(language.lsp)
+  ---加入一个或多个 LSP 定义。
+  ---@param definitions LanguageLspDefinitions
+  ---@param fallback_root? ProjectRootDetector
+  local function add_all(definitions, fallback_root)
+    if not definitions then
+      return
     end
-    for _, definition in pairs(language.projects) do
-      if definition.lsp then
-        add(definition.lsp, definition.root)
+    if vim.islist(definitions) then
+      for _, definition in ipairs(definitions) do
+        add(definition, fallback_root)
       end
+    else
+      add(definitions, fallback_root)
+    end
+  end
+
+  for _, language in pairs(M.definitions) do
+    add_all(language.lsp)
+    for _, definition in pairs(language.projects) do
+      add_all(definition.lsp, definition.root)
     end
   end
   return configs
@@ -333,9 +354,19 @@ function M.mason_servers()
   local seen, servers = {}, {}
 
   ---加入一个尚未记录的 Mason LSP 包。
-  ---@param definition LanguageLspDefinition|false
-  local function add(definition)
-    if definition and definition.mason then
+  ---@param definitions LanguageLspDefinitions
+  local function add(definitions)
+    if not definitions then
+      return
+    end
+    if vim.islist(definitions) then
+      for _, definition in ipairs(definitions) do
+        add(definition)
+      end
+      return
+    end
+    local definition = definitions
+    if definition.mason then
       local name = type(definition.mason) == "string" and definition.mason or definition.name
       if not seen[name] then
         seen[name] = true
