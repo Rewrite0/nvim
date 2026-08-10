@@ -27,3 +27,5 @@ require("lazy").setup("plugins", {
   checker = { enabled = true, notify = false },
   install = { colorscheme = { "catppuccin", "habamax" } },
 })
+
+require("config.reload")

@@ -99,6 +99,7 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | `<leader>q` | 关闭当前窗口 |
 | `<leader>m` | 打开 Mason |
 | `<leader>l` | 打开 Lazy |
+| `:Reload` | 重载用户配置 |
 | `<S-h>` / `<S-l>` | 上一个 / 下一个 Buffer 标签 |
 | `<leader>bd` | 选择并关闭 Buffer 标签 |
 | `<C-h/j/k/l>` | 聚焦相邻窗口 |
