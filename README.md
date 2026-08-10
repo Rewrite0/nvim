@@ -75,17 +75,18 @@ nvim
 | Go | `gopls` | `gofmt` | `golangci-lint` |
 | Rust | `rust_analyzer` | `rustfmt` | `clippy`（通过 `rust-analyzer`） |
 | Python | `pyright` | Ruff | Ruff |
-| JavaScript / TypeScript / JSX / TSX（Node） | `ts_ls` | `prettier` | `eslint` |
-| JavaScript / TypeScript / JSX / TSX（Deno） | `denols` | `deno fmt` | `deno lint` |
-| Vue（Node） | `vue_ls` + `ts_ls` Vue 插件 | `prettier` | `eslint` |
-| Astro（Node） | `astro` | `prettier` | `eslint` |
-| Vue / Astro（Deno） | 无专用 LSP | `deno fmt` | 无 |
+| HTML | `emmet_language_server` | 无 | 无 |
+| JavaScript / TypeScript / JSX / TSX（Node） | `ts_ls` + Emmet | `prettier` | `eslint` |
+| JavaScript / TypeScript / JSX / TSX（Deno） | `denols` + Emmet | `deno fmt` | `deno lint` |
+| Vue（Node） | `vue_ls` + `ts_ls` Vue 插件 + Emmet | `prettier` | `eslint` |
+| Astro（Node） | `astro` + Emmet | `prettier` | `eslint` |
+| Vue / Astro（Deno） | Emmet（无框架专用 LSP） | `deno fmt` | 无 |
 | CSS / SCSS / Less | 无 | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无 |
 | JSON / JSONC / YAML / Markdown | 无 | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无 |
 
 Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；Deno 项目通过 `deno.json` 或 `deno.jsonc` 识别。Deno 优先级更高，同一路径下不会同时启动 `denols` 和 `ts_ls`。不属于 Node 或 Deno 项目的文件不会自动选择对应 formatter/linter。
 
-Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`、`ts_ls`、`vue_ls`、Astro LSP，以及 `stylua`、`golangci-lint`、Ruff、`prettier` 和 `deno`。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
+Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`、`ts_ls`、`vue_ls`、Astro LSP、Emmet Language Server，以及 `stylua`、`golangci-lint`、Ruff、`prettier` 和 `deno`。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
 
 ## 常用快捷键
 

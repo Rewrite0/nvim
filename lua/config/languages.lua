@@ -8,6 +8,16 @@ local javascript_filetypes = {
   "typescriptreact",
 }
 
+local emmet_filetypes = {
+  "html",
+  "javascript",
+  "javascriptreact",
+  "typescript",
+  "typescriptreact",
+  "vue",
+  "astro",
+}
+
 local deno_formatters = {
   javascript = { "deno_fmt" },
   javascriptreact = { "deno_fmt" },
@@ -167,6 +177,32 @@ local languages = {
       root = false,
       config = {
         filetypes = { "python" },
+      },
+    },
+  },
+
+  html = {
+    filetypes = { "html" },
+    treesitter = { "html" },
+    toolchain = "typescript",
+    projects = {},
+    tools = false,
+    lsp = {
+      name = "emmet_language_server",
+      mason = true,
+      root = false,
+      config = {
+        filetypes = emmet_filetypes,
+        single_file_support = true,
+        init_options = {
+          includeLanguages = {
+            javascript = "javascriptreact",
+            typescript = "typescriptreact",
+          },
+          showAbbreviationSuggestions = true,
+          showExpandedAbbreviation = "always",
+          showSuggestionsAsSnippets = true,
+        },
       },
     },
   },
