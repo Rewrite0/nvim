@@ -1,10 +1,48 @@
 local map = vim.keymap.set
 
+---沿指定方向移动当前窗口相邻的分隔线。
+---@param direction "left"|"right"|"up"|"down"
+---@param amount integer
+local function move_window_separator(direction, amount)
+  local current = vim.api.nvim_get_current_win()
+  local neighbors = {
+    left = vim.fn.win_getid(vim.fn.winnr("h")),
+    right = vim.fn.win_getid(vim.fn.winnr("l")),
+    up = vim.fn.win_getid(vim.fn.winnr("k")),
+    down = vim.fn.win_getid(vim.fn.winnr("j")),
+  }
+
+  if direction == "left" then
+    vim.fn.win_move_separator(neighbors.left ~= current and neighbors.left or current, -amount)
+  elseif direction == "right" then
+    local target = neighbors.right ~= current and current or neighbors.left
+    vim.fn.win_move_separator(target, amount)
+  elseif direction == "up" then
+    vim.fn.win_move_statusline(neighbors.up ~= current and neighbors.up or current, -amount)
+  else
+    local target = neighbors.down ~= current and current or neighbors.up
+    vim.fn.win_move_statusline(target, amount)
+  end
+end
+
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 map("n", "<C-h>", "<C-w><C-h>", { desc = "聚焦左侧窗口" })
 map("n", "<C-j>", "<C-w><C-j>", { desc = "聚焦下方窗口" })
 map("n", "<C-k>", "<C-w><C-k>", { desc = "聚焦上方窗口" })
 map("n", "<C-l>", "<C-w><C-l>", { desc = "聚焦右侧窗口" })
+for lhs, spec in pairs({
+  ["<Left>"] = { direction = "left", label = "左" },
+  ["<Right>"] = { direction = "right", label = "右" },
+  ["<Up>"] = { direction = "up", label = "上" },
+  ["<Down>"] = { direction = "down", label = "下" },
+}) do
+  map("n", lhs, function()
+    move_window_separator(spec.direction, 5)
+  end, { desc = "向" .. spec.label .. "移动窗口分隔线" })
+  map("n", "<C-" .. lhs:sub(2), function()
+    move_window_separator(spec.direction, 1)
+  end, { desc = "向" .. spec.label .. "微调窗口分隔线" })
+end
 map("n", "<leader>w", function()
   Snacks.bufdelete()
 end, { desc = "关闭当前标签" })

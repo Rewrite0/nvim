@@ -102,6 +102,8 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | `<S-h>` / `<S-l>` | 上一个 / 下一个 Buffer 标签 |
 | `<leader>bd` | 选择并关闭 Buffer 标签 |
 | `<C-h/j/k/l>` | 聚焦相邻窗口 |
+| `<方向键>` | 沿箭头方向移动窗口分隔线（每次 5 行/列） |
+| `<C-方向键>` | 沿箭头方向微调窗口分隔线（每次 1 行/列） |
 | `<Esc>` | 清除搜索高亮 |
 | `<C-/>` | 切换当前行或选区注释 |
 | `s` / `S` | Flash 快速跳转 / Treesitter 结构跳转 |
