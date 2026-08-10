@@ -7,6 +7,7 @@
 - Neovim 0.11 或更高版本
 - Git
 - Nerd Font（用于图标显示）
+- 可选：Neovide；建议安装 `Maple Mono NF CN`，并可安装 `Source Code Pro`、`Fira Code` 作为字体回退
 - `ripgrep`（Snacks 全文搜索）
 - `tree-sitter-cli >= 0.26.1`（安装 Treesitter parser）
 - C 编译器（Windows 必须使用 Visual Studio C++ Build Tools 提供的 MSVC `cl.exe`）
@@ -30,6 +31,8 @@ nvim
 首次启动时会自动安装 `lazy.nvim`、声明的插件和语言工具。使用 `:Lazy` 查看插件状态，使用 `:Mason` 查看 LSP、formatter 和 linter。
 
 使用 AI 幽灵文本补全前，执行 `:Copilot auth` 登录 GitHub Copilot。
+
+使用 Neovide 启动时，界面字体依次使用 `Maple Mono NF CN`、`Source Code Pro`、`Fira Code` 和系统 `monospace`。终端版 Neovim 不会修改终端字体。
 
 ## 插件说明
 

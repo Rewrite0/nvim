@@ -22,6 +22,10 @@ opt.confirm = true
 opt.termguicolors = true
 opt.completeopt = { "menu", "menuone", "noselect" }
 
+if vim.g.neovide then
+  vim.o.guifont = "Maple Mono NF CN,Source Code Pro,Fira Code,monospace"
+end
+
 opt.expandtab = true
 opt.shiftwidth = 2
 opt.tabstop = 2
