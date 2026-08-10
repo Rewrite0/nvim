@@ -55,6 +55,7 @@ nvim
 | [L3MON4D3/LuaSnip](https://github.com/L3MON4D3/LuaSnip) | 代码片段引擎 |
 | [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | 通用代码片段集合 |
 | [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | 语法高亮与缩进 |
+| [kevinhwang91/nvim-ufo](https://github.com/kevinhwang91/nvim-ufo) | 基于 Treesitter 的异步代码折叠与折叠预览 |
 | [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs) | 自动补全括号、引号等成对符号 |
 | [stevearc/conform.nvim](https://github.com/stevearc/conform.nvim) | 保存时和手动格式化 |
 | [mfussenegger/nvim-lint](https://github.com/mfussenegger/nvim-lint) | 保存、进入 Buffer 和离开插入模式时 lint |
@@ -124,7 +125,7 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | --- | --- |
 | `gd` / `gD` | 跳转到定义 / 声明 |
 | `gr` | 查找引用 |
-| `K` | 悬浮文档 |
+| `K` | 预览光标下的折叠内容；无折叠时显示悬浮文档 |
 | `<leader>cr` | 重命名符号 |
 | `<leader>ca` | 代码操作 |
 | `[d` / `]d` | 上一个 / 下一个诊断 |
@@ -141,6 +142,17 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | 快捷键 | 功能 |
 | --- | --- |
 | `<A-l>` | 接受 GitHub Copilot 幽灵文本建议 |
+
+### 代码折叠
+
+折叠范围优先由 Treesitter 提供，无法获得 Treesitter 折叠范围时回退到缩进。打开文件时默认展开全部折叠；收起后在折叠文本末尾显示隐藏的行数。
+
+| 快捷键 | 功能 |
+| --- | --- |
+| `zc` / `zo` / `za` | 收起 / 展开 / 切换光标所在折叠 |
+| `zm` / `zr` | 在整个窗口收起 / 展开一层折叠；数字前缀指定调整层数，例如 `2zm` |
+| `zM` / `zR` | 收起 / 展开全部折叠 |
+| `K` | 预览光标下的折叠内容；无折叠时显示 LSP 悬浮文档 |
 
 ### Snacks 界面与开关
 

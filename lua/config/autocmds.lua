@@ -25,7 +25,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("gd", vim.lsp.buf.definition, "跳转到定义")
     map("gr", vim.lsp.buf.references, "查找引用")
     map("gD", vim.lsp.buf.declaration, "跳转到声明")
-    map("K", vim.lsp.buf.hover, "悬浮文档")
     map("<leader>cr", vim.lsp.buf.rename, "重命名")
     map("<leader>ca", vim.lsp.buf.code_action, "代码操作")
     -- 跳转到上一个诊断并显示详情。
