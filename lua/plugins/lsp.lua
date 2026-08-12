@@ -43,6 +43,9 @@ return {
       table.sort(servers)
       vim.lsp.enable(servers)
 
+      if vim.fn.exists(":LspRestart") == 2 then
+        vim.api.nvim_del_user_command("LspRestart")
+      end
       vim.api.nvim_create_user_command("LspRestart", function(command)
         local names = {}
         if command.args ~= "" then
@@ -50,7 +53,7 @@ return {
         else
           local seen = {}
           for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
-            if not seen[client.name] then
+            if vim.lsp.is_enabled(client.name) and not seen[client.name] then
               seen[client.name] = true
               names[#names + 1] = client.name
             end
@@ -63,9 +66,9 @@ return {
           return
         end
 
-        vim.lsp.enable(names, false)
-        vim.lsp.enable(names)
-        vim.notify("已重启 LSP: " .. table.concat(names, ", "))
+        require("utils.lsp").restart(names, function()
+          vim.notify("已重启 LSP: " .. table.concat(names, ", "))
+        end)
       end, {
         nargs = "?",
         desc = "重启指定 LSP，未指定时重启当前 Buffer 的所有 LSP",

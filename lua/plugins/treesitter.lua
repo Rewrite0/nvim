@@ -28,7 +28,9 @@ return {
           )
         end)
       end
+      local group = vim.api.nvim_create_augroup("project_treesitter", { clear = true })
       vim.api.nvim_create_autocmd("FileType", {
+        group = group,
         desc = "启用 Treesitter 高亮和缩进",
         -- 为当前缓冲区启动 Treesitter，并设置其缩进表达式。
         callback = function(event)

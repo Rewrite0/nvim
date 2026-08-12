@@ -102,7 +102,7 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | `<leader>q` | 关闭当前窗口 |
 | `<leader>m` | 打开 Mason |
 | `<leader>l` | 打开 Lazy |
-| `:Reload` | 重载用户配置 |
+| `:Reload` | 重载基础配置和插件规格，重新配置已加载插件，并重启当前 Buffer 的 LSP |
 | `<S-h>` / `<S-l>` | 上一个 / 下一个 Buffer 标签 |
 | `<leader>bd` | 选择并关闭 Buffer 标签 |
 | `<C-h/j/k/l>` | 聚焦相邻窗口 |
@@ -145,6 +145,8 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | `<leader>xl` | 打开当前 Buffer LSP 列表 |
 | `<leader>xq` / `<leader>xL` | 打开 quickfix / location list |
 | `[r` / `]r` | 上一个 / 下一个当前符号的 LSP 文档高亮引用 |
+
+`:Reload` 适用于选项、快捷键、自动命令、语言注册表和多数插件配置的小幅修改。以下情况仍需重启 Neovim：修改 `init.lua` 中 lazy.nvim 自身的引导或初始化、安装或删除插件、变更插件的加载时机或依赖关系，以及第三方插件不支持重复执行 `setup()` 的配置变更。
 
 ### AI 补全
 
