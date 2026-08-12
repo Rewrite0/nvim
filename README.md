@@ -171,6 +171,7 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | `<leader>z` | 切换 Zen 专注模式 |
 | `<leader>ud` | 切换诊断显示（带状态图标） |
 | `<leader>uh` | 切换 LSP Inlay Hints（带状态图标） |
+| `<leader>uf` | 临时切换保存时格式化（不影响手动格式化） |
 | `<leader>us` | 切换拼写检查（带状态图标） |
 | `<leader>tt` | 切换 Snacks 终端 |
 | `<leader>tf` | 切换 Snacks 浮动终端 |

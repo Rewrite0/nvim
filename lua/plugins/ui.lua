@@ -51,8 +51,15 @@ return {
     },
     config = function(_, opts)
       require("snacks").setup(opts)
+      local format = require("config.format")
+
       Snacks.toggle.diagnostics():map("<leader>ud")
       Snacks.toggle.inlay_hints():map("<leader>uh")
+      Snacks.toggle.new({
+        name = "保存时格式化",
+        get = format.is_enabled,
+        set = format.set_enabled,
+      }):map("<leader>uf")
       Snacks.toggle.option("spell", { name = "拼写检查" }):map("<leader>us")
     end,
   },
