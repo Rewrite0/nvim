@@ -139,6 +139,7 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | `[d` / `]d` | 上一个 / 下一个诊断 |
 | `<leader>cf` | 格式化当前 Buffer 或选区 |
 | `<leader>cl` | 手动运行当前项目的 linter |
+| `:LspRestart [LSP 名称]` | 重启指定 LSP；省略名称时重启当前 Buffer 的所有 LSP |
 | `<leader>xx` / `<leader>xX` | 打开全部 / 当前 Buffer 诊断 |
 | `<leader>xs` | 打开当前 Buffer 符号列表 |
 | `<leader>xl` | 打开当前 Buffer LSP 列表 |
