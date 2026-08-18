@@ -34,6 +34,8 @@ nvim
 
 使用 Neovide 启动时，界面字体依次使用 `Maple Mono NF CN`、`Source Code Pro`、`Fira Code` 和系统 `monospace`。终端版 Neovim 不会修改终端字体。
 
+Windows 下 Neovim 的默认 shell 配置为 PowerShell：优先使用 PowerShell 7 的 `pwsh`，未安装时回退到系统自带的 `powershell.exe`。该设置同时应用于 `:terminal`、Snacks 终端和 `:!` 外部命令。
+
 ## 插件说明
 
 | 插件 | 用途 |
