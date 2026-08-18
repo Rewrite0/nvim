@@ -216,6 +216,18 @@ local languages = {
           },
         },
       },
+      {
+        name = "tailwindcss",
+        mason = true,
+        root = project.tailwind_root,
+        config = {},
+      },
+      {
+        name = "unocss",
+        mason = true,
+        root = false,
+        config = {},
+      },
     },
   },
 

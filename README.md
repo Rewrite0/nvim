@@ -91,7 +91,9 @@ Windows 下 Neovim 的默认 shell 配置为 PowerShell：优先使用 PowerShel
 
 Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；Deno 项目通过 `deno.json` 或 `deno.jsonc` 识别。Deno 优先级更高，同一路径下不会同时启动 `denols` 和 `ts_ls`。不属于 Node 或 Deno 项目的文件不会自动选择对应 formatter/linter。
 
-Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`、`ts_ls`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server，以及 `stylua`、`golangci-lint`、Ruff、`prettier` 和 `deno`。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
+Tailwind CSS Language Server 和 UnoCSS Language Server 提供原子化 CSS 类名补全、悬浮文档与诊断。Tailwind CSS 仅在当前子包存在 `tailwind.config.*`，或最近的 `package.json` 声明 `tailwindcss` / `@tailwindcss/*` 依赖时启动；检测不会跨越最近的 `package.json`，避免 monorepo 中其他子包误启动。UnoCSS 使用 `nvim-lspconfig` 的项目识别规则，在存在 `uno.config.js`、`uno.config.ts`、`unocss.config.js` 或 `unocss.config.ts` 时启动。两者支持的 Web 与模板文件类型由各自的 `nvim-lspconfig` 配置决定。
+
+Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`、`ts_ls`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server、Tailwind CSS Language Server、UnoCSS Language Server，以及 `stylua`、`golangci-lint`、Ruff、`prettier` 和 `deno`。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
 
 ## 常用快捷键
 
