@@ -1,5 +1,4 @@
 {
-  "name": "custom-snippets",
   "contributes": {
     "snippets": [
       {
@@ -10,11 +9,34 @@
         "language": [
           "javascript",
           "javascriptreact",
+          "jsx",
           "typescript",
-          "typescriptreact"
+          "typescriptreact",
+          "tsx"
+        ],
+        "path": "./js.json"
+      },
+      {
+        "language": [
+          "typescript",
+          "typescriptreact",
+          "tsx"
         ],
         "path": "./ts.json"
+      },
+      {
+        "language": [
+          "vue",
+          "javascript",
+          "javascriptreact",
+          "jsx",
+          "typescript",
+          "typescriptreact",
+          "tsx"
+        ],
+        "path": "./vue.json"
       }
     ]
-  }
+  },
+  "name": "custom-snippets"
 }

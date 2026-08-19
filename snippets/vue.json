@@ -1,0 +1,33 @@
+{
+  "setupTs": {
+    "body": [
+      "<script setup lang=\"ts\">",
+      "  ${1:}",
+      "</script>",
+      "",
+      "<template>",
+      "  ${2:}",
+      "</template>",
+      "",
+      "<style lang=\"scss\" scoped></style>"
+    ],
+    "prefix": "setupTs"
+  },
+  "vemit": {
+    "body": "const emit = defineEmits<{${1:}}>();",
+    "prefix": "vemit"
+  },
+  "vprops": {
+    "body": "const props = withDefaults(defineProps<{${1:}}>(), {${2:}});",
+    "prefix": "vprops"
+  },
+  "vslot": {
+    "body": [
+      "defineSlots<{",
+      "  default: (${1:}) => any",
+      "  ${2:}",
+      "}>()"
+    ],
+    "prefix": "vslot"
+  }
+}
