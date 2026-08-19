@@ -11,7 +11,7 @@
 - `ripgrep`（Snacks 全文搜索）
 - `tree-sitter-cli >= 0.26.1`（安装 Treesitter parser）
 - C 编译器（Windows 必须使用 Visual Studio C++ Build Tools 提供的 MSVC `cl.exe`）
-- Node.js 与 npm（Mason 安装 Node 生态 LSP 和 `pyright`）
+- Node.js 与 npm（Mason 安装 Node 生态 LSP）
 - 可选：GitHub Copilot 账号（AI 幽灵文本补全）
 - Go 工具链（Go 格式化和 `gopls` 安装）
 - Rustup 管理的 Rust 工具链，并安装 `rustfmt` 与 `clippy` 组件
@@ -80,23 +80,28 @@ Windows 下 Neovim 的默认 shell 配置为 PowerShell：优先使用 PowerShel
 | Lua | `lua_ls` | `stylua` | 无 |
 | Go | `gopls` | `gofmt` | `golangci-lint` |
 | Rust | `rust_analyzer` | `rustfmt` | `clippy`（通过 `rust-analyzer`） |
-| Python | `pyright` | Ruff | Ruff |
+| Python | `basedpyright` | Ruff | Ruff |
 | HTML | `html` + `emmet_language_server` | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无 |
-| JavaScript / TypeScript / JSX / TSX（Node） | `ts_ls` + Emmet | `prettier` | `eslint` |
+| JavaScript / TypeScript / JSX / TSX（Node） | `vtsls` + Emmet | `prettier` | `eslint` |
 | JavaScript / TypeScript / JSX / TSX（Deno） | `denols` + Emmet | `deno fmt` | `deno lint` |
-| Vue（Node） | `vue_ls` + `ts_ls` Vue 插件 + Emmet | `prettier` | `eslint` |
+| Vue（Node） | `vue_ls` + `vtsls` Vue 插件 + Emmet | `prettier` | `eslint` |
 | Astro（Node） | `astro` + Emmet | `prettier` | `eslint` |
-| Vue / Astro（Deno） | Emmet（无框架专用 LSP） | `deno fmt` | 无 |
+| Vue（Deno） | `vue_ls` + `vtsls` Vue 插件 + Emmet | `deno fmt` | 无 |
+| Astro（Deno） | Astro LSP + Emmet | `deno fmt` | 无 |
 | CSS / SCSS / Less | `cssls` | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无 |
 | JSON / JSONC / YAML / Markdown | 无 | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无 |
 
-Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；Deno 项目通过 `deno.json` 或 `deno.jsonc` 识别。Deno 优先级更高，同一路径下不会同时启动 `denols` 和 `ts_ls`。不属于 Node 或 Deno 项目的文件不会自动选择对应 formatter/linter。
+Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；Deno 项目通过 `deno.json` 或 `deno.jsonc` 识别。Deno 优先级更高，同一路径下不会同时启动 `denols` 和 `vtsls`。不属于 Node 或 Deno 项目的文件不会自动选择对应 formatter/linter。
+
+临时编辑不属于任何已识别项目的 JavaScript / TypeScript / JSX / TSX 脚本时，`denols` 会以文件所在目录启动；普通 JS/TS 文件的 `vtsls` 只在完整 Node 项目中启动。Vue 和 Astro 的框架 LSP 可在 Node 或 Deno 项目中启动，但不为项目外的临时框架文件启动。Deno 项目中的 Vue 仍由 `vtsls` 提供 Vue TypeScript 插件所需的语言服务，普通 JS/TS 文件则只使用 `denols`。Lua、Go、Rust、Python、HTML 和 CSS 等语言沿用各语言服务器的单文件支持。
+
+未识别为 Node 或 Deno 项目时，Web、JSON、YAML 和 Markdown 文件默认使用 `prettier` 格式化，但不自动启用 ESLint。Deno 项目仍优先使用 `deno fmt`，Node 项目使用 `prettier`。
 
 Tailwind CSS Language Server 和 UnoCSS Language Server 提供原子化 CSS 类名补全、悬浮文档与诊断。Tailwind CSS 仅在当前子包存在 `tailwind.config.*`，或最近的 `package.json` 声明 `tailwindcss` / `@tailwindcss/*` 依赖时启动；检测不会跨越最近的 `package.json`，避免 monorepo 中其他子包误启动。UnoCSS 使用 `nvim-lspconfig` 的项目识别规则，在存在 `uno.config.js`、`uno.config.ts`、`unocss.config.js` 或 `unocss.config.ts` 时启动。两者支持的 Web 与模板文件类型由各自的 `nvim-lspconfig` 配置决定。
 
 语言服务器标记为 `Unnecessary` 的未使用变量、函数或导入会使用较暗的颜色显示，效果取决于对应语言服务器是否提供该诊断标签。
 
-Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`、`ts_ls`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server、Tailwind CSS Language Server、UnoCSS Language Server，以及 `stylua`、`golangci-lint`、Ruff、`prettier` 和 `deno`。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
+Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`basedpyright`、`denols`、`vtsls`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server、Tailwind CSS Language Server、UnoCSS Language Server，以及 `stylua`、`golangci-lint`、Ruff、`prettier` 和 `deno`。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
 
 ## 常用快捷键
 

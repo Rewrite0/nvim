@@ -8,6 +8,20 @@ local javascript_filetypes = {
   "typescriptreact",
 }
 
+---为 Astro LSP 优先选择项目 TypeScript SDK，并回退到 Mason 版本。
+---@param _ lsp.InitializeParams
+---@param config vim.lsp.ClientConfig
+local function set_typescript_sdk(_, config)
+  local tsdk = require("lspconfig.util").get_typescript_server_path(config.root_dir)
+  if not tsdk or tsdk == "" then
+    tsdk = vim.fn.stdpath("data")
+      .. "/mason/packages/vtsls/node_modules/@vtsls/language-server/node_modules/typescript/lib"
+  end
+  config.init_options = config.init_options or {}
+  config.init_options.typescript = config.init_options.typescript or {}
+  config.init_options.typescript.tsdk = tsdk
+end
+
 local emmet_filetypes = {
   "html",
   "javascript",
@@ -102,6 +116,7 @@ local languages = {
       root = false,
       config = {
         filetypes = { "lua" },
+        workspace_required = false,
         root_markers = { ".luarc.json", ".luarc.jsonc", ".stylua.toml", "stylua.toml", ".git" },
         settings = {
           Lua = {
@@ -134,6 +149,7 @@ local languages = {
       root = false,
       config = {
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
+        workspace_required = false,
       },
     },
   },
@@ -154,6 +170,7 @@ local languages = {
       root = false,
       config = {
         filetypes = { "rust" },
+        workspace_required = false,
         settings = {
           ["rust-analyzer"] = {
             check = { command = "clippy" },
@@ -174,11 +191,12 @@ local languages = {
       linters = { python = { "ruff" } },
     },
     lsp = {
-      name = "pyright",
+      name = "basedpyright",
       mason = true,
       root = false,
       config = {
         filetypes = { "python" },
+        workspace_required = false,
       },
     },
   },
@@ -196,6 +214,7 @@ local languages = {
         root = false,
         config = {
           filetypes = { "html" },
+          workspace_required = false,
         },
       },
       {
@@ -204,7 +223,7 @@ local languages = {
         root = false,
         config = {
           filetypes = emmet_filetypes,
-          single_file_support = true,
+          workspace_required = false,
           init_options = {
             includeLanguages = {
               javascript = "javascriptreact",
@@ -236,7 +255,11 @@ local languages = {
     treesitter = { "javascript", "typescript", "tsx" },
     lsp = false,
     toolchain = false,
-    tools = false,
+    tools = {
+      mason = { "prettier" },
+      formatters = node_formatters,
+      linters = {},
+    },
     projects = {
       deno = {
         priority = 100,
@@ -249,10 +272,10 @@ local languages = {
         lsp = {
           name = "denols",
           mason = true,
-          root = false,
+          root = project.deno_root_or_script_dir,
           config = {
             filetypes = javascript_filetypes,
-            single_file_support = false,
+            workspace_required = true,
             init_options = {
               enable = true,
               lint = false,
@@ -270,19 +293,24 @@ local languages = {
           linters = node_linters,
         },
         lsp = {
-          name = "ts_ls",
+          name = "vtsls",
           mason = true,
-          root = false,
+          root = project.typescript_root,
           config = {
             filetypes = vim.list_extend(vim.deepcopy(javascript_filetypes), { "vue" }),
-            single_file_support = false,
-            init_options = {
-              plugins = {
-                {
-                  name = "@vue/typescript-plugin",
-                  location = vim.fn.stdpath("data")
-                    .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
-                  languages = { "javascript", "typescript", "vue" },
+            workspace_required = true,
+            settings = {
+              vtsls = {
+                tsserver = {
+                  globalPlugins = {
+                    {
+                      name = "@vue/typescript-plugin",
+                      location = vim.fn.stdpath("data")
+                        .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                      languages = { "vue" },
+                      configNamespace = "typescript",
+                    },
+                  },
                 },
               },
             },
@@ -301,10 +329,10 @@ local languages = {
     lsp = {
       name = "vue_ls",
       mason = true,
-      root = project.node_root,
+      root = project.framework_root,
       config = {
         filetypes = { "vue" },
-        single_file_support = false,
+        workspace_required = true,
       },
     },
   },
@@ -318,10 +346,11 @@ local languages = {
     lsp = {
       name = "astro",
       mason = true,
-      root = project.node_root,
+      root = project.framework_root,
       config = {
         filetypes = { "astro" },
-        single_file_support = false,
+        workspace_required = true,
+        before_init = set_typescript_sdk,
       },
     },
   },
@@ -335,6 +364,7 @@ local languages = {
       root = false,
       config = {
         filetypes = { "css", "scss", "less" },
+        workspace_required = false,
       },
     },
     toolchain = "typescript",

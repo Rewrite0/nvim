@@ -230,7 +230,8 @@ function M.formatters_for(bufnr)
     return {}
   end
   local definition = M.resolve_project(language, bufnr)
-  local tools = definition and definition.tools or language.tools
+  local toolchain = language.toolchain and M.definitions[language.toolchain] or language
+  local tools = definition and definition.tools or language.tools or toolchain.tools
   return tools and tools.formatters[vim.bo[bufnr].filetype] or {}
 end
 

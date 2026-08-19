@@ -16,6 +16,13 @@ local package_dependency_fields = {
   "peerDependencies",
 }
 
+local javascript_filetypes = {
+  javascript = true,
+  javascriptreact = true,
+  typescript = true,
+  typescriptreact = true,
+}
+
 ---将缓冲区编号或文件路径统一转换为用于项目检测的起始路径。
 ---@param bufnr_or_path integer|string
 ---@return string
@@ -25,6 +32,15 @@ local function path_for(bufnr_or_path)
     return name ~= "" and name or vim.uv.cwd()
   end
   return bufnr_or_path ~= "" and bufnr_or_path or vim.uv.cwd()
+end
+
+---返回起始路径本身或其所在目录。
+---@param bufnr_or_path integer|string
+---@return string
+local function directory_for(bufnr_or_path)
+  local path = path_for(bufnr_or_path)
+  local stat = vim.uv.fs_stat(path)
+  return stat and stat.type == "directory" and path or vim.fs.dirname(path)
 end
 
 ---从起始路径向上查找任一标记文件，并返回标记文件所在目录。
@@ -110,6 +126,42 @@ function M.node_root(bufnr_or_path)
     return nil
   end
   return find_upward({ "tsconfig.json", "jsconfig.json", "package.json" }, bufnr_or_path)
+end
+
+---查找 Deno 项目根目录；独立 JS/TS 脚本回退到所在目录，Node 项目不匹配。
+---@param bufnr_or_path integer|string
+---@return string?
+function M.deno_root_or_script_dir(bufnr_or_path)
+  local root = M.deno_root(bufnr_or_path)
+  if root then
+    return root
+  end
+  if M.node_root(bufnr_or_path) then
+    return nil
+  end
+  if type(bufnr_or_path) == "number" and javascript_filetypes[vim.bo[bufnr_or_path].filetype] then
+    return directory_for(bufnr_or_path)
+  end
+end
+
+---查找 Node 或 Deno 项目根目录，Deno 配置优先。
+---@param bufnr_or_path integer|string
+---@return string?
+function M.framework_root(bufnr_or_path)
+  return M.deno_root(bufnr_or_path) or M.node_root(bufnr_or_path)
+end
+
+---查找 TypeScript LSP 根目录；Deno 项目仅为 Vue 文件启用。
+---@param bufnr_or_path integer|string
+---@return string?
+function M.typescript_root(bufnr_or_path)
+  local root = M.node_root(bufnr_or_path)
+  if root then
+    return root
+  end
+  if type(bufnr_or_path) == "number" and vim.bo[bufnr_or_path].filetype == "vue" then
+    return M.deno_root(bufnr_or_path)
+  end
 end
 
 ---判断当前文件是否属于 Deno 项目。
