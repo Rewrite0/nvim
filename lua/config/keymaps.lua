@@ -44,9 +44,6 @@ for lhs, spec in pairs({
     move_window_separator(spec.direction, 1)
   end, { desc = "向" .. spec.label .. "微调窗口分隔线" })
 end
-map("n", "<leader>bw", function()
-  Snacks.bufdelete()
-end, { desc = "关闭当前标签" })
 map("n", "<leader>w", "<cmd>write<CR>", { desc = "保存文件" })
 map("n", "<C-s>", "<cmd>write<CR>", { desc = "保存文件" })
 map("n", "<leader>q", "<cmd>confirm quit<CR>", { desc = "关闭窗口" })
@@ -59,6 +56,9 @@ map("n", "<leader>bd", "<cmd>BufferLinePickClose<CR>", { desc = "关闭选中标
 map("n", "<leader>bl", "<cmd>BufferLineCloseLeft<CR>", { desc = "关闭左侧标签" })
 map("n", "<leader>br", "<cmd>BufferLineCloseRight<CR>", { desc = "关闭右侧标签" })
 map("n", "<leader>bo", "<cmd>BufferLineCloseOthers<CR>", { desc = "关闭其他标签" })
+map("n", "<leader>bc", function()
+  Snacks.bufdelete()
+end, { desc = "关闭当前标签" })
 
 -- 使用 Snacks Picker 查找文件。
 map("n", "<leader>ff", function()
