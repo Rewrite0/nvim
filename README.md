@@ -4,7 +4,7 @@
 
 ## 环境要求
 
-- Neovim 0.11 或更高版本
+- Neovim 0.12 或更高版本
 - Git
 - Nerd Font（用于图标显示）
 - 可选：Neovide；建议安装 `Maple Mono NF CN`，并可安装 `Source Code Pro`、`Fira Code` 作为字体回退
@@ -57,8 +57,9 @@ Windows 下 Neovim 的默认 shell 配置为 PowerShell：优先使用 PowerShel
 | [WhoIsSethDaniel/mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim) | 根据语言注册表自动安装 formatter 和 linter |
 | [saghen/blink.cmp](https://github.com/Saghen/blink.cmp) | 插入模式与命令行实时补全 |
 | [zbirenbaum/copilot.lua](https://github.com/zbirenbaum/copilot.lua) | GitHub Copilot 幽灵文本补全 |
-| [L3MON4D3/LuaSnip](https://github.com/L3MON4D3/LuaSnip) | 代码片段引擎 |
+| [nvim-mini/mini.snippets](https://github.com/nvim-mini/mini.snippets) | 加载和展开代码片段 |
 | [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | 通用代码片段集合 |
+| [chrisgrieser/nvim-scissors](https://github.com/chrisgrieser/nvim-scissors) | 创建、搜索和编辑自定义代码片段 |
 | [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | 语法高亮与缩进 |
 | [kevinhwang91/nvim-ufo](https://github.com/kevinhwang91/nvim-ufo) | 基于 Treesitter 的异步代码折叠与折叠预览 |
 | [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs) | 自动补全括号、引号等成对符号 |
@@ -157,6 +158,32 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | 快捷键 | 功能 |
 | --- | --- |
 | `<A-l>` | 接受 GitHub Copilot 幽灵文本建议 |
+
+### 代码片段
+
+`blink.cmp` 使用 `mini.snippets` 展开片段，同时加载 `friendly-snippets` 和仓库 `snippets/package.json` 声明的自定义 VSCode 格式片段。自定义片段由 nvim-scissors 管理，保存后无需重启即可用于补全。
+
+| 快捷键 | 功能 |
+| --- | --- |
+| `<leader>sa` | 新增自定义片段；可视模式下将选区预填为片段正文 |
+| `<leader>se` | 使用 Snacks Picker 搜索并编辑自定义片段 |
+| `<CR>` | 接受 blink 补全菜单中选中的片段 |
+| `<Tab>` / `<S-Tab>` | 活跃片段中跳到下一个 / 上一个占位符；否则选择下一个 / 上一个补全候选 |
+
+也可以使用 `:ScissorsAddNewSnippet` 和 `:ScissorsEditSnippet`。`<leader>sa`、`<leader>se` 与现有的 `<leader>s` 保存键共享前缀；如果感觉保存响应存在等待，可为片段管理改用其他前缀。
+
+nvim-scissors 编辑弹窗中的以下快捷键只在弹窗内生效：
+
+| 快捷键 | 功能 |
+| --- | --- |
+| `<CR>` | 保存修改，也可以使用 `:w` |
+| `q` | 取消并关闭弹窗 |
+| `<BS>` | 返回片段搜索列表 |
+| `<C-BS>` | 删除当前片段 |
+| `<C-d>` | 复制当前片段 |
+| `<C-o>` | 在普通 Buffer 中打开当前片段的 JSON 文件 |
+| `<C-p>` | 在普通模式或插入模式中插入下一个占位符 |
+| `?` | 显示弹窗全部快捷键帮助 |
 
 ### 代码折叠
 

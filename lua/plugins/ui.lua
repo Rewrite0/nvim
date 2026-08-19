@@ -55,11 +55,13 @@ return {
 
       Snacks.toggle.diagnostics():map("<leader>ud")
       Snacks.toggle.inlay_hints():map("<leader>uh")
-      Snacks.toggle.new({
-        name = "保存时格式化",
-        get = format.is_enabled,
-        set = format.set_enabled,
-      }):map("<leader>uf")
+      Snacks.toggle
+        .new({
+          name = "保存时格式化",
+          get = format.is_enabled,
+          set = format.set_enabled,
+        })
+        :map("<leader>uf")
       Snacks.toggle.option("spell", { name = "拼写检查" }):map("<leader>us")
     end,
   },
@@ -74,6 +76,7 @@ return {
         { "<leader>g", group = "Git" },
         { "<leader>c", group = "代码" },
         { "<leader>p", group = "会话" },
+        { "<leader>s", group = "代码片段" },
         { "<leader>t", group = "终端" },
         { "<leader>u", group = "开关" },
         { "<leader>x", group = "列表" },

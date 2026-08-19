@@ -4,8 +4,7 @@ return {
     version = "1.*",
     event = "InsertEnter",
     dependencies = {
-      "L3MON4D3/LuaSnip",
-      "rafamadriz/friendly-snippets",
+      "nvim-mini/mini.snippets",
     },
     opts = {
       keymap = {
@@ -36,16 +35,8 @@ return {
         list = { selection = { preselect = false, auto_insert = true } },
       },
       signature = { enabled = true },
-      snippets = { preset = "luasnip" },
+      snippets = { preset = "mini_snippets" },
       sources = { default = { "lsp", "path", "snippets", "buffer" } },
     },
-    -- 加载第三方和自定义代码片段，然后初始化补全引擎。
-    config = function(_, opts)
-      local vscode_loader = require("luasnip.loaders.from_vscode")
-      vscode_loader.lazy_load()
-      vscode_loader.lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets" })
-      require("config.snippets")
-      require("blink.cmp").setup(opts)
-    end,
   },
 }

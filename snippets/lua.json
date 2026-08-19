@@ -1,0 +1,16 @@
+{
+  "Import module": {
+    "prefix": "req",
+    "body": "local ${1:module} = require(\"${2:module}\")",
+    "description": "Import a Lua module"
+  },
+  "Function": {
+    "prefix": "fn",
+    "body": [
+      "function ${1:name}(${2})",
+      "  $0",
+      "end"
+    ],
+    "description": "Define a Lua function"
+  }
+}
