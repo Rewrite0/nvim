@@ -102,14 +102,16 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 
 | 快捷键 | 功能 |
 | --- | --- |
-| `<leader>s` / `<C-s>` | 保存文件 |
-| `<leader>w` | 关闭当前 Buffer 标签并保持分屏布局 |
+| `<leader>w` / `<C-s>` | 保存文件 |
+| `<leader>bw` | 关闭当前 Buffer 标签并保持分屏布局 |
 | `<leader>q` | 关闭当前窗口 |
 | `<leader>m` | 打开 Mason |
 | `<leader>l` | 打开 Lazy |
 | `:Reload` | 重载基础配置和插件规格，重新配置已加载插件，并重启当前 Buffer 的 LSP |
 | `<S-h>` / `<S-l>` | 上一个 / 下一个 Buffer 标签 |
 | `<leader>bd` | 选择并关闭 Buffer 标签 |
+| `<leader>bl` / `<leader>br` | 关闭当前 Buffer 左侧 / 右侧的其他 Buffer 标签 |
+| `<leader>bo` | 关闭除当前 Buffer 外的其他 Buffer 标签 |
 | `<C-h/j/k/l>` | 聚焦相邻窗口 |
 | `<方向键>` | 沿箭头方向移动窗口分隔线（每次 5 行/列） |
 | `<C-方向键>` | 沿箭头方向微调窗口分隔线（每次 1 行/列） |
@@ -170,7 +172,7 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 | `<CR>` | 接受 blink 补全菜单中选中的片段 |
 | `<Tab>` / `<S-Tab>` | 活跃片段中跳到下一个 / 上一个占位符；否则选择下一个 / 上一个补全候选 |
 
-也可以使用 `:ScissorsAddNewSnippet` 和 `:ScissorsEditSnippet`。`<leader>sa`、`<leader>se` 与现有的 `<leader>s` 保存键共享前缀；如果感觉保存响应存在等待，可为片段管理改用其他前缀。
+也可以使用 `:ScissorsAddNewSnippet` 和 `:ScissorsEditSnippet`。
 
 nvim-scissors 编辑弹窗中的以下快捷键只在弹窗内生效：
 
