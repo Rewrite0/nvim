@@ -98,6 +98,8 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`pyright`、`denols`�
 
 ## 常用快捷键
 
+which-key 在 Visual 模式下为 `<leader>c`（代码）和 `<leader>s`（代码片段）提供按键组提示。
+
 ### 基础与 Buffer
 
 | 快捷键 | 功能 |
