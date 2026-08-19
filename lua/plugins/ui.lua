@@ -4,8 +4,16 @@ return {
     name = "catppuccin",
     priority = 1000,
     lazy = false,
+    opts = {
+      custom_highlights = function(colors)
+        return {
+          DiagnosticUnnecessary = { fg = colors.overlay0 },
+        }
+      end,
+    },
     -- 应用 Catppuccin 配置并切换到对应配色。
-    config = function()
+    config = function(_, opts)
+      require("catppuccin").setup(opts)
       vim.cmd.colorscheme("catppuccin-macchiato")
     end,
   },

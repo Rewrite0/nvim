@@ -1,4 +1,42 @@
 local group = vim.api.nvim_create_augroup("user_config", { clear = true })
+local unnecessary_namespaces = {}
+
+vim.diagnostic.handlers.unnecessary = {
+  show = function(namespace, bufnr, diagnostics)
+    if not vim.api.nvim_buf_is_valid(bufnr) then
+      return
+    end
+
+    local highlight_namespace = unnecessary_namespaces[namespace]
+    if not highlight_namespace then
+      highlight_namespace = vim.api.nvim_create_namespace("user.diagnostic.unnecessary." .. namespace)
+      unnecessary_namespaces[namespace] = highlight_namespace
+    end
+    vim.api.nvim_buf_clear_namespace(bufnr, highlight_namespace, 0, -1)
+
+    for _, diagnostic in ipairs(diagnostics) do
+      if diagnostic._tags and diagnostic._tags.unnecessary then
+        local line = vim.api.nvim_buf_get_lines(bufnr, diagnostic.lnum, diagnostic.lnum + 1, true)[1]
+        if line then
+          vim.hl.range(
+            bufnr,
+            highlight_namespace,
+            "DiagnosticUnnecessary",
+            { diagnostic.lnum, math.min(diagnostic.col, math.max(#line - 1, 0)) },
+            { diagnostic.end_lnum, diagnostic.end_col },
+            { priority = vim.hl.priorities.diagnostics }
+          )
+        end
+      end
+    end
+  end,
+  hide = function(namespace, bufnr)
+    local highlight_namespace = unnecessary_namespaces[namespace]
+    if highlight_namespace and vim.api.nvim_buf_is_valid(bufnr) then
+      vim.api.nvim_buf_clear_namespace(bufnr, highlight_namespace, 0, -1)
+    end
+  end,
+}
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = group,
@@ -42,6 +80,7 @@ vim.diagnostic.config({
   severity_sort = true,
   float = { border = "rounded", source = "if_many" },
   underline = { severity = vim.diagnostic.severity.ERROR },
+  unnecessary = true,
   signs = true,
   virtual_text = { spacing = 2, source = "if_many" },
 })
