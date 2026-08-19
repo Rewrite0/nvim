@@ -118,6 +118,7 @@ which-key 在 Visual 模式下为 `<leader>c`（代码）和 `<leader>s`（代�
 | `<leader>l` | 打开 Lazy |
 | `:Reload` | 重载基础配置和插件规格，重新配置已加载插件，并重启当前 Buffer 的 LSP |
 | `<S-h>` / `<S-l>` | 上一个 / 下一个 Buffer 标签 |
+| `<leader>bp` | 选择并切换到 Buffer 标签 |
 | `<leader>bd` | 选择并关闭 Buffer 标签 |
 | `<leader>bl` / `<leader>br` | 关闭当前 Buffer 左侧 / 右侧的其他 Buffer 标签 |
 | `<leader>bo` | 关闭除当前 Buffer 外的其他 Buffer 标签 |
