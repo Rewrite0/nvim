@@ -91,7 +91,7 @@ Windows 下 Neovim 的默认 shell 配置为 PowerShell：优先使用 PowerShel
 | CSS / SCSS / Less                           | `cssls`                             | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无                               |
 | JSON / JSONC / YAML / Markdown              | 无                                  | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无                               |
 
-Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；Deno 项目通过 `deno.json` 或 `deno.jsonc` 识别。Deno 优先级更高，同一路径下不会同时启动 `denols` 和 `vtsls`。不属于 Node 或 Deno 项目的文件不会自动选择对应 formatter/linter。
+Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；Deno 项目通过 `deno.json` 或 `deno.jsonc` 识别。Deno 优先级更高，同一路径下不会同时启动 `denols` 和 `vtsls`。Node monorepo 中，`vue_ls` 与 `vtsls` 优先共用最近的 `pnpm-workspace.yaml`、包管理器 lockfile 或声明 `workspaces` 的 `package.json` 所在目录；无 Git 仓库时不会越过用户主目录查找 workspace 标记，无 workspace 标记时回退到最近的 Node 项目根目录。不属于 Node 或 Deno 项目的文件不会自动选择对应 formatter/linter。
 
 临时编辑不属于任何已识别项目的 JavaScript / TypeScript / JSX / TSX 脚本时，`denols` 会以文件所在目录启动；普通 JS/TS 文件的 `vtsls` 只在完整 Node 项目中启动。Vue 和 Astro 的框架 LSP 可在 Node 或 Deno 项目中启动，但不为项目外的临时框架文件启动。Deno 项目中的 Vue 仍由 `vtsls` 提供 Vue TypeScript 插件所需的语言服务，普通 JS/TS 文件则只使用 `denols`。Lua、Go、Rust、Python、HTML 和 CSS 等语言沿用各语言服务器的单文件支持。
 
@@ -100,6 +100,8 @@ Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；
 Tailwind CSS Language Server 和 UnoCSS Language Server 提供原子化 CSS 类名补全、悬浮文档与诊断。Tailwind CSS 仅在当前子包存在 `tailwind.config.*`，或最近的 `package.json` 声明 `tailwindcss` / `@tailwindcss/*` 依赖时启动；检测不会跨越最近的 `package.json`，避免 monorepo 中其他子包误启动。UnoCSS 使用 `nvim-lspconfig` 的项目识别规则，在存在 `uno.config.js`、`uno.config.ts`、`unocss.config.js` 或 `unocss.config.ts` 时启动。两者支持的 Web 与模板文件类型由各自的 `nvim-lspconfig` 配置决定。
 
 语言服务器标记为 `Unnecessary` 的未使用变量、函数或导入会使用较暗的颜色显示，效果取决于对应语言服务器是否提供该诊断标签。
+
+前端框架组件标签与原生标签使用不同颜色。Treesitter 查询会立即将 HTML 系模板和 JSX/TSX 中的 PascalCase 或包含连字符的标签视为组件或自定义元素；Vue 的 `vue_ls` 就绪后以更高优先级的 `component` semantic token 覆盖。Astro LSP 当前没有组件专用 semantic token，因此保持 Treesitter 着色。全小写且不含连字符的标签不做语法推断，无法获得可靠语义分类时保持主题默认颜色。
 
 Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`basedpyright`、`denols`、`vtsls`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server、Tailwind CSS Language Server、UnoCSS Language Server，以及 `stylua`、`golangci-lint`、Ruff、`prettier` 和 `deno`。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
 

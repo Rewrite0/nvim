@@ -8,6 +8,13 @@ return {
       custom_highlights = function(colors)
         return {
           DiagnosticUnnecessary = { fg = colors.overlay0 },
+          FrameworkComponentTag = { fg = colors.pink },
+          ["@lsp.type.component"] = { link = "FrameworkComponentTag" },
+          ["@lsp.type.component.vue"] = { link = "FrameworkComponentTag" },
+          ["@tag.framework"] = { link = "FrameworkComponentTag" },
+          ["@tag.javascript"] = { link = "FrameworkComponentTag" },
+          ["@tag.tsx"] = { link = "FrameworkComponentTag" },
+          ["@type.astro"] = { link = "FrameworkComponentTag" },
         }
       end,
     },
