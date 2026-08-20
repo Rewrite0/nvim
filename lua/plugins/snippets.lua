@@ -43,6 +43,16 @@ return {
           stop = "",
         },
       })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MiniSnippetsSessionJump",
+        callback = function(args)
+          if args.data.tabstop_to == "0" then
+            mini_snippets.session.stop()
+          end
+        end,
+        desc = "跳到最终占位符后结束代码片段会话",
+      })
     end,
   },
   {

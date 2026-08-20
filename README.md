@@ -180,7 +180,7 @@ which-key 在 Visual 模式下为 `<leader>c`（代码）和 `<leader>s`（代�
 | `<leader>sa`        | 新增自定义片段；可视模式下将选区预填为片段正文                       |
 | `<leader>se`        | 使用 Snacks Picker 搜索并编辑自定义片段                              |
 | `<CR>`              | 接受 blink 补全菜单中选中的片段                                      |
-| `<Tab>` / `<S-Tab>` | 活跃片段中跳到下一个 / 上一个占位符；否则选择下一个 / 上一个补全候选 |
+| `<Tab>` / `<S-Tab>` | 活跃片段中跳到下一个 / 上一个占位符；跳到 `$0` 时自动结束片段会话；否则选择下一个 / 上一个补全候选 |
 
 也可以使用 `:ScissorsAddNewSnippet` 和 `:ScissorsEditSnippet`。
 
