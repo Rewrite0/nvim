@@ -32,6 +32,17 @@ local javascript_filetypes = {
   typescriptreact = true,
 }
 
+---规范化项目根路径；仅 Windows 解析真实路径，避免大小写差异产生重复 workspace。
+---@param path string
+---@return string
+local function normalize_project_root(path)
+  if vim.fn.has("win32") == 1 then
+    path = vim.uv.fs_realpath(path) or path
+    return vim.fs.normalize(path)
+  end
+  return path
+end
+
 ---将缓冲区编号或文件路径统一转换为用于项目检测的起始路径。
 ---@param bufnr_or_path integer|string
 ---@return string
@@ -62,7 +73,7 @@ local function find_upward(markers, start)
     upward = true,
     stop = vim.uv.os_homedir(),
   })
-  return matches[1] and vim.fs.dirname(matches[1]) or nil
+  return matches[1] and normalize_project_root(vim.fs.dirname(matches[1])) or nil
 end
 
 ---读取 JSON 文件并返回对象。
@@ -124,7 +135,7 @@ local function node_workspace_root(bufnr_or_path, package_root)
 
     for _, marker in ipairs(node_workspace_markers) do
       if vim.uv.fs_stat(vim.fs.joinpath(current, marker)) then
-        return current
+        return normalize_project_root(current)
       end
     end
 
@@ -143,7 +154,7 @@ local function node_workspace_root(bufnr_or_path, package_root)
     current = parent
   end
 
-  return package_root
+  return normalize_project_root(package_root)
 end
 
 ---查找当前子包的 Tailwind CSS 项目根目录，不跨越最近的 package.json。
@@ -157,7 +168,7 @@ function M.tailwind_root(bufnr_or_path)
   while current do
     for _, name in ipairs(tailwind_config_files) do
       if vim.uv.fs_stat(vim.fs.joinpath(current, name)) then
-        return current
+        return normalize_project_root(current)
       end
     end
 
@@ -203,7 +214,7 @@ function M.deno_root_or_script_dir(bufnr_or_path)
     return nil
   end
   if type(bufnr_or_path) == "number" and javascript_filetypes[vim.bo[bufnr_or_path].filetype] then
-    return directory_for(bufnr_or_path)
+    return normalize_project_root(directory_for(bufnr_or_path))
   end
 end
 
@@ -228,7 +239,7 @@ function M.typescript_root(bufnr_or_path)
 
   local package_root = M.node_root(bufnr_or_path)
   if package_root then
-    return node_workspace_root(bufnr_or_path, package_root)
+    return normalize_project_root(node_workspace_root(bufnr_or_path, package_root))
   end
 end
 

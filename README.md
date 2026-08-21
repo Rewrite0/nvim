@@ -94,6 +94,8 @@ Windows 下 Neovim 的默认 shell 配置为 PowerShell：优先使用 PowerShel
 
 Node 项目通过 `package.json`、`tsconfig.json` 或 `jsconfig.json` 识别；Deno 项目通过 `deno.json` 或 `deno.jsonc` 识别。Deno 优先级更高，同一路径下不会同时启动 `denols` 和 `vtsls`。Node monorepo 中，`vue_ls` 与 `vtsls` 优先共用最近的 `pnpm-workspace.yaml`、包管理器 lockfile 或声明 `workspaces` 的 `package.json` 所在目录；无 Git 仓库时不会越过用户主目录查找 workspace 标记，无 workspace 标记时回退到最近的 Node 项目根目录。不属于 Node 或 Deno 项目的文件不会自动选择对应 formatter/linter。
 
+Windows 下项目根目录会解析为真实路径并统一路径格式，避免同一物理目录因盘符或目录大小写不同而启动多个 LSP 客户端；Linux 和 macOS 保留符号链接路径语义。
+
 临时编辑不属于任何已识别项目的 JavaScript / TypeScript / JSX / TSX 脚本时，`denols` 会以文件所在目录启动；普通 JS/TS 文件的 `vtsls` 只在完整 Node 项目中启动。Vue 和 Astro 的框架 LSP 可在 Node 或 Deno 项目中启动，但不为项目外的临时框架文件启动。Deno 项目中的 Vue 仍由 `vtsls` 提供 Vue TypeScript 插件所需的语言服务，普通 JS/TS 文件则只使用 `denols`。Lua、Go、Rust、Python、HTML 和 CSS 等语言沿用各语言服务器的单文件支持。
 
 未识别为 Node 或 Deno 项目时，Web、JSON、YAML 和 Markdown 文件默认使用 `prettier` 格式化，但不自动启用 ESLint。Deno 项目仍优先使用 `deno fmt`，Node 项目使用 `prettier`。
