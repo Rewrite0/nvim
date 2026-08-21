@@ -12,6 +12,7 @@
 - `tree-sitter-cli >= 0.26.1`（安装 Treesitter parser）
 - C 编译器（Windows 必须使用 Visual Studio C++ Build Tools 提供的 MSVC `cl.exe`）
 - Node.js 与 npm（Mason 安装 Node 生态 LSP）
+- Deno（系统安装，并确保 `deno` 在 `PATH` 中；Deno LSP、formatter 和 linter 不由 Mason 管理）
 - 可选：GitHub Copilot 账号（AI 幽灵文本补全）
 - Go 工具链（Go 格式化和 `gopls` 安装）
 - Rustup 管理的 Rust 工具链，并安装 `rustfmt` 与 `clippy` 组件
@@ -103,7 +104,7 @@ Tailwind CSS Language Server 和 UnoCSS Language Server 提供原子化 CSS 类�
 
 前端框架组件标签与原生标签使用不同颜色。Treesitter 查询会立即将 HTML 系模板和 JSX/TSX 中的 PascalCase 或包含连字符的标签视为组件或自定义元素；Vue 的 `vue_ls` 就绪后以更高优先级的 `component` semantic token 覆盖。Astro LSP 当前没有组件专用 semantic token，因此保持 Treesitter 着色。全小写且不含连字符的标签不做语法推断，无法获得可靠语义分类时保持主题默认颜色。
 
-Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`basedpyright`、`denols`、`vtsls`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server、Tailwind CSS Language Server、UnoCSS Language Server，以及 `stylua`、`golangci-lint`、Ruff、`prettier` 和 `deno`。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
+Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`basedpyright`、`vtsls`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server、Tailwind CSS Language Server、UnoCSS Language Server，以及 `stylua`、`golangci-lint`、Ruff 和 `prettier`。Deno 项目直接使用系统 `deno` 提供的 `denols`、`deno fmt` 和 `deno lint`，不会由 Mason 安装或管理。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
 
 ## 常用快捷键
 

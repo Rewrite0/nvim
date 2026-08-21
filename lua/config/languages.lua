@@ -265,13 +265,13 @@ local languages = {
         priority = 100,
         root = project.deno_root,
         tools = {
-          mason = { "deno" },
+          mason = {},
           formatters = deno_formatters,
           linters = deno_linters,
         },
         lsp = {
           name = "denols",
-          mason = true,
+          mason = false,
           root = project.deno_root_or_script_dir,
           config = {
             filetypes = javascript_filetypes,
