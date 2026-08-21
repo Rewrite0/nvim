@@ -62,6 +62,7 @@ map("n", "<leader>bo", "<cmd>BufferLineCloseOthers<CR>", { desc = "关闭其他�
 map("n", "<leader>bc", function()
   Snacks.bufdelete()
 end, { desc = "关闭当前标签" })
+map("c", "<C-v>", "<C-r>+", { desc = "粘贴剪贴板内容到cmd" })
 
 -- 使用 Snacks Picker 查找文件。
 map("n", "<leader>ff", function()
