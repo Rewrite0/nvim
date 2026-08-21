@@ -44,6 +44,7 @@ Windows 下 Neovim 的默认 shell 配置为 PowerShell：优先使用 PowerShel
 | [folke/lazy.nvim](https://github.com/folke/lazy.nvim)                                                     | 插件安装、锁定和懒加载                                                   |
 | [catppuccin/nvim](https://github.com/catppuccin/nvim)                                                     | Catppuccin Macchiato 配色                                                |
 | [nvim-lualine/lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)                                 | 全局状态栏                                                               |
+| [Bekaboo/dropbar.nvim](https://github.com/Bekaboo/dropbar.nvim)                                           | 显示当前代码层级的面包屑导航，并支持层级选择                             |
 | [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim)                                     | Buffer 标签栏和 LSP 诊断标记                                             |
 | [folke/snacks.nvim](https://github.com/folke/snacks.nvim)                                                 | 启动页、文件浏览、Picker、通知、终端、专注模式、临时缓冲区及文本辅助功能 |
 | [folke/which-key.nvim](https://github.com/folke/which-key.nvim)                                           | Leader 快捷键提示                                                        |
