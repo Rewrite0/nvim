@@ -48,6 +48,7 @@ for lhs, spec in pairs({
 end
 map("n", "<leader>w", "<cmd>write<CR>", { desc = "保存文件" })
 map("n", "<C-s>", "<cmd>write<CR>", { desc = "保存文件" })
+map("i", "<C-s>", "<C-o><cmd>w<CR>", { desc = "保存文件" })
 map("n", "<leader>q", "<cmd>confirm quit<CR>", { desc = "关闭窗口" })
 map("n", "<leader>m", "<cmd>Mason<CR>", { desc = "打开 Mason" })
 map("n", "<leader>l", "<cmd>Lazy<CR>", { desc = "打开 Lazy" })
