@@ -26,6 +26,8 @@ local function move_window_separator(direction, amount)
 end
 
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
+map("n", "<C-z>", "u", { desc = "撤销" })
+map("i", "<C-z>", "<C-o>u", { desc = "撤销" })
 map("n", ";", ":", { desc = "进入命令行" })
 map("n", "<C-h>", "<C-w><C-h>", { desc = "聚焦左侧窗口" })
 map("n", "<C-j>", "<C-w><C-j>", { desc = "聚焦下方窗口" })

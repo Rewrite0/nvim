@@ -47,6 +47,13 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+-- 在不覆盖补全插件 `<CR>` 映射的前提下切断插入撤销块。
+vim.on_key(function(key)
+  if key == "\r" and vim.fn.mode():sub(1, 1) == "i" then
+    vim.api.nvim_feedkeys(vim.keycode("<C-g>u"), "n", false)
+  end
+end, vim.api.nvim_create_namespace("user.undo_break"))
+
 vim.api.nvim_create_autocmd("LspAttach", {
   group = group,
   desc = "设置 LSP 快捷键",
