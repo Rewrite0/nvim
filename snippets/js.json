@@ -1,7 +1,7 @@
 {
   "Import module": {
-    "prefix": "imp",
-    "body": "import $0 from '$1';",
-    "description": "Import a module"
+    "body": "import {$0} from '$1';",
+    "description": "Import a module",
+    "prefix": "imp"
   }
 }
