@@ -62,6 +62,26 @@ local function adjust_fold_level(direction)
   end
 end
 
+local fold_preview_win
+
+local function peek_fold_or_hover()
+  local ufo = require("ufo")
+  local preview_is_open = fold_preview_win and vim.api.nvim_win_is_valid(fold_preview_win)
+
+  if preview_is_open and vim.api.nvim_get_current_win() == fold_preview_win then
+    vim.cmd.wincmd("p")
+    return
+  end
+
+  local winid = ufo.peekFoldedLinesUnderCursor(preview_is_open)
+  if winid then
+    fold_preview_win = winid
+  else
+    fold_preview_win = nil
+    vim.lsp.buf.hover()
+  end
+end
+
 return {
   {
     "kevinhwang91/nvim-ufo",
@@ -110,12 +130,7 @@ return {
       },
       {
         "K",
-        function()
-          local winid = require("ufo").peekFoldedLinesUnderCursor()
-          if not winid then
-            vim.lsp.buf.hover()
-          end
-        end,
+        peek_fold_or_hover,
         desc = "预览折叠内容或悬浮文档",
       },
     },
