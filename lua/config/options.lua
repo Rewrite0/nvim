@@ -3,6 +3,7 @@ local opt = vim.opt
 opt.number = true
 opt.relativenumber = true
 opt.mouse = "a"
+vim.g.clipboard = "osc52"
 opt.clipboard = "unnamedplus"
 opt.breakindent = true
 opt.undofile = true
