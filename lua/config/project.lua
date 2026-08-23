@@ -9,6 +9,15 @@ local tailwind_config_files = {
   "tailwind.config.mts",
 }
 
+local eslint_config_files = {
+  "eslint.config.js",
+  "eslint.config.mjs",
+  "eslint.config.cjs",
+  "eslint.config.ts",
+  "eslint.config.mts",
+  "eslint.config.cts",
+}
+
 local package_dependency_fields = {
   "dependencies",
   "devDependencies",
@@ -119,6 +128,39 @@ local function package_declares_workspace(path)
   return package ~= nil and type(package.workspaces) == "table"
 end
 
+---判断项目是否声明 ESLint flat config。
+---@param root string
+---@return boolean
+local function has_eslint_config(root)
+  for _, name in ipairs(eslint_config_files) do
+    if vim.uv.fs_stat(vim.fs.joinpath(root, name)) then
+      return true
+    end
+  end
+  return false
+end
+
+---判断 package.json 是否声明 antfu ESLint 配置。
+---@param root string
+---@return boolean
+local function package_uses_antfu_eslint(root)
+  if not root then
+    return false
+  end
+  local package = read_json_object(vim.fs.joinpath(root, "package.json"))
+  if not package then
+    return false
+  end
+
+  for _, field in ipairs(package_dependency_fields) do
+    local dependencies = package[field]
+    if type(dependencies) == "table" and dependencies["@antfu/eslint-config"] then
+      return true
+    end
+  end
+  return false
+end
+
 ---查找包含当前 Node 子包的 workspace 根目录。
 ---@param bufnr_or_path integer|string
 ---@param package_root string
@@ -200,6 +242,33 @@ function M.node_root(bufnr_or_path)
     return nil
   end
   return find_upward({ "tsconfig.json", "jsconfig.json", "package.json" }, bufnr_or_path)
+end
+
+---查找包含 ESLint flat config 的 Node 项目根目录。
+---@param bufnr_or_path integer|string
+---@return string?
+function M.eslint_root(bufnr_or_path)
+  local package_root = M.node_root(bufnr_or_path)
+  if not package_root then
+    return nil
+  end
+
+  local workspace_root = node_workspace_root(bufnr_or_path, package_root)
+  if has_eslint_config(workspace_root) then
+    return workspace_root
+  end
+  return has_eslint_config(package_root) and package_root or nil
+end
+
+---判断当前项目是否使用 antfu ESLint 配置。
+---@param bufnr_or_path integer|string
+---@return boolean
+function M.is_antfu_eslint(bufnr_or_path)
+  local root = M.eslint_root(bufnr_or_path)
+  if not root then
+    return false
+  end
+  return package_uses_antfu_eslint(root) or package_uses_antfu_eslint(M.node_root(bufnr_or_path))
 end
 
 ---查找 Deno 项目根目录；独立 JS/TS 脚本回退到所在目录，Node 项目不匹配。

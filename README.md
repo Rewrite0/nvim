@@ -84,10 +84,10 @@ Windows 下 Neovim 的默认 shell 配置为 PowerShell：优先使用 PowerShel
 | Rust                                        | `rust_analyzer`                     | `rustfmt`                                      | `clippy`（通过 `rust-analyzer`） |
 | Python                                      | `basedpyright`                      | Ruff                                           | Ruff                             |
 | HTML                                        | `html` + `emmet_language_server`    | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无                               |
-| JavaScript / TypeScript / JSX / TSX（Node） | `vtsls` + Emmet                     | `prettier`                                     | `eslint`                         |
+| JavaScript / TypeScript / JSX / TSX（Node） | `vtsls` + `eslint` LSP + Emmet        | antfu 项目由 ESLint fix，否则 `prettier`       | `eslint`                         |
 | JavaScript / TypeScript / JSX / TSX（Deno） | `denols` + Emmet                    | `deno fmt`                                     | `deno lint`                      |
-| Vue（Node）                                 | `vue_ls` + `vtsls` Vue 插件 + Emmet | `prettier`                                     | `eslint`                         |
-| Astro（Node）                               | `astro` + Emmet                     | `prettier`                                     | `eslint`                         |
+| Vue（Node）                                 | `vue_ls` + `vtsls` + `eslint` LSP + Emmet | antfu 项目由 ESLint fix，否则 `prettier`       | `eslint`                         |
+| Astro（Node）                               | `astro` + `eslint` LSP + Emmet       | antfu 项目由 ESLint fix，否则 `prettier`       | `eslint`                         |
 | Vue（Deno）                                 | `vue_ls` + `vtsls` Vue 插件 + Emmet | `deno fmt`                                     | 无                               |
 | Astro（Deno）                               | Astro LSP + Emmet                   | `deno fmt`                                     | 无                               |
 | CSS / SCSS / Less                           | `cssls`                             | 随 Node/Deno 项目选择 `prettier` 或 `deno fmt` | 无                               |
@@ -107,7 +107,7 @@ Tailwind CSS Language Server 和 UnoCSS Language Server 提供原子化 CSS 类�
 
 前端框架组件标签与原生标签使用不同颜色。Treesitter 查询会立即将 HTML 系模板和 JSX/TSX 中的 PascalCase 或包含连字符的标签视为组件或自定义元素；Vue 的 `vue_ls` 就绪后以更高优先级的 `component` semantic token 覆盖。Astro LSP 当前没有组件专用 semantic token，因此保持 Treesitter 着色。全小写且不含连字符的标签不做语法推断，无法获得可靠语义分类时保持主题默认颜色。
 
-Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`basedpyright`、`vtsls`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server、Tailwind CSS Language Server、UnoCSS Language Server，以及 `stylua`、`golangci-lint`、Ruff 和 `prettier`。Deno 项目直接使用系统 `deno` 提供的 `denols`、`deno fmt` 和 `deno lint`，不会由 Mason 安装或管理。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。Mason 不提供供 `nvim-lint` 直接调用的普通 ESLint CLI，因此 Node 项目需在项目依赖中安装并配置 `eslint`。
+Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`basedpyright`、`vtsls`、`eslint`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server、Tailwind CSS Language Server、UnoCSS Language Server，以及 `stylua`、`golangci-lint`、Ruff 和 `prettier`。Deno 项目直接使用系统 `deno` 提供的 `denols`、`deno fmt` 和 `deno lint`，不会由 Mason 安装或管理。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。`nvim-lint` 调用的 ESLint CLI 仍需安装在 Node 项目依赖中。采用 `@antfu/eslint-config` 且存在 `eslint.config.*` 的项目会由 ESLint LSP 执行统一修复；项目中的 `eslint-plugin-format` 可继续调用本地 Prettier 处理 ESLint 不原生支持的文件类型。
 
 ## 常用快捷键
 

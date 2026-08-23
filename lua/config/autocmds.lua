@@ -1,4 +1,5 @@
 local group = vim.api.nvim_create_augroup("user_config", { clear = true })
+local eslint_group = vim.api.nvim_create_augroup("antfu_eslint_format", { clear = true })
 local unnecessary_namespaces = {}
 
 vim.diagnostic.handlers.unnecessary = {
@@ -72,6 +73,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("gD", vim.lsp.buf.declaration, "跳转到声明")
     map("<leader>cr", vim.lsp.buf.rename, "重命名")
     map("<leader>ca", vim.lsp.buf.code_action, "代码操作")
+
     -- 跳转到上一个诊断并显示详情。
     map("[d", function()
       vim.diagnostic.jump({ count = -1, float = true })

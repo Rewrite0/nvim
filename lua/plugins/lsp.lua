@@ -1,4 +1,5 @@
 local languages = require("config.languages")
+local project = require("config.project")
 
 return {
   {
@@ -37,6 +38,42 @@ return {
 
       local servers = {}
       for name, config in pairs(languages.lsp_configs()) do
+        -- 保留 ESLint LSP 默认的 before_init，再追加 antfu 项目设置。
+        if name == "eslint" and config.antfu_before_init then
+          local antfu_before_init = config.antfu_before_init
+          local base_config = vim.lsp.config[name]
+          local default_before_init = base_config and base_config.before_init
+          config.antfu_before_init = nil
+          config.before_init = function(initialize_params, client_config)
+            if default_before_init then
+              default_before_init(initialize_params, client_config)
+            end
+            antfu_before_init(initialize_params, client_config)
+          end
+
+          local antfu_on_attach = function(_, bufnr)
+            if not project.is_antfu_eslint(bufnr) then
+              return
+            end
+            local command = vim.fn.exists(":LspEslintFixAll") == 2 and "LspEslintFixAll" or "EslintFixAll"
+            if vim.fn.exists(":" .. command) == 2 then
+              vim.api.nvim_clear_autocmds({ group = vim.api.nvim_create_augroup("antfu_eslint_format", { clear = false }), buffer = bufnr })
+              vim.api.nvim_create_autocmd("BufWritePre", {
+                group = "antfu_eslint_format",
+                buffer = bufnr,
+                desc = "使用 antfu ESLint 自动修复",
+                command = command,
+              })
+            end
+          end
+          local default_on_attach = base_config and base_config.on_attach
+          config.on_attach = function(client, bufnr)
+            if default_on_attach then
+              default_on_attach(client, bufnr)
+            end
+            antfu_on_attach(client, bufnr)
+          end
+        end
         vim.lsp.config(name, config)
         servers[#servers + 1] = name
       end

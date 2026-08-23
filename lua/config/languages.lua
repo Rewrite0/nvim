@@ -8,6 +8,52 @@ local javascript_filetypes = {
   "typescriptreact",
 }
 
+local eslint_filetypes = {
+  "javascript",
+  "javascriptreact",
+  "javascript.jsx",
+  "typescript",
+  "typescriptreact",
+  "typescript.tsx",
+  "vue",
+  "html",
+  "markdown",
+  "json",
+  "jsonc",
+  "yaml",
+  "toml",
+  "xml",
+  "gql",
+  "graphql",
+  "astro",
+  "svelte",
+  "css",
+  "less",
+  "scss",
+  "pcss",
+  "postcss",
+}
+
+local antfu_rules_customizations = {
+  { rule = "style/*", severity = "off", fixable = true },
+  { rule = "format/*", severity = "off", fixable = true },
+  { rule = "*-indent", severity = "off", fixable = true },
+  { rule = "*-spacing", severity = "off", fixable = true },
+  { rule = "*-spaces", severity = "off", fixable = true },
+  { rule = "*-order", severity = "off", fixable = true },
+  { rule = "*-dangle", severity = "off", fixable = true },
+  { rule = "*-newline", severity = "off", fixable = true },
+  { rule = "*quotes", severity = "off", fixable = true },
+  { rule = "*semi", severity = "off", fixable = true },
+}
+
+local function configure_eslint(_, config)
+  if project.is_antfu_eslint(config.root_dir) then
+    config.settings = config.settings or {}
+    config.settings.rulesCustomizations = antfu_rules_customizations
+  end
+end
+
 ---为 Astro LSP 优先选择项目 TypeScript SDK，并回退到 Mason 版本。
 ---@param _ lsp.InitializeParams
 ---@param config vim.lsp.ClientConfig
@@ -293,25 +339,40 @@ local languages = {
           linters = node_linters,
         },
         lsp = {
-          name = "vtsls",
-          mason = true,
-          root = project.typescript_root,
-          config = {
-            filetypes = vim.list_extend(vim.deepcopy(javascript_filetypes), { "vue" }),
-            workspace_required = true,
-            settings = {
-              vtsls = {
-                tsserver = {
-                  globalPlugins = {
-                    {
-                      name = "@vue/typescript-plugin",
-                      location = vim.fn.stdpath("data")
-                        .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
-                      languages = { "vue" },
-                      configNamespace = "typescript",
+          {
+            name = "vtsls",
+            mason = true,
+            root = project.typescript_root,
+            config = {
+              filetypes = vim.list_extend(vim.deepcopy(javascript_filetypes), { "vue" }),
+              workspace_required = true,
+              settings = {
+                vtsls = {
+                  tsserver = {
+                    globalPlugins = {
+                      {
+                        name = "@vue/typescript-plugin",
+                        location = vim.fn.stdpath("data")
+                          .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                        languages = { "vue" },
+                        configNamespace = "typescript",
+                      },
                     },
                   },
                 },
+              },
+            },
+          },
+          {
+            name = "eslint",
+            mason = true,
+            root = project.eslint_root,
+            config = {
+              filetypes = eslint_filetypes,
+              workspace_required = true,
+              antfu_before_init = configure_eslint,
+              settings = {
+                workingDirectory = { mode = "auto" },
               },
             },
           },

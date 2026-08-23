@@ -6,10 +6,21 @@ return {
     config = function()
       local lint = require("lint")
       local languages = require("config.languages")
+      local project = require("config.project")
       local group = vim.api.nvim_create_augroup("project_lint", { clear = true })
 
       -- 某些 ESLint 配置会把提示日志写入 stdout，剥离日志后复用内置 JSON parser。
       local eslint = lint.linters.eslint
+      eslint.cmd = function()
+        local root = project.eslint_root(vim.api.nvim_get_current_buf())
+        if root then
+          local local_binary = vim.fs.joinpath(root, "node_modules", ".bin", "eslint")
+          if vim.fn.executable(local_binary) == 1 then
+            return local_binary
+          end
+        end
+        return "eslint"
+      end
       local eslint_parser = eslint.parser
       eslint.parser = function(output, bufnr)
         local json_start = output:find("\n%[%s*{") or output:find("\n%[%s*%]")
