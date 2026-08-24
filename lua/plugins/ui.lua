@@ -52,7 +52,24 @@ return {
       indent = {},
       input = {},
       notifier = {},
-      picker = {},
+      picker = {
+        sources = {
+          buffers = {
+            win = {
+              input = {
+                keys = {
+                  ["dd"] = { "bufdelete", mode = "n" },
+                },
+              },
+              list = {
+                keys = {
+                  ["dd"] = "bufdelete",
+                },
+              },
+            },
+          },
+        },
+      },
       quickfile = {},
       rename = {},
       scratch = {},
