@@ -45,7 +45,7 @@ Windows 下 Neovim 的默认 shell 配置为 PowerShell：优先使用 PowerShel
 | [catppuccin/nvim](https://github.com/catppuccin/nvim)                                                     | Catppuccin Macchiato 配色                                                |
 | [nvim-lualine/lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)                                 | 全局状态栏                                                               |
 | [Bekaboo/dropbar.nvim](https://github.com/Bekaboo/dropbar.nvim)                                           | 显示当前代码层级的面包屑导航，并支持层级选择                             |
-| [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim)                                     | Buffer 标签栏和 LSP 诊断标记                                             |
+| [nanozuki/tabby.nvim](https://github.com/nanozuki/tabby.nvim)                                             | 展示和管理 Tab 及当前 Tab 的 Window                                      |
 | [folke/snacks.nvim](https://github.com/folke/snacks.nvim)                                                 | 启动页、文件浏览、Picker、通知、终端、专注模式、临时缓冲区及文本辅助功能 |
 | [folke/which-key.nvim](https://github.com/folke/which-key.nvim)                                           | Leader 快捷键提示                                                        |
 | [folke/flash.nvim](https://github.com/folke/flash.nvim)                                                   | 快速文本和 Treesitter 结构跳转                                           |
@@ -113,30 +113,35 @@ Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`basedpyright`、`vtsl
 
 which-key 在 Visual 模式下为 `<leader>c`（代码）和 `<leader>s`（代码片段）提供按键组提示。
 
-### 基础与 Buffer
+### 基础、Tab、Window 与 Buffer
 
-| 快捷键                      | 功能                                                                 |
-| --------------------------- | -------------------------------------------------------------------- |
-| `<leader>w` / `<C-s>`       | 保存文件                                                             |
-| `<leader>q`                 | 关闭当前窗口                                                         |
-| `<leader>m`                 | 打开 Mason                                                           |
-| `<leader>l`                 | 打开 Lazy                                                            |
-| `:Reload`                   | 重载基础配置和插件规格，重新配置已加载插件，并重启当前 Buffer 的 LSP |
-| `<S-h>` / `<S-l>`           | 上一个 / 下一个 Buffer 标签                                          |
-| `<leader>bp`                | 选择并切换到 Buffer 标签                                             |
-| `<leader>bd`                | 选择并关闭 Buffer 标签                                               |
-| `<leader>bl` / `<leader>br` | 关闭当前 Buffer 左侧 / 右侧的其他 Buffer 标签                        |
-| `<leader>bo`                | 关闭除当前 Buffer 外的其他 Buffer 标签                               |
-| `<leader>bc`                | 关闭当前 Buffer 标签并保持分屏布局                                   |
-| `<C-h/j/k/l>`               | 聚焦相邻窗口                                                         |
-| `<方向键>`                  | 沿箭头方向移动窗口分隔线（每次 5 行/列）                             |
-| `<C-方向键>`                | 沿箭头方向微调窗口分隔线（每次 1 行/列）                             |
-| `<C-z>`                     | 在普通或插入模式撤销上一次编辑操作；输入和回车分别独立撤销           |
-| `;`                         | 进入命令行（等同于 `:`）                                             |
-| `<Esc>`                     | 清除搜索高亮                                                         |
-| `<C-/>`                     | 切换当前行或选区注释                                                 |
-| `s` / `S`                   | Flash 快速跳转 / Treesitter 结构跳转                                 |
-| `gsa` / `gsd` / `gsr`       | 添加 / 删除 / 替换文本环绕                                           |
+Tabby 使用 `active_wins_at_tail` 预设：左侧展示全部 Tab，右侧展示当前 Tab 中的 Window。Tabline 始终显示，并跟随 Catppuccin 状态栏主题。
+
+| 快捷键                            | 功能                                                                 |
+| --------------------------------- | -------------------------------------------------------------------- |
+| `<leader>w` / `<C-s>`             | 保存文件                                                             |
+| `<leader>q`                       | 关闭当前 Window                                                      |
+| `<leader>m`                       | 打开 Mason                                                           |
+| `<leader>l`                       | 打开 Lazy                                                            |
+| `:Reload`                         | 重载基础配置和插件规格，重新配置已加载插件，并重启当前 Buffer 的 LSP |
+| `<S-h>` / `<S-l>`                 | 上一个 / 下一个 Tab                                                  |
+| `<leader><Tab>n`                  | 新建 Tab                                                             |
+| `<leader><Tab>c`                  | 关闭当前 Tab                                                         |
+| `<leader><Tab>o`                  | 仅保留当前 Tab                                                       |
+| `<leader><Tab>r`                  | 重命名当前 Tab；输入空名称恢复自动命名                               |
+| `<leader><Tab>j`                  | 进入单键 Tab 跳转模式                                                |
+| `<leader><Tab>w`                  | 选择任意 Tab 中的 Window                                             |
+| `<leader><Tab>h` / `<leader><Tab>l` | 向左 / 向右移动当前 Tab                                            |
+| `<leader>bc`                      | 关闭当前 Buffer 并保持分屏布局                                       |
+| `<C-h/j/k/l>`                     | 聚焦相邻 Window                                                      |
+| `<方向键>`                        | 沿箭头方向移动 Window 分隔线（每次 5 行/列）                         |
+| `<C-方向键>`                      | 沿箭头方向微调 Window 分隔线（每次 1 行/列）                         |
+| `<C-z>`                           | 在普通或插入模式撤销上一次编辑操作；输入和回车分别独立撤销           |
+| `;`                               | 进入命令行（等同于 `:`）                                             |
+| `<Esc>`                           | 清除搜索高亮                                                         |
+| `<C-/>`                           | 切换当前行或选区注释                                                 |
+| `s` / `S`                         | Flash 快速跳转 / Treesitter 结构跳转                                 |
+| `gsa` / `gsd` / `gsr`             | 添加 / 删除 / 替换文本环绕                                           |
 
 ### 查找与浏览
 
@@ -144,7 +149,7 @@ which-key 在 Visual 模式下为 `<leader>c`（代码）和 `<leader>s`（代�
 | ------------ | ------------ |
 | `<leader>ff` | 查找文件     |
 | `<leader>fg` | 全文搜索     |
-| `<leader>fb` | 查找 Buffer  |
+| `<leader>fb` | 查找 Buffer；按 `dd` 关闭选中 Buffer |
 | `<leader>fr` | 最近文件     |
 | `<leader>fn` | 查看通知历史 |
 | `<leader>e`  | 文件浏览器   |
@@ -241,7 +246,7 @@ Snacks 终端窗口可以使用 Neovim 的窗口命令继续布局：`<C-w>v` �
 | `<leader>pl` | 恢复最近会话     |
 | `<leader>pd` | 停止保存会话     |
 
-保存和恢复会话时会忽略目录参数及隐藏的目录 Buffer，避免通过目录启动 Neovim 后在 Buffer 列表中残留一个会触发文件浏览器的条目。保存会话时还会排除空白窗口，防止 Snacks 文件浏览器被保存为空 Buffer 窗口，并单独记录文件浏览器的开启和焦点状态：退出时文件浏览器处于关闭状态则不会恢复，处于开启状态则在恢复会话后重新打开。保存完成后会恢复原有的 `sessionoptions`。
+保存和恢复会话时会保留 Tab、Window 布局及自定义 Tab 名称，并忽略目录参数及隐藏的目录 Buffer，避免通过目录启动 Neovim 后在 Buffer 列表中残留一个会触发文件浏览器的条目。保存会话时还会排除空白窗口，防止 Snacks 文件浏览器被保存为空 Buffer 窗口，并单独记录文件浏览器的开启和焦点状态：退出时文件浏览器处于关闭状态则不会恢复，处于开启状态则在恢复会话后重新打开。保存完成后会恢复原有的 `sessionoptions`。
 
 ### Git
 

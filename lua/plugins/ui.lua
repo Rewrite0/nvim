@@ -103,6 +103,7 @@ return {
     opts = {
       preset = "helix",
       spec = {
+        { "<leader><Tab>", group = "Tab" },
         { "<leader>b", group = "Buffer" },
         { "<leader>f", group = "查找" },
         { "<leader>g", group = "Git" },

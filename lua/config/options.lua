@@ -46,6 +46,8 @@ opt.scrolloff = 8
 opt.confirm = true
 opt.termguicolors = true
 opt.completeopt = { "menu", "menuone", "noselect" }
+opt.showtabline = 2
+opt.sessionoptions:append("globals")
 
 if vim.fn.has("win32") == 1 then
   opt.shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell.exe"
