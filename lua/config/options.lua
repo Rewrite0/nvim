@@ -1,9 +1,33 @@
 local opt = vim.opt
 
+local is_ssh = vim.env.SSH_TTY ~= nil or vim.env.SSH_CONNECTION ~= nil
+
+if is_ssh then
+  local osc52 = require("vim.ui.clipboard.osc52")
+
+  local function paste()
+    return {
+      vim.fn.split(vim.fn.getreg(""), "\n"),
+      vim.fn.getregtype(""),
+    }
+  end
+
+  vim.g.clipboard = {
+    name = "OSC 52 (copy only)",
+    copy = {
+      ["+"] = osc52.copy("+"),
+      ["*"] = osc52.copy("*"),
+    },
+    paste = {
+      ["+"] = paste,
+      ["*"] = paste,
+    },
+  }
+end
+
 opt.number = true
 opt.relativenumber = true
 opt.mouse = "a"
-vim.g.clipboard = "osc52"
 opt.clipboard = "unnamedplus"
 opt.breakindent = true
 opt.undofile = true
