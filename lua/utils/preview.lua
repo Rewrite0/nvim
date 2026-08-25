@@ -7,10 +7,23 @@ local function valid(winid)
   return winid and vim.api.nvim_win_is_valid(winid)
 end
 
-local function find_float(source, known)
+local function floating_wins()
+  local wins = {}
+  for _, winid in ipairs(vim.api.nvim_list_wins()) do
+    if valid(winid) then
+      local config = vim.api.nvim_win_get_config(winid)
+      if config.relative ~= "" and config.focusable ~= false then
+        wins[winid] = true
+      end
+    end
+  end
+  return wins
+end
+
+local function find_float(source, excluded)
   local candidate
   for _, winid in ipairs(vim.api.nvim_list_wins()) do
-    if winid ~= source and winid ~= known and valid(winid) then
+    if winid ~= source and not excluded[winid] and valid(winid) then
       local config = vim.api.nvim_win_get_config(winid)
       if config.relative ~= "" and config.focusable ~= false then
         candidate = winid
@@ -28,8 +41,8 @@ function M.register(winid, source)
   return winid
 end
 
-function M.register_latest(source, known)
-  local winid = find_float(source, known)
+function M.register_latest(source, excluded)
+  local winid = find_float(source, excluded)
   if winid then
     M.register(winid, source)
   end
@@ -48,21 +61,24 @@ function M.toggle_focus()
     if valid(source_win) then
       vim.api.nvim_set_current_win(source_win)
     end
-  else
-    source_win = current
+  elseif current == source_win then
     vim.api.nvim_set_current_win(preview_win)
   end
 end
 
 function M.capture_after(action, source)
-  local known = preview_win
+  local existing_floats = floating_wins()
   local captured = false
+
+  -- 每次预览操作只允许登记本次新创建的浮窗，避免复用旧预览状态。
+  preview_win = nil
+  source_win = nil
   action()
   local function capture()
     if captured then
       return
     end
-    captured = M.register_latest(source, known) ~= nil
+    captured = M.register_latest(source, existing_floats) ~= nil
   end
 
   vim.schedule(capture)
