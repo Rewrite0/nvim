@@ -33,6 +33,9 @@ map("n", "<C-h>", "<C-w><C-h>", { desc = "聚焦左侧窗口" })
 map("n", "<C-j>", "<C-w><C-j>", { desc = "聚焦下方窗口" })
 map("n", "<C-k>", "<C-w><C-k>", { desc = "聚焦上方窗口" })
 map("n", "<C-l>", "<C-w><C-l>", { desc = "聚焦右侧窗口" })
+map("n", "<Tab>", function()
+  require("utils.preview").toggle_focus()
+end, { desc = "切换预览窗口焦点" })
 for lhs, spec in pairs({
   ["<Left>"] = { direction = "left", label = "左" },
   ["<Right>"] = { direction = "right", label = "右" },

@@ -66,19 +66,23 @@ local fold_preview_win
 
 local function peek_fold_or_hover()
   local ufo = require("ufo")
+  local preview = require("utils.preview")
   local preview_is_open = fold_preview_win and vim.api.nvim_win_is_valid(fold_preview_win)
 
   if preview_is_open and vim.api.nvim_get_current_win() == fold_preview_win then
-    vim.cmd.wincmd("p")
     return
   end
 
   local winid = ufo.peekFoldedLinesUnderCursor(preview_is_open)
   if winid then
     fold_preview_win = winid
+    preview.register(winid)
   else
     fold_preview_win = nil
-    vim.lsp.buf.hover()
+    local source = vim.api.nvim_get_current_win()
+    preview.capture_after(function()
+      vim.lsp.buf.hover()
+    end, source)
   end
 end
 

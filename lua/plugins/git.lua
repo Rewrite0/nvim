@@ -25,7 +25,13 @@ return {
         end, "上一个 Git 块")
         map("<leader>gs", gs.stage_hunk, "暂存 Git 块")
         map("<leader>gr", gs.reset_hunk, "还原 Git 块")
-        map("<leader>gp", gs.preview_hunk, "预览 Git 块")
+        map("<leader>gp", function()
+          local preview = require("utils.preview")
+          local source = vim.api.nvim_get_current_win()
+          preview.capture_after(function()
+            gs.preview_hunk()
+          end, source)
+        end, "预览 Git 块")
       end,
     },
   },

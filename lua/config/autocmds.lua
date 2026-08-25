@@ -76,11 +76,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- 跳转到上一个诊断并显示详情。
     map("[d", function()
-      vim.diagnostic.jump({ count = -1, float = true })
+      local preview = require("utils.preview")
+      local source = vim.api.nvim_get_current_win()
+      preview.capture_after(function()
+        vim.diagnostic.jump({ count = -1, float = true })
+      end, source)
     end, "上一个诊断")
     -- 跳转到下一个诊断并显示详情。
     map("]d", function()
-      vim.diagnostic.jump({ count = 1, float = true })
+      local preview = require("utils.preview")
+      local source = vim.api.nvim_get_current_win()
+      preview.capture_after(function()
+        vim.diagnostic.jump({ count = 1, float = true })
+      end, source)
     end, "下一个诊断")
   end,
 })
