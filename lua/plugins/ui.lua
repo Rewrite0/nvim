@@ -75,7 +75,13 @@ return {
       scratch = {},
       scope = {},
       statuscolumn = {},
-      terminal = {},
+      terminal = {
+        win = {
+          keys = {
+            term_normal = false,
+          },
+        },
+      },
       toggle = {},
       words = {},
       scroll = {},

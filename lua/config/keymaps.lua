@@ -75,6 +75,7 @@ map("n", "<leader>bc", function()
   Snacks.bufdelete()
 end, { desc = "关闭当前 Buffer" })
 map("c", "<C-v>", "<C-r>+", { desc = "粘贴剪贴板内容到cmd" })
+map("t", "<C-Space>", "<C-\\><C-n>", { desc = "退出终端模式" })
 
 -- 使用 Snacks Picker 查找文件。
 map("n", "<leader>ff", function()

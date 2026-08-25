@@ -237,6 +237,7 @@ nvim-scissors 编辑弹窗中的以下快捷键只在弹窗内生效：
 | `<leader>tt` | 切换 Snacks 终端                         |
 | `<leader>tf` | 切换 Snacks 浮动终端                     |
 | `<leader>tr` | 切换 Snacks 右侧终端                     |
+| `<C-Space>`  | 在终端模式退出到普通模式                 |
 
 Snacks 终端窗口可以使用 Neovim 的窗口命令继续布局：`<C-w>v` 垂直拆分、`<C-w>s` 水平拆分。拆分窗口会复用同一个终端进程；要创建独立终端，请使用数字前缀，例如 `2<leader>tt`。
 
