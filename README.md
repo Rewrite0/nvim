@@ -51,7 +51,7 @@ Windows 下 Neovim 的默认 shell 配置为 PowerShell：优先使用 PowerShel
 | [folke/flash.nvim](https://github.com/folke/flash.nvim)                                                   | 快速文本和 Treesitter 结构跳转                                           |
 | [folke/trouble.nvim](https://github.com/folke/trouble.nvim)                                               | 诊断、符号、LSP 和 quickfix 列表                                         |
 | [echasnovski/mini.surround](https://github.com/echasnovski/mini.surround)                                 | 添加、删除和替换文本环绕符号                                             |
-| [numToStr/Comment.nvim](https://github.com/numToStr/Comment.nvim)                                         | 切换当前行或选区的行注释                                                 |
+| [numToStr/Comment.nvim](https://github.com/numToStr/Comment.nvim)                                         | 切换当前行注释或选区块注释                                               |
 | [nvim-tree/nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)                             | 文件和界面图标                                                           |
 | [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)                                         | 基于 Neovim 原生 API 配置 LSP                                            |
 | [mason-org/mason.nvim](https://github.com/mason-org/mason.nvim)                                           | 安装和管理 LSP 服务                                                      |
@@ -142,7 +142,7 @@ Tabby 使用 `active_wins_at_tail` 预设：左侧展示全部 Tab，右侧展�
 | `<C-z>`                           | 在普通或插入模式撤销上一次编辑操作；输入和回车分别独立撤销           |
 | `;`                               | 进入命令行（等同于 `:`）                                             |
 | `<Esc>`                           | 清除搜索高亮                                                         |
-| `<C-/>`                           | 切换当前行或选区注释                                                 |
+| `<C-/>`                           | 普通模式切换当前行注释；可视模式切换选区块注释                       |
 | `s` / `S`                         | Flash 快速跳转 / Treesitter 结构跳转                                 |
 | `gsa` / `gsd` / `gsr`             | 添加 / 删除 / 替换文本环绕                                           |
 
