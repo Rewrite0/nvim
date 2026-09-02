@@ -121,31 +121,30 @@ which-key 在 Visual 模式下为 `<leader>c`（代码）和 `<leader>s`（代�
 
 Tabby 使用 `active_wins_at_tail` 预设：左侧展示全部 Tab，右侧展示当前 Tab 中的 Window。Tabline 始终显示，并跟随 Catppuccin 状态栏主题。
 
-| 快捷键                              | 功能                                                                 |
-| ----------------------------------- | -------------------------------------------------------------------- |
-| `<leader>w` / `<C-s>`               | 保存文件                                                             |
-| `<leader>q`                         | 关闭当前 Window                                                      |
-| `<leader>m`                         | 打开 Mason                                                           |
-| `<leader>l`                         | 打开 Lazy                                                            |
-| `:Reload`                           | 重载基础配置和插件规格，重新配置已加载插件，并重启当前 Buffer 的 LSP |
-| `<S-h>` / `<S-l>`                   | 上一个 / 下一个 Tab                                                  |
-| `<leader><Tab>n`                    | 新建 Tab                                                             |
-| `<leader><Tab>c`                    | 关闭当前 Tab                                                         |
-| `<leader><Tab>o`                    | 仅保留当前 Tab                                                       |
-| `<leader><Tab>r`                    | 重命名当前 Tab；输入空名称恢复自动命名                               |
-| `<leader><Tab>j`                    | 进入单键 Tab 跳转模式                                                |
-| `<leader><Tab>w`                    | 选择任意 Tab 中的 Window                                             |
-| `<leader><Tab>h` / `<leader><Tab>l` | 向左 / 向右移动当前 Tab                                              |
-| `<leader>bc`                        | 关闭当前 Buffer 并保持分屏布局                                       |
-| `<C-h/j/k/l>`                       | 聚焦相邻 Window                                                      |
-| `<方向键>`                          | 沿箭头方向移动 Window 分隔线（每次 5 行/列）                         |
-| `<C-方向键>`                        | 沿箭头方向微调 Window 分隔线（每次 1 行/列）                         |
-| `<C-z>`                             | 在普通或插入模式撤销上一次编辑操作；输入和回车分别独立撤销           |
-| `;`                                 | 进入命令行（等同于 `:`）                                             |
-| `<Esc>`                             | 清除搜索高亮                                                         |
-| `<C-/>`                             | 普通模式切换当前行注释；可视模式切换选区块注释                       |
-| `s` / `S`                           | Flash 快速跳转 / Treesitter 结构跳转                                 |
-| `gsa` / `gsd` / `gsr`               | 添加 / 删除 / 替换文本环绕                                           |
+| 快捷键                              | 功能                                                       |
+| ----------------------------------- | ---------------------------------------------------------- |
+| `<leader>w` / `<C-s>`               | 保存文件                                                   |
+| `<leader>q`                         | 关闭当前 Window                                            |
+| `<leader>m`                         | 打开 Mason                                                 |
+| `<leader>l`                         | 打开 Lazy                                                  |
+| `<S-h>` / `<S-l>`                   | 上一个 / 下一个 Tab                                        |
+| `<leader><Tab>n`                    | 新建 Tab                                                   |
+| `<leader><Tab>c`                    | 关闭当前 Tab                                               |
+| `<leader><Tab>o`                    | 仅保留当前 Tab                                             |
+| `<leader><Tab>r`                    | 重命名当前 Tab；输入空名称恢复自动命名                     |
+| `<leader><Tab>j`                    | 进入单键 Tab 跳转模式                                      |
+| `<leader><Tab>w`                    | 选择任意 Tab 中的 Window                                   |
+| `<leader><Tab>h` / `<leader><Tab>l` | 向左 / 向右移动当前 Tab                                    |
+| `<leader>bc`                        | 关闭当前 Buffer 并保持分屏布局                             |
+| `<C-h/j/k/l>`                       | 聚焦相邻 Window                                            |
+| `<方向键>`                          | 沿箭头方向移动 Window 分隔线（每次 5 行/列）               |
+| `<C-方向键>`                        | 沿箭头方向微调 Window 分隔线（每次 1 行/列）               |
+| `<C-z>`                             | 在普通或插入模式撤销上一次编辑操作；输入和回车分别独立撤销 |
+| `;`                                 | 进入命令行（等同于 `:`）                                   |
+| `<Esc>`                             | 清除搜索高亮                                               |
+| `<C-/>`                             | 普通模式切换当前行注释；可视模式切换选区块注释             |
+| `s` / `S`                           | Flash 快速跳转 / Treesitter 结构跳转                       |
+| `gsa` / `gsd` / `gsr`               | 添加 / 删除 / 替换文本环绕                                 |
 
 ### 查找与浏览
 
@@ -179,8 +178,6 @@ Tabby 使用 `active_wins_at_tail` 预设：左侧展示全部 Tab，右侧展�
 | `<leader>xl`                | 打开当前 Buffer LSP 列表                                           |
 | `<leader>xq` / `<leader>xL` | 打开 quickfix / location list                                      |
 | `[r` / `]r`                 | 上一个 / 下一个当前符号的 LSP 文档高亮引用                         |
-
-`:Reload` 适用于选项、快捷键、自动命令、语言注册表和多数插件配置的小幅修改。以下情况仍需重启 Neovim：修改 `init.lua` 中 lazy.nvim 自身的引导或初始化、安装或删除插件、变更插件的加载时机或依赖关系，以及第三方插件不支持重复执行 `setup()` 的配置变更。
 
 ### AI 补全
 
