@@ -111,7 +111,7 @@ Tailwind CSS Language Server 和 UnoCSS Language Server 提供原子化 CSS 类�
 
 在 HTML、JSX/TSX、Vue、Svelte 和 Astro 等受支持的模板中，输入开始标签末尾的 `>` 会自动插入对应的结束标签；修改开始标签时，结束标签也会同步更新。
 
-Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`basedpyright`、`vtsls`、`eslint`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server、Tailwind CSS Language Server、UnoCSS Language Server，以及 `stylua`、`golangci-lint`、Ruff 和 `prettier`。Deno 项目直接使用系统 `deno` 提供的 `denols`、`deno fmt` 和 `deno lint`，不会由 Mason 安装或管理。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。`nvim-lint` 调用的 ESLint CLI 仍需安装在 Node 项目依赖中；没有本地 `node_modules/.bin/eslint` 的项目会自动跳过 ESLint lint。采用 `@antfu/eslint-config` 且存在 `eslint.config.*` 的项目会由 ESLint LSP 执行统一修复；项目中的 `eslint-plugin-format` 可继续调用本地 Prettier 处理 ESLint 不原生支持的文件类型。
+Mason 自动安装 `lua_ls`、`gopls`、`rust_analyzer`、`basedpyright`、`vtsls`、`eslint`、`vue_ls`、Astro LSP、HTML LSP、CSS LSP、Emmet Language Server、Tailwind CSS Language Server、UnoCSS Language Server，以及 `stylua`、`golangci-lint`、Ruff 和 `prettier`。Deno 项目直接使用系统 `deno` 提供的 `denols`、`deno fmt` 和 `deno lint`，不会由 Mason 安装或管理。Emmet 补全适用于 HTML、JavaScript、JSX、TypeScript、TSX、Vue 和 Astro。`cssls` 同时支持 CSS、SCSS 和 Less。`gofmt` 由 Go 工具链提供；`rustfmt` 和 `clippy` 由 Rustup 组件提供。`nvim-lint` 调用的 ESLint CLI 仍需安装在 Node 项目依赖中；没有本地 `node_modules/.bin/eslint` 的项目会自动跳过 ESLint lint。存在 `eslint.config.*` 且在项目 `.vscode/settings.json` 中设置 `"antfu_eslint": true` 时，项目会由 ESLint LSP 执行统一修复；项目中的 `eslint-plugin-format` 可继续调用本地 Prettier 处理 ESLint 不原生支持的文件类型。
 
 ## 常用快捷键
 

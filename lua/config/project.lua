@@ -140,25 +140,65 @@ local function has_eslint_config(root)
   return false
 end
 
----判断 package.json 是否声明 antfu ESLint 配置。
+---读取 .vscode/settings.json 中的布尔设置，兼容 JSONC 注释和尾随逗号。
 ---@param root string
----@return boolean
-local function package_uses_antfu_eslint(root)
+---@param key string
+---@return boolean?
+local function read_vscode_boolean(root, key)
   if not root then
-    return false
-  end
-  local package = read_json_object(vim.fs.joinpath(root, "package.json"))
-  if not package then
-    return false
+    return nil
   end
 
-  for _, field in ipairs(package_dependency_fields) do
-    local dependencies = package[field]
-    if type(dependencies) == "table" and dependencies["@antfu/eslint-config"] then
+  local ok, lines = pcall(vim.fn.readfile, vim.fs.joinpath(root, ".vscode", "settings.json"))
+  if not ok then
+    return nil
+  end
+
+  local in_block_comment = false
+  for _, line in ipairs(lines) do
+    local code = {}
+    local in_string = false
+    local escaped = false
+    local index = 1
+    while index <= #line do
+      local current = line:sub(index, index)
+      local next_char = line:sub(index + 1, index + 1)
+      if in_block_comment then
+        if current == "*" and next_char == "/" then
+          in_block_comment = false
+          index = index + 1
+        end
+      elseif in_string then
+        code[#code + 1] = current
+        if escaped then
+          escaped = false
+        elseif current == "\\" then
+          escaped = true
+        elseif current == '"' then
+          in_string = false
+        end
+      elseif current == '"' then
+        in_string = true
+        code[#code + 1] = current
+      elseif current == "/" and next_char == "/" then
+        break
+      elseif current == "/" and next_char == "*" then
+        in_block_comment = true
+        index = index + 1
+      else
+        code[#code + 1] = current
+      end
+      index = index + 1
+    end
+
+    local value = table.concat(code):match('"' .. vim.pesc(key) .. '"%s*:%s*(%a+)')
+    if value == "true" then
       return true
+    elseif value == "false" then
+      return false
     end
   end
-  return false
+  return nil
 end
 
 ---查找包含当前 Node 子包的 workspace 根目录。
@@ -264,11 +304,24 @@ end
 ---@param bufnr_or_path integer|string
 ---@return boolean
 function M.is_antfu_eslint(bufnr_or_path)
-  local root = M.eslint_root(bufnr_or_path)
-  if not root then
+  local eslint_root = M.eslint_root(bufnr_or_path)
+  local package_root = M.node_root(bufnr_or_path)
+  if not eslint_root or not package_root then
     return false
   end
-  return package_uses_antfu_eslint(root) or package_uses_antfu_eslint(M.node_root(bufnr_or_path))
+
+  local roots = { package_root, eslint_root, node_workspace_root(bufnr_or_path, package_root) }
+  local seen = {}
+  for _, root in ipairs(roots) do
+    if not seen[root] then
+      seen[root] = true
+      local enabled = read_vscode_boolean(root, "antfu_eslint")
+      if enabled ~= nil then
+        return enabled
+      end
+    end
+  end
+  return false
 end
 
 ---查找 Deno 项目根目录；独立 JS/TS 脚本回退到所在目录，Node 项目不匹配。
