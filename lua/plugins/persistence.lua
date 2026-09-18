@@ -49,6 +49,44 @@ local function save_explorer_state()
   )
 end
 
+local function restore_terminals()
+  local terminal_wins = {}
+  for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      if
+        vim.bo[buf].buftype == "terminal"
+        and vim.startswith(vim.api.nvim_buf_get_name(buf), "term://")
+      then
+        terminal_wins[#terminal_wins + 1] = { buf = buf, win = win }
+      end
+    end
+  end
+
+  if #terminal_wins == 0 then
+    return
+  end
+
+  local current_win = vim.api.nvim_get_current_win()
+  for _, item in ipairs(terminal_wins) do
+    if vim.api.nvim_win_is_valid(item.win) and vim.api.nvim_buf_is_valid(item.buf) then
+      local cwd = vim.fn.getcwd(item.win)
+      vim.api.nvim_set_current_win(item.win)
+      Snacks.terminal.open(nil, {
+        cwd = cwd,
+        win = { position = "current" },
+      })
+      if vim.api.nvim_buf_is_valid(item.buf) and #vim.fn.win_findbuf(item.buf) == 0 then
+        pcall(vim.api.nvim_buf_delete, item.buf, { force = true })
+      end
+    end
+  end
+
+  if vim.api.nvim_win_is_valid(current_win) then
+    vim.api.nvim_set_current_win(current_win)
+  end
+end
+
 local function restore_explorer()
   local session = vim.v.this_session
   if session == "" then
@@ -126,9 +164,12 @@ return {
         pattern = "PersistenceLoadPost",
         callback = function()
           cleanup_directory_entries()
-          restore_explorer()
+          vim.schedule(function()
+            restore_terminals()
+            restore_explorer()
+          end)
         end,
-        desc = "恢复会话后清理目录 Buffer 并恢复目录树",
+        desc = "恢复会话后清理终端、目录 Buffer 并恢复目录树",
       })
     end,
     keys = {
