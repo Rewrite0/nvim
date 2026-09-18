@@ -156,7 +156,7 @@ Tabby 使用 `active_wins_at_tail` 预设：左侧展示全部 Tab，右侧展�
 | `<leader>fb` | 查找 Buffer；按 `dd` 关闭选中 Buffer |
 | `<leader>fr` | 最近文件                             |
 | `<leader>fn` | 查看通知历史                         |
-| `<leader>e`  | 文件浏览器                           |
+| `<leader>e`  | 文件浏览器；文件上按 `<C-t>` 在新 Tab 打开 |
 
 ### LSP 与代码质量
 

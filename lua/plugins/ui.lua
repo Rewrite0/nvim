@@ -68,6 +68,15 @@ return {
               },
             },
           },
+          explorer = {
+            win = {
+              list = {
+                keys = {
+                  ["<c-t>"] = "tab",
+                },
+              },
+            },
+          },
         },
       },
       quickfile = {},
