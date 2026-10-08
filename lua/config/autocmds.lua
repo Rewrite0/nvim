@@ -69,6 +69,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     map("gd", vim.lsp.buf.definition, "跳转到定义")
+    map("gt", function()
+      vim.cmd("tab split")
+      vim.lsp.buf.definition({ reuse_win = false })
+    end, "在新 Tab 跳转到定义")
     map("gr", vim.lsp.buf.references, "查找引用")
     map("gD", vim.lsp.buf.declaration, "跳转到声明")
     map("<leader>cr", vim.lsp.buf.rename, "重命名")
